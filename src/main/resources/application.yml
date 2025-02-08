@@ -1,5 +1,32 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: stamp
 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/stamp?serverTimezone=UTC
+    username: root
+    password:
 
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        highlight_sql: true
+
+    hibernate:
+      ddl-auto: create
+
+
+
+oauth:
+  kakao:
+    client_id: ENC(T+MKyWp1Re+vMBALgV5zyIuVXB4HVm2rbiL/D8Xr+AdXMooFgbISWBUtvMhCvaR6)
+    redirect_uri: http://localhost:3000/oauth/redirected/kakao
+    client_secret: ENC(O3OjyztpBsbBY5RC3/KFYxqoI5+xeB4mAXrVjoU/7mwlDTrQhyvh1Jon3wBFtHyD)
+    scope: profile_nickname, profile_image
