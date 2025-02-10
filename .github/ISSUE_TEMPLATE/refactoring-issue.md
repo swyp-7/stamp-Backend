@@ -1,7 +1,7 @@
 ---
 name: "\U0001F4AB Refactoring Issue"
 about: 리펙토링 이슈를 작성합니다.
-title: ''
+title: "[REFACTOR]"
 labels: refactor
 assignees: ''
 
