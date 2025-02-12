@@ -1,14 +1,13 @@
 package com.stamp.global.oauth.authcode.domain;
 
-import com.stamp.global.oauth.ProviderType;
-import org.springframework.stereotype.Component;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
+import com.stamp.global.oauth.ProviderType;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
-import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.toMap;
+import org.springframework.stereotype.Component;
 
 @Component
 public class OAuthRequestProviderComposite {
@@ -16,8 +15,7 @@ public class OAuthRequestProviderComposite {
     private final Map<ProviderType, OAuthRequestProvider> providerMap;
 
     public OAuthRequestProviderComposite(Set<OAuthRequestProvider> providers) {
-        providerMap = providers.stream()
-                .collect(toMap(OAuthRequestProvider::supportType, identity()));
+        providerMap = providers.stream().collect(toMap(OAuthRequestProvider::supportType, identity()));
     }
 
     public String provide(ProviderType providerType) {
@@ -28,5 +26,4 @@ public class OAuthRequestProviderComposite {
         return Optional.ofNullable(providerMap.get(providerType))
                 .orElseThrow(() -> new RuntimeException("지원하지 않는 소셜 로그인 타입입니다."));
     }
-
 }

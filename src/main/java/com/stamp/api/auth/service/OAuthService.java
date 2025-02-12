@@ -5,5 +5,6 @@ import com.stamp.global.oauth.ProviderType;
 
 public interface OAuthService {
     String getAuthCodeUrl(ProviderType providerType);
+
     String login(SocialLoginReq loginReq);
 }

@@ -1,31 +1,22 @@
 package com.stamp.global.oauth.authcode.kakao.dto;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.stamp.api.auth.domain.OAuthId;
-import com.stamp.global.oauth.authcode.domain.OAuthUserDetails;
-
-import java.time.LocalDateTime;
-
 import static com.stamp.global.oauth.ProviderType.KAKAO;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.stamp.api.auth.domain.entity.OAuthId;
+import com.stamp.global.oauth.authcode.domain.OAuthUserDetails;
+import java.time.LocalDateTime;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @JsonNaming(SnakeCaseStrategy.class)
-public record KakaoMemberResponse(
-        Long id,
-        boolean hasSignedUp,
-        LocalDateTime connectedAt,
-        KakaoAccount kakaoAccount
-) {
+public record KakaoMemberResponse(Long id, boolean hasSignedUp, LocalDateTime connectedAt, KakaoAccount kakaoAccount) {
 
     public OAuthUserDetails toOAuthUser() {
-        return new OAuthUserDetails(
-                new OAuthId(String.valueOf(id), KAKAO),
-                kakaoAccount.profile.nickname,
-                kakaoAccount.profile.profileImageUrl
-        );
+        log.info(kakaoAccount.toString());
+        return new OAuthUserDetails(new OAuthId(String.valueOf(id), KAKAO), kakaoAccount.email());
     }
-
 
     @JsonNaming(SnakeCaseStrategy.class)
     public record KakaoAccount(
@@ -52,16 +43,8 @@ public record KakaoMemberResponse(
             String phoneNumber,
             boolean ciNeedsAgreement,
             String ci,
-            LocalDateTime ciAuthenticatedAt
-    ) {
-    }
+            LocalDateTime ciAuthenticatedAt) {}
 
     @JsonNaming(SnakeCaseStrategy.class)
-    public record Profile(
-            String nickname,
-            String thumbnailImageUrl,
-            String profileImageUrl,
-            boolean isDefaultImage
-    ) {
-    }
+    public record Profile(String nickname, String thumbnailImageUrl, String profileImageUrl, boolean isDefaultImage) {}
 }

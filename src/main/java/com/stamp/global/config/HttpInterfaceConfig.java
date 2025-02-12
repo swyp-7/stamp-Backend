@@ -18,7 +18,8 @@ public class HttpInterfaceConfig {
     private <T> T createHttpInterface(Class<T> clazz) {
         WebClient webClient = WebClient.create();
         WebClientAdapter adapter = WebClientAdapter.create(webClient);
-        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+        HttpServiceProxyFactory factory =
+                HttpServiceProxyFactory.builderFor(adapter).build();
         return factory.createClient(clazz);
     }
 }

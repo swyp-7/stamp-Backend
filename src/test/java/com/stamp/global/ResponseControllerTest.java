@@ -1,5 +1,7 @@
 package com.stamp.global;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.stamp.global.exception.Error;
 import com.stamp.global.exception.GlobalErrorCode;
 import com.stamp.global.response.ApplicationResponse;
@@ -7,17 +9,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @DisplayName("컨트롤러 테스트 - 공통 응답 테스트")
 public class ResponseControllerTest {
 
     @DisplayName("데이터가 없는 성공 응답 요청이 오면 빈 공통 응답을 반환한다.")
     @Test
-    public void givenNothing_whenCallingResponse_thenReturnEmptyOK(){
+    public void givenNothing_whenCallingResponse_thenReturnEmptyOK() {
         ApplicationResponse<Void> response = ApplicationResponse.ok();
 
-        //assert
+        // assert
         assertThat((response)).isNotNull();
         assertThat((response.getCode())).isEqualTo(HttpStatus.OK.value());
         assertThat((response.getMessage())).isEqualTo("SUCCESS");
@@ -30,7 +30,7 @@ public class ResponseControllerTest {
     public void givenData_whenCallingResponse_thenReturnOK() {
         ApplicationResponse<String> response = ApplicationResponse.ok("test");
 
-        //assert
+        // assert
         assertThat((response)).isNotNull();
         assertThat((response.getCode())).isEqualTo(HttpStatus.OK.value());
         assertThat((response.getMessage())).isEqualTo("SUCCESS");
@@ -43,12 +43,12 @@ public class ResponseControllerTest {
     public void givenError_whenCallingResponse_thenReturnError() {
         ApplicationResponse<Error> response = ApplicationResponse.error(GlobalErrorCode.BAD_REQUEST);
 
-        //assert
+        // assert
         assertThat((response)).isNotNull();
-        assertThat((response.getCode())).isEqualTo(GlobalErrorCode.BAD_REQUEST.getStatus().value());
+        assertThat((response.getCode()))
+                .isEqualTo(GlobalErrorCode.BAD_REQUEST.getStatus().value());
         assertThat((response.getMessage())).isEqualTo(GlobalErrorCode.BAD_REQUEST.getMessage());
         assertThat((response.getData())).isNull();
         assertThat((response.getLocalDateTime())).isNotNull();
     }
-
 }

@@ -1,10 +1,9 @@
 package com.stamp.api.auth.repository;
 
-import com.stamp.api.auth.domain.OAuthId;
-import com.stamp.api.auth.domain.EmployerUser;
-import org.springframework.data.jpa.repository.JpaRepository;
-
+import com.stamp.api.auth.domain.entity.EmployerUser;
+import com.stamp.api.auth.domain.entity.OAuthId;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EmployerUserRepository extends JpaRepository<EmployerUser, Long> {
 

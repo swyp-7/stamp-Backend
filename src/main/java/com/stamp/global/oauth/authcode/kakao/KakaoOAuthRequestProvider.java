@@ -19,8 +19,7 @@ public class KakaoOAuthRequestProvider implements OAuthRequestProvider {
 
     @Override
     public String provide() {
-        return UriComponentsBuilder
-                .fromUriString("https://kauth.kakao.com/oauth/authorize")
+        return UriComponentsBuilder.fromUriString("https://kauth.kakao.com/oauth/authorize")
                 .queryParam("response_type", "code")
                 .queryParam("client_id", kakaoOAuthConfig.clientId())
                 .queryParam("redirect_uri", kakaoOAuthConfig.redirectUri())

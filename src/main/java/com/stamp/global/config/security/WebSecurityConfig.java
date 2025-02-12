@@ -1,6 +1,9 @@
 package com.stamp.global.config.security;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 import com.stamp.global.config.security.filter.JwtAuthenticationFilter;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,10 +18,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.List;
-
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -28,19 +27,19 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/public/**").permitAll()
-                                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                                .requestMatchers("/api/v1/authenticated-healthCheck").authenticated()
-                                .anyRequest().permitAll()
-                )
+                        //                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers(CorsUtils::isPreFlightRequest)
+                        .permitAll()
+                        .requestMatchers("/api/v1/authenticated-healthCheck")
+                        .authenticated()
+                        .anyRequest()
+                        .permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(withDefaults())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
 
         return http.build();
     }

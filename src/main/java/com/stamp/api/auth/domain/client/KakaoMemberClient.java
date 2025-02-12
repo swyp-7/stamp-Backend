@@ -1,7 +1,7 @@
 package com.stamp.api.auth.domain.client;
 
-import com.stamp.api.auth.domain.EmployerUser;
 import com.stamp.api.auth.domain.dto.SocialLoginReq;
+import com.stamp.api.auth.domain.entity.EmployerUser;
 import com.stamp.global.oauth.ProviderType;
 import com.stamp.global.oauth.authcode.domain.OAuthUserDetails;
 import com.stamp.global.oauth.authcode.kakao.KakaoOAuthConfig;
@@ -21,7 +21,6 @@ public class KakaoMemberClient implements OAuthMemberClient {
     private final KakaoApiClient kakaoApiClient;
     private final KakaoOAuthConfig kakaoOauthConfig;
 
-
     @Override
     public ProviderType supportType() {
         return ProviderType.KAKAO;
@@ -30,18 +29,10 @@ public class KakaoMemberClient implements OAuthMemberClient {
     @Override
     public EmployerUser fetch(SocialLoginReq loginReq) {
         KakaoToken tokenInfo = kakaoApiClient.fetchToken(tokenRequestParams(loginReq.authCode()));
-        KakaoMemberResponse kakaoMemberResponse =
-                kakaoApiClient.fetchMember("Bearer " + tokenInfo.accessToken());
+        KakaoMemberResponse kakaoMemberResponse = kakaoApiClient.fetchMember("Bearer " + tokenInfo.accessToken());
         log.info(kakaoMemberResponse.toString());
         OAuthUserDetails oAuthUser = kakaoMemberResponse.toOAuthUser();
-        return EmployerUser.of(
-                oAuthUser.oAuthId(),
-                loginReq.name(),
-                loginReq.email(),
-                loginReq.contact(),
-                oAuthUser.nickname(),
-                oAuthUser.profileImageUrl()
-        );
+        return EmployerUser.of(oAuthUser.oAuthId(), loginReq.name(), oAuthUser.email(), null, loginReq.contact());
     }
 
     private MultiValueMap<String, String> tokenRequestParams(String authCode) {

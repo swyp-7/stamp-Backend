@@ -12,6 +12,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ApplicationResponse<Error>> handleRuntimeException(RuntimeException e) {
         log.error("error : {}", e.getMessage());
-        return ResponseEntity.status(GlobalErrorCode.INTERNAL_SERVER_ERROR.getStatus()).body(ApplicationResponse.error(GlobalErrorCode.INTERNAL_SERVER_ERROR));
+        return ResponseEntity.status(GlobalErrorCode.INTERNAL_SERVER_ERROR.getStatus())
+                .body(ApplicationResponse.error(GlobalErrorCode.INTERNAL_SERVER_ERROR));
     }
 }
