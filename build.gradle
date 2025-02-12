@@ -4,7 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
     id 'org.hibernate.orm' version '6.6.0.Final'
     id 'org.sonarqube' version '4.0.0.2929'
-    id 'com.diffplug.spotless' version '6.11.0'
+    id 'com.diffplug.spotless' version '6.25.0'
 }
 
 group = 'com'
@@ -67,6 +67,7 @@ spotless {
         trimTrailingWhitespace()
         endWithNewline()
         indentWithSpaces()
+        palantirJavaFormat()
     }
 }
 
