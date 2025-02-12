@@ -73,3 +73,7 @@ spotless {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.getByName("jar") {
+    enabled = false
+}
