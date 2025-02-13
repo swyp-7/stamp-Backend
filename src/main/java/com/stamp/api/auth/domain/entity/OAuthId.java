@@ -15,18 +15,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PROTECTED)
 public class OAuthId {
 
-    @Column(nullable = false, name = "oauth_server_id")
-    private String oauthServerId;
+  @Column(name = "oauth_server_id")
+  private String oauthServerId;
 
-    @Enumerated(STRING)
-    @Column(nullable = false, name = "oauth_server_provider")
-    private ProviderType providerType;
+  @Enumerated(STRING)
+  @Column(name = "oauth_server_provider")
+  private ProviderType providerType;
 
-    public String oauthServerId() {
-        return oauthServerId;
-    }
+  public String oauthServerId() {
+    return oauthServerId;
+  }
 
-    public ProviderType oauthServer() {
-        return providerType;
-    }
+  public ProviderType oauthServer() {
+    return providerType;
+  }
 }
