@@ -1,6 +1,6 @@
 package com.stamp.api.auth.domain.client;
 
-import com.stamp.api.auth.domain.dto.SocialLoginReq;
+import com.stamp.api.auth.domain.dto.request.SocialLoginReq;
 import com.stamp.api.auth.domain.entity.EmployerUser;
 import com.stamp.global.oauth.ProviderType;
 import com.stamp.global.oauth.authcode.domain.OAuthUserDetails;
@@ -18,30 +18,32 @@ import org.springframework.util.MultiValueMap;
 @RequiredArgsConstructor
 public class KakaoMemberClient implements OAuthMemberClient {
 
-    private final KakaoApiClient kakaoApiClient;
-    private final KakaoOAuthConfig kakaoOauthConfig;
+  private final KakaoApiClient kakaoApiClient;
+  private final KakaoOAuthConfig kakaoOauthConfig;
 
-    @Override
-    public ProviderType supportType() {
-        return ProviderType.KAKAO;
-    }
+  @Override
+  public ProviderType supportType() {
+    return ProviderType.KAKAO;
+  }
 
-    @Override
-    public EmployerUser fetch(SocialLoginReq loginReq) {
-        KakaoToken tokenInfo = kakaoApiClient.fetchToken(tokenRequestParams(loginReq.authCode()));
-        KakaoMemberResponse kakaoMemberResponse = kakaoApiClient.fetchMember("Bearer " + tokenInfo.accessToken());
-        log.info(kakaoMemberResponse.toString());
-        OAuthUserDetails oAuthUser = kakaoMemberResponse.toOAuthUser();
-        return EmployerUser.of(oAuthUser.oAuthId(), loginReq.name(), oAuthUser.email(), null, loginReq.contact());
-    }
+  @Override
+  public EmployerUser fetch(SocialLoginReq loginReq) {
+    KakaoToken tokenInfo = kakaoApiClient.fetchToken(tokenRequestParams(loginReq.authCode()));
+    KakaoMemberResponse kakaoMemberResponse =
+        kakaoApiClient.fetchMember("Bearer " + tokenInfo.accessToken());
+    log.info(kakaoMemberResponse.toString());
+    OAuthUserDetails oAuthUser = kakaoMemberResponse.toOAuthUser();
+    return EmployerUser.of(
+        oAuthUser.oAuthId(), loginReq.name(), oAuthUser.email(), null, loginReq.contact());
+  }
 
-    private MultiValueMap<String, String> tokenRequestParams(String authCode) {
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type", "authorization_code");
-        params.add("client_id", kakaoOauthConfig.clientId());
-        params.add("redirect_uri", kakaoOauthConfig.redirectUri());
-        params.add("code", authCode);
-        params.add("client_secret", kakaoOauthConfig.clientSecret());
-        return params;
-    }
+  private MultiValueMap<String, String> tokenRequestParams(String authCode) {
+    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+    params.add("grant_type", "authorization_code");
+    params.add("client_id", kakaoOauthConfig.clientId());
+    params.add("redirect_uri", kakaoOauthConfig.redirectUri());
+    params.add("code", authCode);
+    params.add("client_secret", kakaoOauthConfig.clientSecret());
+    return params;
+  }
 }

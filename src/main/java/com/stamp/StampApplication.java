@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 @SpringBootApplication
 public class StampApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(StampApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(StampApplication.class, args);
+  }
 }

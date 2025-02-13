@@ -1,6 +1,6 @@
 package com.stamp.global.config.security.filter;
 
-import com.stamp.global.util.JwtProvider;
+import com.stamp.global.util.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,42 +20,40 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtProvider jwtProvider;
+  private final JwtTokenProvider jwtTokenProvider;
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        String token = extractToken(request);
+  @Override
+  protected void doFilterInternal(
+      HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+      throws ServletException, IOException {
+    String token = extractToken(request);
 
-        if (token != null) {
-            try {
-                // JWT에서 사용자 정보를 가져오는 메서드
-                String userId = jwtProvider.validateAndGetUserId(token);
+    if (token != null) {
+      try {
+        // JWT에서 사용자 정보를 가져오는 메서드
+        String userId = jwtTokenProvider.validateAndGetUserId(token);
 
-                UserDetails userDetails = User.builder()
-                        .username(userId)
-                        .password("")
-                        .roles("USER")
-                        .build();
+        UserDetails userDetails =
+            User.builder().username(userId).password("").roles("USER").build();
 
-                JwtAuthenticationToken authentication =
-                        new JwtAuthenticationToken(userDetails, token, userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        JwtAuthentication authentication =
+            new JwtAuthentication(userDetails, token, userDetails.getAuthorities());
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            } catch (Exception e) {
-                log.error("JWT 검증 실패: {}", e.getMessage());
-            }
-        }
-
-        filterChain.doFilter(request, response);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+      } catch (Exception e) {
+        log.error("JWT 검증 실패: {}", e.getMessage());
+      }
     }
 
-    private String extractToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-        return null;
+    filterChain.doFilter(request, response);
+  }
+
+  private String extractToken(HttpServletRequest request) {
+    String bearerToken = request.getHeader("Authorization");
+    if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+      return bearerToken.substring(7);
     }
+    return null;
+  }
 }

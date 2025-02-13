@@ -17,22 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HealthCheckController {
 
-    private final EmployerUserRepository employerUserRepository;
+  private final EmployerUserRepository employerUserRepository;
 
-    @GetMapping("/healthCheck")
-    public String healthCheck() {
-        LocalDateTime now = LocalDateTime.now();
-        return "server is Up! requested at:" + now;
-    }
+  @GetMapping("/healthCheck")
+  public String healthCheck() {
+    LocalDateTime now = LocalDateTime.now();
+    return "server is Up! requested at:" + now;
+  }
 
-    @GetMapping("/authenticated-healthCheck")
-    public String authenticatedHealthCheck(@AuthenticationPrincipal UserDetails user) {
-        log.info(user.toString());
-        EmployerUser employerUser = employerUserRepository
-                .findById(Long.valueOf(user.getUsername()))
-                .orElseGet(null);
-        log.info(String.valueOf(employerUser));
-        LocalDateTime now = LocalDateTime.now();
-        return "server is Up! requested at:" + now;
-    }
+  @GetMapping("/authenticated-healthCheck")
+  public String authenticatedHealthCheck(@AuthenticationPrincipal UserDetails user) {
+    log.info(user.toString());
+    EmployerUser employerUser =
+        employerUserRepository.findById(Long.valueOf(user.getUsername())).orElseGet(null);
+    log.info(String.valueOf(employerUser));
+    LocalDateTime now = LocalDateTime.now();
+    return "server is Up! requested at:" + now;
+  }
 }
