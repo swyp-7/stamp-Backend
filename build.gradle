@@ -67,7 +67,7 @@ spotless {
         trimTrailingWhitespace()
         endWithNewline()
         indentWithSpaces()
-        palantirJavaFormat()
+        googleJavaFormat()
     }
 }
 

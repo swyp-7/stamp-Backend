@@ -26,7 +26,11 @@ spring:
 
 oauth:
   kakao:
-    client_id: ENC(T+MKyWp1Re+vMBALgV5zyIuVXB4HVm2rbiL/D8Xr+AdXMooFgbISWBUtvMhCvaR6)
+    client_id: ENC(fMx4e5K5Eal9LQj4aTTO6ZSaBGx2HhrGHn/zUg55+GsHUk1hbAOr15zsIZsXsjzP)
     redirect_uri: http://localhost:3000/oauth/redirected/kakao
-    client_secret: ENC(O3OjyztpBsbBY5RC3/KFYxqoI5+xeB4mAXrVjoU/7mwlDTrQhyvh1Jon3wBFtHyD)
+    client_secret: ENC(Ceso259/vkXME5OIcpnvO+MkcC75ZdwW7p/OMzCz8tvE1QaHJ/eP04Gy8I2JIsnB)
     scope: profile_nickname, profile_image
+
+
+jwt:
+  secret_key: swyp-stamp-backend-jwt-secret-key-for-generate-and-validate-token
