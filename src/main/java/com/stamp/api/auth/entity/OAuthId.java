@@ -3,7 +3,7 @@ package com.stamp.api.auth.entity;
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.stamp.global.oauth.ProviderType;
+import com.stamp.api.auth.infra.oauth.ProviderType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Enumerated;

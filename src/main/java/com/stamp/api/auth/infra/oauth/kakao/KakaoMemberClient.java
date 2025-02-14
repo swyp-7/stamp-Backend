@@ -7,7 +7,7 @@ import com.stamp.api.auth.infra.oauth.kakao.dto.KakaoMemberResponse;
 import com.stamp.api.auth.infra.oauth.kakao.dto.KakaoToken;
 import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.global.config.oauth.kakao.KakaoOAuthConfig;
-import com.stamp.global.oauth.ProviderType;
+import com.stamp.api.auth.infra.oauth.ProviderType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

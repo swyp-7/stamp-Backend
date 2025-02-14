@@ -1,6 +1,5 @@
-package com.stamp.global.oauth.util;
+package com.stamp.api.auth.infra.oauth;
 
-import com.stamp.global.oauth.ProviderType;
 import org.springframework.core.convert.converter.Converter;
 
 public class ProviderTypeConverter implements Converter<String, ProviderType> {

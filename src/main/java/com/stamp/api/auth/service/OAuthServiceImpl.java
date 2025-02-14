@@ -8,7 +8,7 @@ import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.api.employeruser.repository.EmployerUserRepository;
 import com.stamp.global.jwt.JwtResponse;
 import com.stamp.global.jwt.util.JwtTokenProvider;
-import com.stamp.global.oauth.ProviderType;
+import com.stamp.api.auth.infra.oauth.ProviderType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

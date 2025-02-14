@@ -5,7 +5,7 @@ import com.stamp.api.auth.dto.request.SocialLoginReq;
 import com.stamp.api.auth.dto.response.LoginRes;
 import com.stamp.api.auth.service.AuthService;
 import com.stamp.api.auth.service.OAuthService;
-import com.stamp.global.oauth.ProviderType;
+import com.stamp.api.auth.infra.oauth.ProviderType;
 import com.stamp.global.response.ApplicationResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;

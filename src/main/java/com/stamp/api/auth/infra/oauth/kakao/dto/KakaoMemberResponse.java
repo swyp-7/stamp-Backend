@@ -1,6 +1,6 @@
 package com.stamp.api.auth.infra.oauth.kakao.dto;
 
-import static com.stamp.global.oauth.ProviderType.KAKAO;
+import static com.stamp.api.auth.infra.oauth.ProviderType.KAKAO;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
