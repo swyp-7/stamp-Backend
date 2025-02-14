@@ -1,3 +1,5 @@
+### .gitignore에 추가되어 git에 업로드 되지 않습니다.
+### 설정 정보는 /yml/global/application-global.yml에 올려주세요.
 server:
   port: 8080
 
