@@ -1,36 +1,21 @@
+### .gitignore에 추가되어 git에 업로드 되지 않습니다.
+### 설정 정보는 /yml/global/application-global.yml에 올려주세요.
 server:
   port: 8080
 
 spring:
-  application:
-    name: stamp
+  config:
+    import:
+      - classpath:/yml/db/application-dev.yml
+      - classpath:/yml/db/application-local.yml
+      - classpath:/yml/logging/application-basic.yml
+      - classpath:/yml/logging/application-detailed.yml
+      - classpath:/yml/logging/application-persist.yml
+      - classpath:/yml/logging/application-custom.yml
+      - classpath:/yml/global/application-global.yml
+  profiles:
+    group:
+      default: global, local, custom
+      develop: global, dev, persist
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/stamp?serverTimezone=UTC
-    username: root
-    password:
-
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        use_sql_comments: true
-        highlight_sql: true
-
-    hibernate:
-      ddl-auto: create
-
-
-
-oauth:
-  kakao:
-    client_id: ENC(iZffJNpezuQV9MJk3R4qyU7J6nxzeZW5BPC+CYbcWEo0pqKNiG6U1HaDlBEpy2MP)
-    redirect_uri: http://localhost:3000/oauth/redirected/kakao
-    client_secret: ENC(8YcTJN1pWPlQAtyBYQgiAC6c/Fw4LM9oKvUVlJDeZkddcFSY6nosQuRtQbbwMlw2)
-    scope: profile_nickname, profile_image
-
-
-jwt:
-  secret_key: ENC(2ls8XqBzzqe94En9LWK5UwWu7+n5urRLmHUi1acEI4Djgt/JtaDA3ccdZKKyst0ycCDaydJympIcdxMoAivinVQOCVgJbBdp7zTFFU0hkYc=)
+    active: default
