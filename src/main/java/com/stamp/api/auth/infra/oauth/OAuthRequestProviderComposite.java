@@ -1,4 +1,4 @@
-package com.stamp.global.oauth.authcode;
+package com.stamp.api.auth.infra.oauth;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;

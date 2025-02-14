@@ -1,10 +1,10 @@
-package com.stamp.api.auth.infra;
+package com.stamp.api.auth.infra.oauth;
 
 import static java.util.function.UnaryOperator.identity;
 import static java.util.stream.Collectors.toMap;
 
 import com.stamp.api.auth.dto.request.SocialLoginReq;
-import com.stamp.api.auth.entity.EmployerUser;
+import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.global.oauth.ProviderType;
 import java.util.Map;
 import java.util.Optional;

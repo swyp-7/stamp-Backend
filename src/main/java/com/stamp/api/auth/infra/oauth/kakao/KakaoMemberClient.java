@@ -1,12 +1,13 @@
-package com.stamp.api.auth.infra;
+package com.stamp.api.auth.infra.oauth.kakao;
 
 import com.stamp.api.auth.dto.request.SocialLoginReq;
-import com.stamp.api.auth.entity.EmployerUser;
+import com.stamp.api.auth.infra.oauth.OAuthMemberClient;
+import com.stamp.api.auth.infra.oauth.OAuthUserDetails;
+import com.stamp.api.auth.infra.oauth.kakao.dto.KakaoMemberResponse;
+import com.stamp.api.auth.infra.oauth.kakao.dto.KakaoToken;
+import com.stamp.api.employeruser.entity.EmployerUser;
+import com.stamp.global.config.oauth.kakao.KakaoOAuthConfig;
 import com.stamp.global.oauth.ProviderType;
-import com.stamp.global.oauth.authcode.OAuthUserDetails;
-import com.stamp.global.oauth.authcode.kakao.KakaoOAuthConfig;
-import com.stamp.global.oauth.authcode.kakao.dto.KakaoMemberResponse;
-import com.stamp.global.oauth.authcode.kakao.dto.KakaoToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

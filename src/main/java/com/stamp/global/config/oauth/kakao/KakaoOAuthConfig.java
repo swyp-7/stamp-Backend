@@ -1,4 +1,4 @@
-package com.stamp.global.oauth.authcode.kakao;
+package com.stamp.global.config.oauth.kakao;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

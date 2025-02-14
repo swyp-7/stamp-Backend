@@ -1,7 +1,7 @@
-package com.stamp.api.auth.repository;
+package com.stamp.api.employeruser.repository;
 
-import com.stamp.api.auth.entity.EmployerUser;
 import com.stamp.api.auth.entity.OAuthId;
+import com.stamp.api.employeruser.entity.EmployerUser;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

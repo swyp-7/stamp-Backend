@@ -1,10 +1,10 @@
-package com.stamp.api.auth.infra;
+package com.stamp.api.auth.infra.oauth.kakao;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
 
-import com.stamp.global.oauth.authcode.kakao.dto.KakaoMemberResponse;
-import com.stamp.global.oauth.authcode.kakao.dto.KakaoToken;
+import com.stamp.api.auth.infra.oauth.kakao.dto.KakaoMemberResponse;
+import com.stamp.api.auth.infra.oauth.kakao.dto.KakaoToken;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;

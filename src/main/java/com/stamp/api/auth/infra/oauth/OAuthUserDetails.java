@@ -1,4 +1,4 @@
-package com.stamp.global.oauth.authcode;
+package com.stamp.api.auth.infra.oauth;
 
 import com.stamp.api.auth.entity.OAuthId;
 

@@ -1,7 +1,7 @@
 package com.stamp.api.signup.service;
 
-import com.stamp.api.auth.entity.EmployerUser;
 import com.stamp.api.auth.service.AuthService;
+import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.api.signup.dto.request.SignUpReq;
 import com.stamp.api.store.service.StoreService;
 import jakarta.transaction.Transactional;

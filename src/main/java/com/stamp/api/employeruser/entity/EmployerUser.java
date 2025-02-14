@@ -1,5 +1,6 @@
-package com.stamp.api.auth.entity;
+package com.stamp.api.employeruser.entity;
 
+import com.stamp.api.auth.entity.OAuthId;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
