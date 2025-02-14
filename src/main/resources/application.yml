@@ -15,7 +15,7 @@ spring:
       - classpath:/yml/global/application-global.yml
   profiles:
     group:
-      default: fixed, local, custom
-      develop: fixed, dev, persist
+      default: global, local, custom
+      develop: global, dev, persist
 
     active: default
