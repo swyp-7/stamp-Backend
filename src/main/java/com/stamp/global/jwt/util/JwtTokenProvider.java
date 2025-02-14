@@ -1,6 +1,7 @@
-package com.stamp.global.util;
+package com.stamp.global.jwt.util;
 
-import com.stamp.api.auth.domain.entity.EmployerUser;
+import com.stamp.api.auth.entity.EmployerUser;
+import com.stamp.global.jwt.JwtResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

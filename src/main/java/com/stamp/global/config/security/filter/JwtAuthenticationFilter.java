@@ -1,6 +1,6 @@
 package com.stamp.global.config.security.filter;
 
-import com.stamp.global.util.JwtTokenProvider;
+import com.stamp.global.jwt.util.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

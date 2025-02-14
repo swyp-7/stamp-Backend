@@ -1,4 +1,4 @@
-package com.stamp.global.oauth.authcode.domain;
+package com.stamp.global.oauth.authcode;
 
 import com.stamp.global.oauth.ProviderType;
 

@@ -1,14 +1,14 @@
 package com.stamp.api.auth.service;
 
-import com.stamp.api.auth.domain.dto.request.LoginReq;
-import com.stamp.api.auth.domain.dto.response.LoginRes;
-import com.stamp.api.auth.domain.entity.EmployerUser;
+import com.stamp.api.auth.dto.request.LoginReq;
+import com.stamp.api.auth.dto.response.LoginRes;
+import com.stamp.api.auth.entity.EmployerUser;
 import com.stamp.api.auth.exception.AuthErrorCode;
 import com.stamp.api.auth.repository.EmployerUserRepository;
-import com.stamp.api.signup.domain.dto.request.CreateEmployerUserReq;
+import com.stamp.api.signup.dto.request.CreateEmployerUserReq;
 import com.stamp.global.exception.DomainException;
-import com.stamp.global.util.JwtResponse;
-import com.stamp.global.util.JwtTokenProvider;
+import com.stamp.global.jwt.JwtResponse;
+import com.stamp.global.jwt.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;

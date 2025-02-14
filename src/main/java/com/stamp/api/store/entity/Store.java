@@ -1,6 +1,6 @@
-package com.stamp.api.store.domain.entity;
+package com.stamp.api.store.entity;
 
-import com.stamp.api.auth.domain.entity.EmployerUser;
+import com.stamp.api.auth.entity.EmployerUser;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;

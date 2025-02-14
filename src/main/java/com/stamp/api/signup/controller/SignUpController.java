@@ -1,6 +1,6 @@
 package com.stamp.api.signup.controller;
 
-import com.stamp.api.signup.domain.dto.request.SignUpReq;
+import com.stamp.api.signup.dto.request.SignUpReq;
 import com.stamp.api.signup.service.SignUpService;
 import com.stamp.global.response.ApplicationResponse;
 import lombok.RequiredArgsConstructor;

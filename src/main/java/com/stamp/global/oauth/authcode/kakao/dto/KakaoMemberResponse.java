@@ -4,8 +4,8 @@ import static com.stamp.global.oauth.ProviderType.KAKAO;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.stamp.api.auth.domain.entity.OAuthId;
-import com.stamp.global.oauth.authcode.domain.OAuthUserDetails;
+import com.stamp.api.auth.entity.OAuthId;
+import com.stamp.global.oauth.authcode.OAuthUserDetails;
 import java.time.LocalDateTime;
 import lombok.extern.slf4j.Slf4j;
 

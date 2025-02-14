@@ -1,4 +1,4 @@
-package com.stamp.api.auth.domain.client;
+package com.stamp.api.auth.infra;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;

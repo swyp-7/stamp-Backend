@@ -1,4 +1,4 @@
-package com.stamp.api.auth.domain.entity;
+package com.stamp.api.auth.entity;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;

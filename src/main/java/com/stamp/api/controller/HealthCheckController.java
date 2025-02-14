@@ -1,6 +1,6 @@
 package com.stamp.api.controller;
 
-import com.stamp.api.auth.domain.entity.EmployerUser;
+import com.stamp.api.auth.entity.EmployerUser;
 import com.stamp.api.auth.repository.EmployerUserRepository;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;

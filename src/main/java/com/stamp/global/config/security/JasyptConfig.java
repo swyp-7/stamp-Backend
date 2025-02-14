@@ -1,4 +1,4 @@
-package com.stamp.global.config;
+package com.stamp.global.config.security;
 
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;

@@ -1,4 +1,4 @@
-package com.stamp.api.auth.domain.dto.response;
+package com.stamp.api.auth.dto.response;
 
 public record LoginRes(String token, Long expirationTime) {
   public static LoginRes of(String token, Long expirationTime) {

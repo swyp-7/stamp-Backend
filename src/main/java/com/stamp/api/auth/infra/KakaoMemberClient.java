@@ -1,9 +1,9 @@
-package com.stamp.api.auth.domain.client;
+package com.stamp.api.auth.infra;
 
-import com.stamp.api.auth.domain.dto.request.SocialLoginReq;
-import com.stamp.api.auth.domain.entity.EmployerUser;
+import com.stamp.api.auth.dto.request.SocialLoginReq;
+import com.stamp.api.auth.entity.EmployerUser;
 import com.stamp.global.oauth.ProviderType;
-import com.stamp.global.oauth.authcode.domain.OAuthUserDetails;
+import com.stamp.global.oauth.authcode.OAuthUserDetails;
 import com.stamp.global.oauth.authcode.kakao.KakaoOAuthConfig;
 import com.stamp.global.oauth.authcode.kakao.dto.KakaoMemberResponse;
 import com.stamp.global.oauth.authcode.kakao.dto.KakaoToken;

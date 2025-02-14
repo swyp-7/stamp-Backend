@@ -1,6 +1,6 @@
 package com.stamp.global.config;
 
-import com.stamp.api.auth.domain.client.KakaoApiClient;
+import com.stamp.api.auth.infra.KakaoApiClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;

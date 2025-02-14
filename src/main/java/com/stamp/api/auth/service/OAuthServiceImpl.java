@@ -1,14 +1,14 @@
 package com.stamp.api.auth.service;
 
-import com.stamp.api.auth.domain.client.OAuthMemberClientComposite;
-import com.stamp.api.auth.domain.dto.request.SocialLoginReq;
-import com.stamp.api.auth.domain.dto.response.LoginRes;
-import com.stamp.api.auth.domain.entity.EmployerUser;
+import com.stamp.api.auth.infra.OAuthMemberClientComposite;
+import com.stamp.api.auth.dto.request.SocialLoginReq;
+import com.stamp.api.auth.dto.response.LoginRes;
+import com.stamp.api.auth.entity.EmployerUser;
 import com.stamp.api.auth.repository.EmployerUserRepository;
 import com.stamp.global.oauth.ProviderType;
-import com.stamp.global.oauth.authcode.domain.OAuthRequestProviderComposite;
-import com.stamp.global.util.JwtResponse;
-import com.stamp.global.util.JwtTokenProvider;
+import com.stamp.global.oauth.authcode.OAuthRequestProviderComposite;
+import com.stamp.global.jwt.JwtResponse;
+import com.stamp.global.jwt.util.JwtTokenProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

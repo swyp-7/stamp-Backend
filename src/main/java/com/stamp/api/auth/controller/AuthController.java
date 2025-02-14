@@ -1,8 +1,8 @@
 package com.stamp.api.auth.controller;
 
-import com.stamp.api.auth.domain.dto.request.LoginReq;
-import com.stamp.api.auth.domain.dto.request.SocialLoginReq;
-import com.stamp.api.auth.domain.dto.response.LoginRes;
+import com.stamp.api.auth.dto.request.LoginReq;
+import com.stamp.api.auth.dto.request.SocialLoginReq;
+import com.stamp.api.auth.dto.response.LoginRes;
 import com.stamp.api.auth.service.AuthService;
 import com.stamp.api.auth.service.OAuthService;
 import com.stamp.global.oauth.ProviderType;

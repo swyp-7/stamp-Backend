@@ -1,4 +1,4 @@
-package com.stamp.api.auth.domain.dto.request;
+package com.stamp.api.auth.dto.request;
 
 import com.stamp.global.oauth.ProviderType;
 

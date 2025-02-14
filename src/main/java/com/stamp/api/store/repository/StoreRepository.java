@@ -1,6 +1,6 @@
 package com.stamp.api.store.repository;
 
-import com.stamp.api.store.domain.entity.Store;
+import com.stamp.api.store.entity.Store;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
