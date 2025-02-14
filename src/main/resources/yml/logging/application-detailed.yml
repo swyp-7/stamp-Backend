@@ -1,0 +1,20 @@
+# SQL 실행시 실행 값 출력
+spring:
+  config:
+    activate:
+      on-profile: detailed
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        highlight_sql: true
+        use_sql_comments: true
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        orm:
+          jdbc:
+            bind: trace

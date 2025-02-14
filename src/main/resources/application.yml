@@ -2,25 +2,20 @@ server:
   port: 8080
 
 spring:
-  application:
-    name: stamp
+  config:
+    import:
+      - classpath:/yml/db/application-dev.yml
+      - classpath:/yml/db/application-local.yml
+      - classpath:/yml/logging/application-basic.yml
+      - classpath:/yml/logging/application-detailed.yml
+      - classpath:/yml/logging/application-persist.yml
+      - classpath:/yml/logging/application-custom.yml
+  profiles:
+    group:
+      default: local, custom
+      develop: dev, persist
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/stamp?serverTimezone=UTC
-    username: root
-    password:
-
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        use_sql_comments: true
-        highlight_sql: true
-
-    hibernate:
-      ddl-auto: create
+    active: default
 
 
 

@@ -1,0 +1,14 @@
+###   개인 설정이니 git에 올리지 않도록 주의해주세요 ###
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/stamp?serverTimezone=UTC
+    username: root
+    password:
+
+    hibernate:
+      ddl-auto: create

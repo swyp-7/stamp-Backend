@@ -1,0 +1,32 @@
+# SQL 실행시 실행 값을 포함한 로그 저장
+# 일별 로그파일 생성
+# 최대 7일치 / 10MB까지 저장
+spring:
+  config:
+    activate:
+      on-profile: persist
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        highlight_sql: true
+        use_sql_comments: true
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        orm:
+          jdbc:
+            bind: trace
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/application.log
+  logback:
+    rollingpolicy:
+      file-name-pattern: logs/application-%d{yyyy-MM-dd}.log
+      max-history: 7
+      total-size-cap: 10MB
