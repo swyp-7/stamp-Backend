@@ -42,8 +42,6 @@ jobs:
     # 1. download src codes
     - name: Checkout
       uses: actions/checkout@v4
-      with:
-        ref: 'dev'
 
     # 2. set up JDK 21
     - name: Set up JDK 21
@@ -66,14 +64,28 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_ACCESS_SECRET }}
         aws-region: ${{ env.AWS_REGION }}
 
+    # 4.6 Choose files to deploy
+    - name: Copy Deploy files
+      run: |
+        mkdir deploy
+        mkdir deploy/build
+        cp -r build/libs/ deploy/build/
+        cp -r scripts/ deploy/
+        cp appspec.yml deploy/appspec.yml
+        ls -al deploy
+
+    # 4.5 Add .env file
+    - name: Add environment variables
+      run: |
+        echo JASYPT_SECRET="${{secrets.JASYPT_SECRET}}" >> deploy/scripts/.env
+
     # 5. Upload JAR file to s3 bucket
     - name: Upload to AWS s3
       run: |
         aws deploy push \
           --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
-          --ignore-hidden-files \
           --s3-location s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip \
-          --source .
+          --source deploy
 
     # 6. Run a file that place at s3 bucket
     - name: Deploy to AWS EC2 from S3
