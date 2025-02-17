@@ -6,16 +6,17 @@ server:
 spring:
   config:
     import:
-      - classpath:/yml/db/application-dev.yml
-      - classpath:/yml/db/application-local.yml
-      - classpath:/yml/logging/application-basic.yml
-      - classpath:/yml/logging/application-detailed.yml
-      - classpath:/yml/logging/application-persist.yml
-      - classpath:/yml/logging/application-custom.yml
-      - classpath:/yml/global/application-global.yml
+      - classpath:yml/db/application-dev.yml
+      - classpath:yml/db/application-local.yml
+      - classpath:yml/logging/application-basic.yml
+      - classpath:yml/logging/application-detailed.yml
+      - classpath:yml/logging/application-persist.yml
+      - classpath:yml/logging/application-custom.yml
+      - classpath:yml/global/application-global.yml
   profiles:
+    include: global
     group:
-      default: global, local, custom
-      develop: global, dev, persist
+      default: local, custom
+      develop: dev, persist
 
-    active: default
+    active: dev
