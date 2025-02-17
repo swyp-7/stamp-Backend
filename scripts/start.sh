@@ -25,4 +25,4 @@ echo "$TIME_NOW > $JAR_FILE 파일 실행" >> $DEPLOY_LOG
 nohup java -Djasypt.encryptor.password="JASYPT_SECRET" -jar $JAR_FILE > $APP_LOG 2> $ERROR_LOG &
 
 CURRENT_PID=$(pgrep -f $JAR_FILE)
-echo "$TIME_NOW > 프로세스 실행완료. [PID: $CURRENT_PID]" >> $DEPL OY_LOG
+echo "$TIME_NOW > 프로세스 실행완료. [PID: $CURRENT_PID]" >> $DEPLOY_LOG
