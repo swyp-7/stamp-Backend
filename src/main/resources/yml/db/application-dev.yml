@@ -2,3 +2,9 @@ spring:
   config:
     activate:
       on-profile: dev
+
+  datasource:
+    url: ENC(dpk4aQnXfPBDznzJRsTQh4XZJ+9kUKn/2z5PCtiRGcYlZ2d04meBxjHgMfLqhkHi)
+    username: stampuser
+    password: ENC(X+7rj16rm/uhoCm2bUwmcQ==)
+    driver-class-name: com.mysql.cj.jdbc.Driver
