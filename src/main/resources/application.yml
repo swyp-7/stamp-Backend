@@ -17,6 +17,6 @@ spring:
     include: global
     group:
       default: local, custom
-      develop: dev, persist
+      develop: dev, detailed
 
     active: dev
