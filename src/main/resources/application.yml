@@ -19,4 +19,4 @@ spring:
       default: local, custom
       develop: dev, detailed
 
-    active: dev
+    active: develop
