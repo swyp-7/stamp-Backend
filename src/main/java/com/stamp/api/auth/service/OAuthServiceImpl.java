@@ -2,26 +2,30 @@ package com.stamp.api.auth.service;
 
 import com.stamp.api.auth.dto.request.SocialLoginReq;
 import com.stamp.api.auth.dto.response.LoginRes;
+import com.stamp.api.auth.exception.AuthErrorCode;
 import com.stamp.api.auth.infra.oauth.OAuthMemberClientComposite;
 import com.stamp.api.auth.infra.oauth.OAuthRequestProviderComposite;
 import com.stamp.api.auth.infra.oauth.ProviderType;
 import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.api.employeruser.repository.EmployerUserRepository;
+import com.stamp.api.signup.service.SignUpService;
+import com.stamp.global.exception.DomainException;
 import com.stamp.global.jwt.JwtResponse;
 import com.stamp.global.jwt.util.JwtTokenProvider;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
-@Service
 @RequiredArgsConstructor
+@Service
 public class OAuthServiceImpl implements OAuthService {
 
   private final OAuthRequestProviderComposite oAuthRequestProviderComposite;
   private final OAuthMemberClientComposite oAuthMemberClientComposite;
-  private final EmployerUserRepository oAuthMemberRepository;
+  private final EmployerUserRepository employerUserRepository;
+  private final SignUpService signUpService;
   private final JwtTokenProvider jwtTokenProvider;
 
   @Override
@@ -29,16 +33,35 @@ public class OAuthServiceImpl implements OAuthService {
     return oAuthRequestProviderComposite.provide(providerType);
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   @Override
   public LoginRes login(SocialLoginReq loginReq) {
-    EmployerUser oauthMember =
-        oAuthMemberClientComposite.fetch(loginReq); // OAuth 토큰 해석을 통한 사용자 정보 추출
-    EmployerUser member =
-        oAuthMemberRepository
-            .findByOauthId(oauthMember.getOauthId()) // 토큰 해석 이후 사용자 생성 혹은 조회
-            .orElseGet(() -> oAuthMemberRepository.save(oauthMember));
-    JwtResponse response = jwtTokenProvider.generateToken(member);
+    EmployerUser oauthEmployerUser = oAuthMemberClientComposite.fetch(loginReq);
+
+    return employerUserRepository
+        .findByOauthId(oauthEmployerUser.getOauthId())
+        .map(this::createLoginResponse)
+        .orElse(LoginRes.newUser());
+    //        .orElseGet(() -> registerNewUser(loginReq, oauthEmployerUser));
+  }
+
+  @Transactional
+  @Override
+  public LoginRes registerNewUser(SocialLoginReq loginReq) {
+    EmployerUser oauthEmployerUser = oAuthMemberClientComposite.fetch(loginReq);
+    if (loginReq.createSocialEmployerUserReq() == null || loginReq.createStoreReq() == null) {
+      log.error("소셜 로그인 사용자, 혹은 가게 정보가 누락되었습니다.");
+      throw new DomainException(
+          AuthErrorCode.SOCIAL_ILLEGAL_ARGUMENT, "OAuthServiceImpl.registerNewUser");
+    }
+    EmployerUser employerUser =
+        signUpService.socialSignUp(
+            loginReq.createSocialEmployerUserReq(), oauthEmployerUser, loginReq.createStoreReq());
+    return createLoginResponse(employerUser);
+  }
+
+  private LoginRes createLoginResponse(EmployerUser employerUser) {
+    JwtResponse response = jwtTokenProvider.generateToken(employerUser);
     return LoginRes.of(response.token(), response.expiration());
   }
 }

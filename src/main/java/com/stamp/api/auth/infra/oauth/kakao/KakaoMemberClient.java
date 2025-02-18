@@ -5,7 +5,7 @@ import com.stamp.api.auth.infra.oauth.OAuthMemberClient;
 import com.stamp.api.auth.infra.oauth.OAuthUserDetails;
 import com.stamp.api.auth.infra.oauth.ProviderType;
 import com.stamp.api.auth.infra.oauth.kakao.dto.KakaoMemberResponse;
-import com.stamp.api.auth.infra.oauth.kakao.dto.KakaoToken;
+import com.stamp.api.employeruser.dto.CreateSocialEmployerUserReq;
 import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.global.config.oauth.kakao.KakaoOAuthConfig;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +29,20 @@ public class KakaoMemberClient implements OAuthMemberClient {
 
   @Override
   public EmployerUser fetch(SocialLoginReq loginReq) {
-    KakaoToken tokenInfo = kakaoApiClient.fetchToken(tokenRequestParams(loginReq.authCode()));
+    //    KakaoToken tokenInfo = kakaoApiClient.fetchToken(tokenRequestParams(loginReq.authCode()));
+    //    log.info(tokenInfo.toString());
     KakaoMemberResponse kakaoMemberResponse =
-        kakaoApiClient.fetchMember("Bearer " + tokenInfo.accessToken());
+        kakaoApiClient.fetchMember("Bearer " + loginReq.accessToken());
     log.info(kakaoMemberResponse.toString());
     OAuthUserDetails oAuthUser = kakaoMemberResponse.toOAuthUser();
+    CreateSocialEmployerUserReq req = loginReq.createSocialEmployerUserReq();
+
     return EmployerUser.of(
-        oAuthUser.oAuthId(), loginReq.name(), oAuthUser.email(), null, loginReq.contact());
+        oAuthUser.oAuthId(),
+        req != null ? req.name() : null,
+        oAuthUser.email(),
+        null,
+        req != null ? req.contact() : null);
   }
 
   private MultiValueMap<String, String> tokenRequestParams(String authCode) {

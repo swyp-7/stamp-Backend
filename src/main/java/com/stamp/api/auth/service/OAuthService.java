@@ -8,4 +8,6 @@ public interface OAuthService {
   String getAuthCodeUrl(ProviderType providerType);
 
   LoginRes login(SocialLoginReq loginReq);
+
+  LoginRes registerNewUser(SocialLoginReq loginReq);
 }

@@ -44,4 +44,9 @@ public class AuthController {
   public ApplicationResponse<LoginRes> login(@RequestBody SocialLoginReq loginReq) {
     return ApplicationResponse.ok(oAuthService.login(loginReq));
   }
+
+  @PostMapping("/oauth/register")
+  public ApplicationResponse<LoginRes> register(@RequestBody SocialLoginReq loginReq) {
+    return ApplicationResponse.ok(oAuthService.registerNewUser(loginReq));
+  }
 }
