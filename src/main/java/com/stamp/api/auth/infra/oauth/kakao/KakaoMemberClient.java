@@ -33,7 +33,6 @@ public class KakaoMemberClient implements OAuthMemberClient {
     //    log.info(tokenInfo.toString());
     KakaoMemberResponse kakaoMemberResponse =
         kakaoApiClient.fetchMember("Bearer " + loginReq.accessToken());
-    log.info(kakaoMemberResponse.toString());
     OAuthUserDetails oAuthUser = kakaoMemberResponse.toOAuthUser();
     CreateSocialEmployerUserReq req = loginReq.createSocialEmployerUserReq();
 

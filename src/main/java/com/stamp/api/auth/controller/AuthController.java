@@ -6,6 +6,8 @@ import com.stamp.api.auth.dto.response.LoginRes;
 import com.stamp.api.auth.infra.oauth.ProviderType;
 import com.stamp.api.auth.service.AuthService;
 import com.stamp.api.auth.service.OAuthService;
+import com.stamp.global.exception.DomainException;
+import com.stamp.global.exception.GlobalErrorCode;
 import com.stamp.global.response.ApplicationResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -34,8 +36,8 @@ public class AuthController {
     try {
       response.sendRedirect(redirectUrl);
     } catch (IOException e) {
-      log.error("error : {}", e.getMessage());
-      throw new RuntimeException(e);
+      throw new DomainException(
+          GlobalErrorCode.EXTERNAL_SERVICE_ERROR, "AuthController.redirectAuthcodeUrl");
     }
     return ApplicationResponse.ok();
   }

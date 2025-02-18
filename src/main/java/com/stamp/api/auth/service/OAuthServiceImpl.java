@@ -50,7 +50,6 @@ public class OAuthServiceImpl implements OAuthService {
   public LoginRes registerNewUser(SocialLoginReq loginReq) {
     EmployerUser oauthEmployerUser = oAuthMemberClientComposite.fetch(loginReq);
     if (loginReq.createSocialEmployerUserReq() == null || loginReq.createStoreReq() == null) {
-      log.error("소셜 로그인 사용자, 혹은 가게 정보가 누락되었습니다.");
       throw new DomainException(
           AuthErrorCode.SOCIAL_ILLEGAL_ARGUMENT, "OAuthServiceImpl.registerNewUser");
     }

@@ -24,9 +24,9 @@ public class CreateEmployerUserServiceImpl implements CreateEmployerUserService 
         .findByEmail(createEmployerUserReq.email())
         .ifPresent(
             user -> {
-              log.error("email already existed");
               throw new DomainException(
-                  AuthErrorCode.EMAIL_ALREADY_EXISTED, "AuthServiceImpl.signUp");
+                  AuthErrorCode.EMAIL_ALREADY_EXISTED,
+                  "CreateEmployerUserServiceImpl.createEmployerUser");
             });
 
     String encryptedPassword = passwordEncoder.encode(createEmployerUserReq.password());
