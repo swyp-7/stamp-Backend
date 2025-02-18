@@ -51,7 +51,7 @@ public class EmployerUser {
 
   @UpdateTimestamp private LocalDateTime updatedAt;
 
-  private LocalDateTime deletedAt;
+  private LocalDateTime deletedAt; // deletedAt != null -> soft deleted
 
   private EmployerUser(
       @Nullable OAuthId oauthId, String name, String email, String password, String contact) {

@@ -41,7 +41,7 @@ public class Store {
 
   @UpdateTimestamp private LocalDateTime updatedAt;
 
-  private LocalDateTime deletedAt;
+  private LocalDateTime deletedAt; // deletedAt != null -> soft deleted
 
   private Store(
       EmployerUser employerUser,
