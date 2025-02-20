@@ -41,6 +41,8 @@ public class Store {
 
   @UpdateTimestamp private LocalDateTime updatedAt;
 
+  private LocalDateTime deletedAt; // deletedAt != null -> soft deleted
+
   private Store(
       EmployerUser employerUser,
       String businessNumber,
@@ -61,5 +63,10 @@ public class Store {
       String address,
       String businessType) {
     return new Store(employerUser, businessNumber, name, address, businessType);
+  }
+
+  public static Store delete(Store store) {
+    store.deletedAt = LocalDateTime.now();
+    return store;
   }
 }

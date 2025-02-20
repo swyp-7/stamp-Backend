@@ -51,6 +51,8 @@ public class EmployerUser {
 
   @UpdateTimestamp private LocalDateTime updatedAt;
 
+  private LocalDateTime deletedAt; // deletedAt != null -> soft deleted
+
   private EmployerUser(
       @Nullable OAuthId oauthId, String name, String email, String password, String contact) {
     this.oauthId = oauthId;
@@ -72,5 +74,10 @@ public class EmployerUser {
       String password,
       String contact) { // 소셜 로그인 사용자 팩토리 메소드 패턴
     return new EmployerUser(oauthId, name, email, password, contact);
+  }
+
+  public static EmployerUser delete(EmployerUser user) {
+    user.deletedAt = LocalDateTime.now();
+    return user;
   }
 }

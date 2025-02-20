@@ -1,7 +1,7 @@
-package com.stamp.api.signup.controller;
+package com.stamp.api.signup.employer.controller;
 
-import com.stamp.api.signup.dto.request.SignUpReq;
-import com.stamp.api.signup.service.SignUpService;
+import com.stamp.api.signup.employer.dto.request.SignUpEmployerReq;
+import com.stamp.api.signup.employer.service.SignUpEmployerService;
 import com.stamp.global.response.ApplicationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @RestController
-public class SignUpController {
+public class SignUpEmployerController {
 
-  private final SignUpService signUpService;
+  private final SignUpEmployerService signUpEmployerService;
 
   @PostMapping("/signUp")
-  public ApplicationResponse<Void> signUp(@RequestBody SignUpReq signUpReq) {
-    signUpService.signUp(signUpReq);
+  public ApplicationResponse<Void> signUp(@RequestBody SignUpEmployerReq signUpEmployerReq) {
+    signUpEmployerService.signUp(signUpEmployerReq);
     return ApplicationResponse.ok();
   }
 }

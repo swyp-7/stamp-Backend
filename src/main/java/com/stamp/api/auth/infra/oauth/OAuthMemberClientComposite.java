@@ -3,7 +3,7 @@ package com.stamp.api.auth.infra.oauth;
 import static java.util.function.UnaryOperator.identity;
 import static java.util.stream.Collectors.toMap;
 
-import com.stamp.api.auth.dto.request.SocialLoginReq;
+import com.stamp.api.auth.dto.request.SocialLoginEmployerReq;
 import com.stamp.api.employeruser.entity.EmployerUser;
 import java.util.Map;
 import java.util.Optional;
@@ -19,7 +19,7 @@ public class OAuthMemberClientComposite {
     providerMap = clients.stream().collect(toMap(OAuthMemberClient::supportType, identity()));
   }
 
-  public EmployerUser fetch(SocialLoginReq loginReq) {
+  public EmployerUser fetch(SocialLoginEmployerReq loginReq) {
     return getClient(loginReq.providerType()).fetch(loginReq);
   }
 
