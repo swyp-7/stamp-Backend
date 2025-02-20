@@ -1,11 +1,11 @@
-package com.stamp.api.auth.service;
+package com.stamp.api.auth.employer.service;
 
-import com.stamp.api.auth.dto.request.SocialLoginEmployerReq;
-import com.stamp.api.auth.dto.response.LoginRes;
+import com.stamp.api.auth.employer.dto.request.SocialLoginEmployerReq;
+import com.stamp.api.auth.employer.dto.response.LoginRes;
+import com.stamp.api.auth.employer.infra.oauth.OAuthMemberClientComposite;
+import com.stamp.api.auth.employer.infra.oauth.OAuthRequestProviderComposite;
+import com.stamp.api.auth.employer.infra.oauth.ProviderType;
 import com.stamp.api.auth.exception.AuthErrorCode;
-import com.stamp.api.auth.infra.oauth.OAuthMemberClientComposite;
-import com.stamp.api.auth.infra.oauth.OAuthRequestProviderComposite;
-import com.stamp.api.auth.infra.oauth.ProviderType;
 import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.api.employeruser.repository.EmployerUserRepository;
 import com.stamp.api.signup.employer.service.SignUpEmployerService;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class OAuthServiceImpl implements OAuthService {
+public class OAuthEmployerServiceImpl implements OAuthEmployerService {
 
   private final OAuthRequestProviderComposite oAuthRequestProviderComposite;
   private final OAuthMemberClientComposite oAuthMemberClientComposite;

@@ -34,7 +34,6 @@ public class Store {
   @Column(nullable = false, name = "address")
   private String address;
 
-  @Column(name = "business_type")
   private String businessType; // 업태, 사용자가 직접 입력
 
   @CreationTimestamp private LocalDateTime createdAt;

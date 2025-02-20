@@ -1,11 +1,11 @@
-package com.stamp.api.auth.controller;
+package com.stamp.api.auth.employer.controller;
 
-import com.stamp.api.auth.dto.request.LoginEmployerReq;
-import com.stamp.api.auth.dto.request.SocialLoginEmployerReq;
-import com.stamp.api.auth.dto.response.LoginRes;
-import com.stamp.api.auth.infra.oauth.ProviderType;
-import com.stamp.api.auth.service.AuthService;
-import com.stamp.api.auth.service.OAuthService;
+import com.stamp.api.auth.employer.dto.request.LoginEmployerReq;
+import com.stamp.api.auth.employer.dto.request.SocialLoginEmployerReq;
+import com.stamp.api.auth.employer.dto.response.LoginRes;
+import com.stamp.api.auth.employer.infra.oauth.ProviderType;
+import com.stamp.api.auth.employer.service.AuthEmployerService;
+import com.stamp.api.auth.employer.service.OAuthEmployerService;
 import com.stamp.global.exception.DomainException;
 import com.stamp.global.exception.GlobalErrorCode;
 import com.stamp.global.response.ApplicationResponse;
@@ -19,20 +19,20 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @RestController
-public class AuthController {
+public class AuthEmployerController {
 
-  private final AuthService authService;
-  private final OAuthService oAuthService;
+  private final AuthEmployerService authEmployerService;
+  private final OAuthEmployerService oAuthEmployerService;
 
   @PostMapping("/auth/login")
   public ApplicationResponse<LoginRes> login(@RequestBody LoginEmployerReq loginEmployerReq) {
-    return ApplicationResponse.ok(authService.login(loginEmployerReq));
+    return ApplicationResponse.ok(authEmployerService.login(loginEmployerReq));
   }
 
   @GetMapping("/oauth/{providerType}")
   public ApplicationResponse<Void> redirectAuthcodeUrl(
       @PathVariable ProviderType providerType, HttpServletResponse response) {
-    String redirectUrl = oAuthService.getAuthCodeUrl(providerType);
+    String redirectUrl = oAuthEmployerService.getAuthCodeUrl(providerType);
     try {
       response.sendRedirect(redirectUrl);
     } catch (IOException e) {
@@ -44,11 +44,11 @@ public class AuthController {
 
   @PostMapping("/oauth/login")
   public ApplicationResponse<LoginRes> login(@RequestBody SocialLoginEmployerReq loginReq) {
-    return ApplicationResponse.ok(oAuthService.login(loginReq));
+    return ApplicationResponse.ok(oAuthEmployerService.login(loginReq));
   }
 
   @PostMapping("/oauth/register")
   public ApplicationResponse<LoginRes> register(@RequestBody SocialLoginEmployerReq loginReq) {
-    return ApplicationResponse.ok(oAuthService.registerNewUser(loginReq));
+    return ApplicationResponse.ok(oAuthEmployerService.registerNewUser(loginReq));
   }
 }

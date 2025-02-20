@@ -1,7 +1,7 @@
-package com.stamp.api.auth.infra.oauth.kakao;
+package com.stamp.api.auth.employer.infra.oauth.kakao;
 
-import com.stamp.api.auth.infra.oauth.OAuthRequestProvider;
-import com.stamp.api.auth.infra.oauth.ProviderType;
+import com.stamp.api.auth.employer.infra.oauth.OAuthRequestProvider;
+import com.stamp.api.auth.employer.infra.oauth.ProviderType;
 import com.stamp.global.config.oauth.kakao.KakaoOAuthConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

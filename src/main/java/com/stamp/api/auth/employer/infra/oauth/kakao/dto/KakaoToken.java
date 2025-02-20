@@ -1,4 +1,4 @@
-package com.stamp.api.auth.infra.oauth.kakao.dto;
+package com.stamp.api.auth.employer.infra.oauth.kakao.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

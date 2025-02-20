@@ -1,4 +1,4 @@
-package com.stamp.api.auth.infra.oauth;
+package com.stamp.api.auth.employer.infra.oauth;
 
 import org.springframework.core.convert.converter.Converter;
 

@@ -1,4 +1,4 @@
-package com.stamp.api.auth.infra.oauth;
+package com.stamp.api.auth.employer.infra.oauth;
 
 import java.util.Locale;
 
