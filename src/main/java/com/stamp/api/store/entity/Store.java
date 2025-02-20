@@ -1,8 +1,12 @@
 package com.stamp.api.store.entity;
 
 import com.stamp.api.employeruser.entity.EmployerUser;
+import com.stamp.api.store.dto.request.UpdateStoreReq;
+import com.stamp.api.storeschedule.entity.StoreSchedule;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,10 +35,16 @@ public class Store {
   @Column(nullable = false, name = "name", length = 100)
   private String name;
 
-  @Column(nullable = false, name = "address")
-  private String address;
+  @Column(nullable = false, name = "address_common")
+  private String addressCommon;
+
+  @Column(nullable = false, name = "address_detail")
+  private String addressDetail;
 
   private String businessType; // 업태, 사용자가 직접 입력
+
+  @OneToMany(mappedBy = "store")
+  private List<StoreSchedule> storeScheduleList = new ArrayList<>();
 
   @CreationTimestamp private LocalDateTime createdAt;
 
@@ -46,12 +56,14 @@ public class Store {
       EmployerUser employerUser,
       String businessNumber,
       String name,
-      String address,
+      String addressCommon,
+      String addressDetail,
       String businessType) {
     this.employerUser = employerUser;
     this.businessNumber = businessNumber;
     this.name = name;
-    this.address = address;
+    this.addressCommon = addressCommon;
+    this.addressDetail = addressDetail;
     this.businessType = businessType;
   }
 
@@ -59,13 +71,22 @@ public class Store {
       EmployerUser employerUser,
       String businessNumber,
       String name,
-      String address,
+      String addressCommon,
+      String addressDetail,
       String businessType) {
-    return new Store(employerUser, businessNumber, name, address, businessType);
+    return new Store(
+        employerUser, businessNumber, name, addressCommon, addressDetail, businessType);
   }
 
-  public static Store delete(Store store) {
-    store.deletedAt = LocalDateTime.now();
-    return store;
+  public void update(UpdateStoreReq updateStoreReq) {
+    this.name = updateStoreReq.name();
+    this.addressCommon = updateStoreReq.addressCommon();
+    this.addressDetail = updateStoreReq.addressDetail();
+    this.businessType = updateStoreReq.businessType();
+  }
+
+  public void delete() {
+    this.deletedAt = LocalDateTime.now();
+    this.storeScheduleList.forEach(StoreSchedule::delete);
   }
 }

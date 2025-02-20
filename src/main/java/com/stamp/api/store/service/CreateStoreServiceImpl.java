@@ -28,7 +28,8 @@ public class CreateStoreServiceImpl implements CreateStoreService {
             employerUser,
             createStoreReq.businessNumber(),
             createStoreReq.name(),
-            createStoreReq.address(),
+            createStoreReq.addressCommon(),
+            createStoreReq.addressDetail(),
             createStoreReq.businessType()));
   }
 }

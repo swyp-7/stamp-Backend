@@ -1,4 +1,4 @@
-package com.stamp.api.controller;
+package com.stamp.api.healthcheck.controller;
 
 import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.api.employeruser.repository.EmployerUserRepository;

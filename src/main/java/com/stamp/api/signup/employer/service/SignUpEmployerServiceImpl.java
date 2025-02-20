@@ -24,12 +24,16 @@ public class SignUpEmployerServiceImpl implements SignUpEmployerService {
     createStoreService.createStore(signUpEmployerReq.createStoreReq(), employerUser);
   }
 
+  @Transactional
   @Override
   public EmployerUser socialSignUp(
       CreateSocialEmployerUserReq createSocialEmployerUserReq,
       EmployerUser oauthEmployerUser,
       CreateStoreReq createStoreReq) {
-    return createEmployerUserService.createSocialEmployerUser(
-        createSocialEmployerUserReq, oauthEmployerUser);
+    EmployerUser employerUser =
+        createEmployerUserService.createSocialEmployerUser(
+            createSocialEmployerUserReq, oauthEmployerUser);
+    createStoreService.createStore(createStoreReq, employerUser);
+    return employerUser;
   }
 }
