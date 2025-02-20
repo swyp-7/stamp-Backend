@@ -1,6 +1,6 @@
 package com.stamp.global.config;
 
-import com.stamp.api.auth.infra.oauth.ProviderTypeConverter;
+import com.stamp.api.auth.employer.infra.oauth.ProviderTypeConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

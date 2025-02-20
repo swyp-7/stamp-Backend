@@ -1,6 +1,6 @@
-package com.stamp.api.auth.dto.request;
+package com.stamp.api.auth.employer.dto.request;
 
-import com.stamp.api.auth.infra.oauth.ProviderType;
+import com.stamp.api.auth.employer.infra.oauth.ProviderType;
 import com.stamp.api.employeruser.dto.CreateSocialEmployerUserReq;
 import com.stamp.api.store.dto.request.CreateStoreReq;
 import jakarta.annotation.Nullable;

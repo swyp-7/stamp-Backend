@@ -1,9 +1,9 @@
-package com.stamp.api.auth.entity;
+package com.stamp.api.auth.employer.entity;
 
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.stamp.api.auth.infra.oauth.ProviderType;
+import com.stamp.api.auth.employer.infra.oauth.ProviderType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Enumerated;

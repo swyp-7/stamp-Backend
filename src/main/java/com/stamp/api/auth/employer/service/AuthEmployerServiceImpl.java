@@ -1,7 +1,7 @@
-package com.stamp.api.auth.service;
+package com.stamp.api.auth.employer.service;
 
-import com.stamp.api.auth.dto.request.LoginEmployerReq;
-import com.stamp.api.auth.dto.response.LoginRes;
+import com.stamp.api.auth.employer.dto.request.LoginEmployerReq;
+import com.stamp.api.auth.employer.dto.response.LoginRes;
 import com.stamp.api.auth.exception.AuthErrorCode;
 import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.api.employeruser.repository.EmployerUserRepository;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class AuthServiceImpl implements AuthService {
+public class AuthEmployerServiceImpl implements AuthEmployerService {
   private final EmployerUserRepository employerUserRepository;
   private final JwtTokenProvider jwtTokenProvider;
   private final PasswordEncoder passwordEncoder;

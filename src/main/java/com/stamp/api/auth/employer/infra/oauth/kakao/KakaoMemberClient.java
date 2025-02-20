@@ -1,10 +1,10 @@
-package com.stamp.api.auth.infra.oauth.kakao;
+package com.stamp.api.auth.employer.infra.oauth.kakao;
 
-import com.stamp.api.auth.dto.request.SocialLoginEmployerReq;
-import com.stamp.api.auth.infra.oauth.OAuthMemberClient;
-import com.stamp.api.auth.infra.oauth.OAuthUserDetails;
-import com.stamp.api.auth.infra.oauth.ProviderType;
-import com.stamp.api.auth.infra.oauth.kakao.dto.KakaoMemberResponse;
+import com.stamp.api.auth.employer.dto.request.SocialLoginEmployerReq;
+import com.stamp.api.auth.employer.infra.oauth.OAuthMemberClient;
+import com.stamp.api.auth.employer.infra.oauth.OAuthUserDetails;
+import com.stamp.api.auth.employer.infra.oauth.ProviderType;
+import com.stamp.api.auth.employer.infra.oauth.kakao.dto.KakaoMemberResponse;
 import com.stamp.api.employeruser.dto.CreateSocialEmployerUserReq;
 import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.global.config.oauth.kakao.KakaoOAuthConfig;

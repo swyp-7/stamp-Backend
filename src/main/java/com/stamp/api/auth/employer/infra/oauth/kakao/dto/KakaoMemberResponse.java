@@ -1,11 +1,11 @@
-package com.stamp.api.auth.infra.oauth.kakao.dto;
+package com.stamp.api.auth.employer.infra.oauth.kakao.dto;
 
-import static com.stamp.api.auth.infra.oauth.ProviderType.KAKAO;
+import static com.stamp.api.auth.employer.infra.oauth.ProviderType.KAKAO;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.stamp.api.auth.entity.OAuthId;
-import com.stamp.api.auth.infra.oauth.OAuthUserDetails;
+import com.stamp.api.auth.employer.entity.OAuthId;
+import com.stamp.api.auth.employer.infra.oauth.OAuthUserDetails;
 import java.time.LocalDateTime;
 import lombok.extern.slf4j.Slf4j;
 

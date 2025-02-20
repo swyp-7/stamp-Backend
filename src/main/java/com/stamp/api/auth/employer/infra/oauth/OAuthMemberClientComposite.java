@@ -1,9 +1,9 @@
-package com.stamp.api.auth.infra.oauth;
+package com.stamp.api.auth.employer.infra.oauth;
 
 import static java.util.function.UnaryOperator.identity;
 import static java.util.stream.Collectors.toMap;
 
-import com.stamp.api.auth.dto.request.SocialLoginEmployerReq;
+import com.stamp.api.auth.employer.dto.request.SocialLoginEmployerReq;
 import com.stamp.api.employeruser.entity.EmployerUser;
 import java.util.Map;
 import java.util.Optional;
