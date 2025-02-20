@@ -1,6 +1,6 @@
 package com.stamp.api.auth.service;
 
-import com.stamp.api.auth.dto.request.LoginReq;
+import com.stamp.api.auth.dto.request.LoginEmployerReq;
 import com.stamp.api.auth.dto.response.LoginRes;
 import com.stamp.api.auth.exception.AuthErrorCode;
 import com.stamp.api.employeruser.entity.EmployerUser;
@@ -22,15 +22,15 @@ public class AuthServiceImpl implements AuthService {
   private final PasswordEncoder passwordEncoder;
 
   @Override
-  public LoginRes login(LoginReq loginReq) {
+  public LoginRes login(LoginEmployerReq loginEmployerReq) {
     EmployerUser employerUser =
         employerUserRepository
-            .findByEmail(loginReq.email())
+            .findByEmail(loginEmployerReq.email())
             .orElseThrow(
                 () ->
                     new DomainException(
                         AuthErrorCode.EMPLOYER_USER_NOT_FOUNDED, "AuthServiceImpl.login"));
-    if (!passwordEncoder.matches(loginReq.password(), employerUser.getPassword())) {
+    if (!passwordEncoder.matches(loginEmployerReq.password(), employerUser.getPassword())) {
       throw new DomainException(AuthErrorCode.INVALID_PASSWORD, "AuthServiceImpl.login");
     }
     JwtResponse response = jwtTokenProvider.generateToken(employerUser);

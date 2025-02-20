@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class StoreServiceImpl implements StoreService {
+public class CreateStoreServiceImpl implements CreateStoreService {
   private final StoreRepository storeRepository;
 
   @Override

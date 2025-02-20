@@ -1,12 +1,12 @@
-package com.stamp.api.signup.service;
+package com.stamp.api.signup.employer.service;
 
 import com.stamp.api.employeruser.dto.CreateSocialEmployerUserReq;
 import com.stamp.api.employeruser.entity.EmployerUser;
-import com.stamp.api.signup.dto.request.SignUpReq;
+import com.stamp.api.signup.employer.dto.request.SignUpEmployerReq;
 import com.stamp.api.store.dto.request.CreateStoreReq;
 
-public interface SignUpService {
-  void signUp(SignUpReq signUpReq);
+public interface SignUpEmployerService {
+  void signUp(SignUpEmployerReq signUpEmployerReq);
 
   EmployerUser socialSignUp(
       CreateSocialEmployerUserReq createSocialEmployerUserReq,

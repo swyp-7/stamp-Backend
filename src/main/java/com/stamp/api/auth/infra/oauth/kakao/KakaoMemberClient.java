@@ -1,6 +1,6 @@
 package com.stamp.api.auth.infra.oauth.kakao;
 
-import com.stamp.api.auth.dto.request.SocialLoginReq;
+import com.stamp.api.auth.dto.request.SocialLoginEmployerReq;
 import com.stamp.api.auth.infra.oauth.OAuthMemberClient;
 import com.stamp.api.auth.infra.oauth.OAuthUserDetails;
 import com.stamp.api.auth.infra.oauth.ProviderType;
@@ -28,7 +28,7 @@ public class KakaoMemberClient implements OAuthMemberClient {
   }
 
   @Override
-  public EmployerUser fetch(SocialLoginReq loginReq) {
+  public EmployerUser fetch(SocialLoginEmployerReq loginReq) {
     //    KakaoToken tokenInfo = kakaoApiClient.fetchToken(tokenRequestParams(loginReq.authCode()));
     //    log.info(tokenInfo.toString());
     KakaoMemberResponse kakaoMemberResponse =
