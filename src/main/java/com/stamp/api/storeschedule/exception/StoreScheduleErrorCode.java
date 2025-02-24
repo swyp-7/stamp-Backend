@@ -1,13 +1,13 @@
-package com.stamp.api.store.exception;
+package com.stamp.api.storeschedule.exception;
 
 import com.stamp.global.exception.Error;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
-public enum StoreErrorCode implements Error {
-  BUSINESS_NUMBER_ALREADY_EXISTED(HttpStatus.BAD_REQUEST, "이미 존재하는 사업자 번호 입니다."),
-  STORE_NOT_FOUNDED(HttpStatus.NOT_FOUND, "존재하지 않는 가게입니다.");
+public enum StoreScheduleErrorCode implements Error {
+  STORE_SCHEDULE_NOT_FOUNDED(HttpStatus.NOT_FOUND, "해당 스케줄이 존재하지 않습니다."),
+  STORE_SCHEDULE_ALREADY_EXISTS(HttpStatus.CONFLICT, "해당 요일의 스케줄이 이미 존재합니다.");
 
   private final HttpStatus status;
   private final String message;

@@ -5,7 +5,7 @@ spring:
 oauth:
   kakao:
     client_id: ENC(iZffJNpezuQV9MJk3R4qyU7J6nxzeZW5BPC+CYbcWEo0pqKNiG6U1HaDlBEpy2MP)
-    redirect_uri: http://localhost:3000/oauth/redirected/kakao
+    redirect_uri: https://stamp.swygbro.com/oauth/redirected/kakao
     client_secret: ENC(8YcTJN1pWPlQAtyBYQgiAC6c/Fw4LM9oKvUVlJDeZkddcFSY6nosQuRtQbbwMlw2)
     scope: profile_nickname, profile_image, account_email
 
