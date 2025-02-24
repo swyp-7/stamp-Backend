@@ -35,10 +35,10 @@ public class WebSecurityConfig {
                     //                        .requestMatchers("/public/**").permitAll()
                     .requestMatchers(CorsUtils::isPreFlightRequest)
                     .permitAll()
-                    .requestMatchers("/api/v1/authenticated-healthCheck")
-                    .authenticated()
+                    .requestMatchers("/api/v1/auth/**", "/api/v1/oauth/**")
+                    .permitAll()
                     .anyRequest()
-                    .permitAll())
+                    .authenticated())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .httpBasic(withDefaults())
