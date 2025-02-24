@@ -1,0 +1,6 @@
+###   개인 설정이니 git에 올리지 않도록 주의해주세요 ###
+spring:
+  config:
+    activate:
+      on-profile: local
+
