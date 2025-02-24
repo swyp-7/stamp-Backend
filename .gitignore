@@ -40,6 +40,6 @@ out/
 
 ### Application.yml ###
 !src/main/resources/application.yml
-!src/main/resources/yml/db/application-local.yml
-!src/main/resources/yml/logging/application-custom.yml
+src/main/resources/yml/db/application-local.yml
+src/main/resources/yml/logging/application-custom.yml
 
