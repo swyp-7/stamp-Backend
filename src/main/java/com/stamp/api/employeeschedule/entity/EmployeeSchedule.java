@@ -1,14 +1,13 @@
-package com.stamp.api.storeschedule.entity;
+package com.stamp.api.employeeschedule.entity;
 
 import com.stamp.api.common.WeekDay;
-import com.stamp.api.store.entity.Store;
-import com.stamp.api.storeschedule.dto.request.UpdateStoreScheduleReq;
+import com.stamp.api.employee.entity.Employee;
+import com.stamp.api.employeeschedule.dto.request.CreateEmployeeScheduleReq;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,38 +22,40 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class StoreSchedule {
-
+public class EmployeeSchedule {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private LocalTime startTime;
   private LocalTime endTime;
-
-  @Enumerated(EnumType.STRING)
   private WeekDay weekDay;
+  private boolean isAdditional; // 추가 근무 시간으로 등록한 것인지 아닌지를 구분
 
-  private boolean isClosed;
-  @ManyToOne private Store store;
+  @ManyToOne
+  @JoinColumn(name = "employee_id")
+  private Employee employee;
 
   @CreationTimestamp private LocalDateTime createdAt;
   @UpdateTimestamp private LocalDateTime updatedAt;
   private LocalDateTime deletedAt;
 
-  public static StoreSchedule of(
-      LocalTime startTime, LocalTime endTime, WeekDay weekDay, Store store, boolean isClosed) {
-    return new StoreSchedule(null, startTime, endTime, weekDay, isClosed, store, null, null, null);
+  public static EmployeeSchedule of(
+      CreateEmployeeScheduleReq createEmployeeScheduleReq, Employee employee) {
+
+    return new EmployeeSchedule(
+        null,
+        createEmployeeScheduleReq.startTime(),
+        createEmployeeScheduleReq.endTime(),
+        createEmployeeScheduleReq.weekDay(),
+        createEmployeeScheduleReq.isAdditional(),
+        employee,
+        null,
+        null,
+        null);
   }
 
   public void delete() {
     this.deletedAt = LocalDateTime.now();
-  }
-
-  public void update(UpdateStoreScheduleReq req) {
-    this.startTime = req.startTime();
-    this.endTime = req.endTime();
-    this.weekDay = req.weekDay();
-    this.isClosed = req.isClosed();
   }
 }

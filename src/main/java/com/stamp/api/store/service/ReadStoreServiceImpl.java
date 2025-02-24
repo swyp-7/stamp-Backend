@@ -24,6 +24,7 @@ public class ReadStoreServiceImpl implements ReadStoreService {
         store.getStoreScheduleList().stream().map(ReadStoreScheduleRes::toDto).toList();
 
     return new ReadStoreRes(
+        store.getId(),
         store.getBusinessNumber(),
         store.getName(),
         store.getAddressCommon(),

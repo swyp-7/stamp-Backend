@@ -1,4 +1,4 @@
-package com.stamp.api.storeschedule;
+package com.stamp.api.common;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
