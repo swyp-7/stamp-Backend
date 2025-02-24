@@ -1,7 +1,7 @@
 package com.stamp.api.storeschedule.entity;
 
+import com.stamp.api.common.WeekDay;
 import com.stamp.api.store.entity.Store;
-import com.stamp.api.storeschedule.WeekDay;
 import com.stamp.api.storeschedule.dto.request.UpdateStoreScheduleReq;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

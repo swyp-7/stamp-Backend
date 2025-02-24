@@ -4,6 +4,7 @@ import com.stamp.api.storeschedule.dto.response.ReadStoreScheduleRes;
 import java.util.List;
 
 public record ReadStoreRes(
+    Long storeId,
     String businessNumber,
     String name,
     String addressCommon,

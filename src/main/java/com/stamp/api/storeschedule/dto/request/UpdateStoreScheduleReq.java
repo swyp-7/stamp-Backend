@@ -1,6 +1,6 @@
 package com.stamp.api.storeschedule.dto.request;
 
-import com.stamp.api.storeschedule.WeekDay;
+import com.stamp.api.common.WeekDay;
 import java.time.LocalTime;
 
 public record UpdateStoreScheduleReq(
