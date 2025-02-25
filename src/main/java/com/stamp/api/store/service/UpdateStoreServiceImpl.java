@@ -1,6 +1,7 @@
 package com.stamp.api.store.service;
 
 import com.stamp.api.store.dto.request.UpdateStoreReq;
+import com.stamp.api.store.dto.response.ReadStoreRes;
 import com.stamp.api.store.entity.Store;
 import com.stamp.api.store.exception.StoreErrorCode;
 import com.stamp.api.store.repository.StoreRepository;
@@ -21,26 +22,22 @@ public class UpdateStoreServiceImpl implements UpdateStoreService {
 
   @Transactional
   @Override
-  public void updateStore(Long storeId, UpdateStoreReq updateStoreReq) {
+  public ReadStoreRes updateStore(Long storeId, UpdateStoreReq updateStoreReq) {
     Store store = findStoreWithSchedule(storeId);
     store.update(updateStoreReq);
 
     for (UpdateStoreScheduleReq storeScheduleReq : updateStoreReq.storeScheduleList()) {
       if (storeScheduleReq.id() == null) {
         checkScheduleExists(store, storeScheduleReq);
-        StoreSchedule storeSchedule =
-            StoreSchedule.of(
-                storeScheduleReq.startTime(),
-                storeScheduleReq.endTime(),
-                storeScheduleReq.weekDay(),
-                store,
-                storeScheduleReq.isClosed());
+        StoreSchedule storeSchedule = StoreSchedule.of(storeScheduleReq, store);
         storeScheduleRepository.save(storeSchedule);
       } else {
         StoreSchedule existingSchedule = findStoreSchedule(storeScheduleReq.id());
         existingSchedule.update(storeScheduleReq);
       }
     }
+
+    return ReadStoreRes.of(store);
   }
 
   private Store findStoreWithSchedule(Long storeId) {

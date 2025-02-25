@@ -42,9 +42,17 @@ public class StoreSchedule {
   @UpdateTimestamp private LocalDateTime updatedAt;
   private LocalDateTime deletedAt;
 
-  public static StoreSchedule of(
-      LocalTime startTime, LocalTime endTime, WeekDay weekDay, Store store, boolean isClosed) {
-    return new StoreSchedule(null, startTime, endTime, weekDay, isClosed, store, null, null, null);
+  public static StoreSchedule of(UpdateStoreScheduleReq req, Store store) {
+    return new StoreSchedule(
+        null,
+        req.startTime(),
+        req.endTime(),
+        req.weekDay(),
+        req.isClosed(),
+        store,
+        null,
+        null,
+        null);
   }
 
   public void delete() {

@@ -28,9 +28,8 @@ public class StoreController {
   }
 
   @PutMapping("/{storeId}")
-  public ApplicationResponse<Void> updateStore(
+  public ApplicationResponse<ReadStoreRes> updateStore(
       @PathVariable Long storeId, @RequestBody UpdateStoreReq updateStoreReq) {
-    updateStoreService.updateStore(storeId, updateStoreReq);
-    return ApplicationResponse.ok();
+    return ApplicationResponse.ok(updateStoreService.updateStore(storeId, updateStoreReq));
   }
 }

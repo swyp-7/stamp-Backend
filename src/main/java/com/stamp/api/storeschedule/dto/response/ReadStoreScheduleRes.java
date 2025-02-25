@@ -5,12 +5,8 @@ import com.stamp.api.storeschedule.entity.StoreSchedule;
 import java.time.LocalTime;
 
 public record ReadStoreScheduleRes(
-    Long storeScheduleId,
-    WeekDay weekDay,
-    LocalTime startTime,
-    LocalTime endTime,
-    boolean isClosed) {
-  public static ReadStoreScheduleRes toDto(StoreSchedule storeSchedule) {
+    Long id, WeekDay weekDay, LocalTime startTime, LocalTime endTime, boolean isClosed) {
+  public static ReadStoreScheduleRes of(StoreSchedule storeSchedule) {
     return new ReadStoreScheduleRes(
         storeSchedule.getId(),
         storeSchedule.getWeekDay(),
