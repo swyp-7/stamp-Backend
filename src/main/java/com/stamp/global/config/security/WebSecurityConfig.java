@@ -27,12 +27,11 @@ public class WebSecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+    http.cors(AbstractHttpConfigurer::disable)
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(
             auth ->
                 auth
-                    //                        .requestMatchers("/public/**").permitAll()
                     .requestMatchers(CorsUtils::isPreFlightRequest)
                     .permitAll()
                     .requestMatchers("/api/v1/auth/**", "/api/v1/oauth/**", "/api/v1/signUp")
@@ -50,7 +49,7 @@ public class WebSecurityConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("*"));
+    configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://stamp.swygbro.com"));
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
     configuration.setAllowCredentials(true);
     configuration.setAllowedHeaders(List.of("*"));
