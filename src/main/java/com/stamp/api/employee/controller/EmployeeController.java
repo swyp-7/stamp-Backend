@@ -1,9 +1,11 @@
 package com.stamp.api.employee.controller;
 
 import com.stamp.api.employee.dto.request.CreateEmployeeReq;
+import com.stamp.api.employee.dto.request.UpdateEmployeeReq;
 import com.stamp.api.employee.dto.response.ReadEmployeeRes;
 import com.stamp.api.employee.service.CreateEmployeeService;
 import com.stamp.api.employee.service.ReadEmployeeService;
+import com.stamp.api.employee.service.UpdateEmployeeService;
 import com.stamp.global.response.ApplicationResponse;
 import java.time.LocalDate;
 import java.util.List;
@@ -12,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +27,7 @@ public class EmployeeController {
 
   private final CreateEmployeeService createEmployeeService;
   private final ReadEmployeeService readEmployeeService;
+  private final UpdateEmployeeService updateEmployeeService;
 
   @PostMapping("/enroll")
   public void enroll(@PathVariable Long storeId, @RequestBody CreateEmployeeReq createEmployeeReq) {
@@ -47,5 +51,12 @@ public class EmployeeController {
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
     return ApplicationResponse.ok(
         readEmployeeService.getEmployeeByPeriod(storeId, startDate, endDate));
+  }
+
+  @PutMapping("/{employeeId}")
+  public ApplicationResponse<ReadEmployeeRes> updateEmployee(
+      @PathVariable Long employeeId, @RequestBody UpdateEmployeeReq updateEmployeeReq) {
+    return ApplicationResponse.ok(
+        updateEmployeeService.updateEmployee(employeeId, updateEmployeeReq));
   }
 }

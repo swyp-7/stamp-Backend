@@ -5,9 +5,10 @@ import com.stamp.api.employeeschedule.entity.EmployeeSchedule;
 import java.time.LocalTime;
 
 public record ReadEmployeeScheduleRes(
-    WeekDay weekDay, LocalTime startTime, LocalTime endTime, boolean isAdditional) {
+    Long id, WeekDay weekDay, LocalTime startTime, LocalTime endTime, boolean isAdditional) {
   public static ReadEmployeeScheduleRes of(EmployeeSchedule employeeSchedule) {
     return new ReadEmployeeScheduleRes(
+        employeeSchedule.getId(),
         employeeSchedule.getWeekDay(),
         employeeSchedule.getStartTime(),
         employeeSchedule.getEndTime(),

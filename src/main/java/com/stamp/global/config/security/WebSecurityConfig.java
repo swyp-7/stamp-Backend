@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                     //                        .requestMatchers("/public/**").permitAll()
                     .requestMatchers(CorsUtils::isPreFlightRequest)
                     .permitAll()
-                    .requestMatchers("/api/v1/auth/**", "/api/v1/oauth/**")
+                    .requestMatchers("/api/v1/auth/**", "/api/v1/oauth/**", "/api/v1/signUp")
                     .permitAll()
                     .anyRequest()
                     .authenticated())

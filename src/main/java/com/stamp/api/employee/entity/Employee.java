@@ -1,6 +1,7 @@
 package com.stamp.api.employee.entity;
 
 import com.stamp.api.employee.dto.request.CreateEmployeeReq;
+import com.stamp.api.employee.dto.request.UpdateEmployeeReq;
 import com.stamp.api.employeeschedule.entity.EmployeeSchedule;
 import com.stamp.api.store.entity.Store;
 import jakarta.persistence.Entity;
@@ -45,36 +46,33 @@ public class Employee {
   @OneToMany(mappedBy = "employee")
   private List<EmployeeSchedule> employeeScheduleList = new ArrayList<>();
 
-  public static Employee of(CreateEmployeeReq createEmployeeReq, Store store) {
+  public static Employee of(CreateEmployeeReq createReq, Store store) {
     return new Employee(
         null,
-        createEmployeeReq.name(),
-        createEmployeeReq.birthDate(),
-        createEmployeeReq.contact(),
-        createEmployeeReq.wage(),
-        createEmployeeReq.addressCommon(),
-        createEmployeeReq.addressDetail(),
-        createEmployeeReq.bank(),
-        createEmployeeReq.bankAccountNumber(),
-        createEmployeeReq.startDate(),
+        createReq.name(),
+        createReq.birthDate(),
+        createReq.contact(),
+        createReq.wage(),
+        createReq.addressCommon(),
+        createReq.addressDetail(),
+        createReq.bank(),
+        createReq.bankAccountNumber(),
+        createReq.startDate(),
         null,
         store,
         new ArrayList<>());
   }
 
-  public void update(
-      String name,
-      LocalDate birthDate,
-      String contact,
-      String wage,
-      LocalDate startDate,
-      Store store) {
-    this.name = name;
-    this.birthDate = birthDate;
-    this.contact = contact;
-    this.wage = wage;
-    this.startDate = startDate;
-    this.store = store;
+  public void update(UpdateEmployeeReq updateReq) {
+    this.name = updateReq.name();
+    this.birthDate = updateReq.birthDate();
+    this.contact = updateReq.contact();
+    this.addressCommon = updateReq.addressCommon();
+    this.addressDetail = updateReq.addressDetail();
+    this.bank = updateReq.bank();
+    this.bankAccountNumber = updateReq.bankAccountNumber();
+    this.wage = updateReq.wage();
+    this.startDate = updateReq.startDate();
   }
 
   public void terminate() {

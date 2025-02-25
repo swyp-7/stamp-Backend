@@ -3,6 +3,7 @@ package com.stamp.api.employeeschedule.entity;
 import com.stamp.api.common.WeekDay;
 import com.stamp.api.employee.entity.Employee;
 import com.stamp.api.employeeschedule.dto.request.CreateEmployeeScheduleReq;
+import com.stamp.api.employeeschedule.dto.request.UpdateEmployeeScheduleReq;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -40,19 +41,25 @@ public class EmployeeSchedule {
   @UpdateTimestamp private LocalDateTime updatedAt;
   private LocalDateTime deletedAt;
 
-  public static EmployeeSchedule of(
-      CreateEmployeeScheduleReq createEmployeeScheduleReq, Employee employee) {
+  public static EmployeeSchedule of(CreateEmployeeScheduleReq createReq, Employee employee) {
 
     return new EmployeeSchedule(
         null,
-        createEmployeeScheduleReq.startTime(),
-        createEmployeeScheduleReq.endTime(),
-        createEmployeeScheduleReq.weekDay(),
-        createEmployeeScheduleReq.isAdditional(),
+        createReq.startTime(),
+        createReq.endTime(),
+        createReq.weekDay(),
+        createReq.isAdditional(),
         employee,
         null,
         null,
         null);
+  }
+
+  public void update(UpdateEmployeeScheduleReq updateReq) {
+    this.startTime = updateReq.startTime();
+    this.endTime = updateReq.endTime();
+    this.weekDay = updateReq.weekDay();
+    this.isAdditional = updateReq.isAdditional();
   }
 
   public void delete() {

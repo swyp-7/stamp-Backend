@@ -1,6 +1,7 @@
 package com.stamp.api.store.entity;
 
 import com.stamp.api.employeruser.entity.EmployerUser;
+import com.stamp.api.store.dto.request.CreateStoreReq;
 import com.stamp.api.store.dto.request.UpdateStoreReq;
 import com.stamp.api.storeschedule.entity.StoreSchedule;
 import jakarta.persistence.*;
@@ -52,37 +53,26 @@ public class Store {
 
   private LocalDateTime deletedAt; // deletedAt != null -> soft deleted
 
-  private Store(
-      EmployerUser employerUser,
-      String businessNumber,
-      String name,
-      String addressCommon,
-      String addressDetail,
-      String businessType) {
-    this.employerUser = employerUser;
-    this.businessNumber = businessNumber;
-    this.name = name;
-    this.addressCommon = addressCommon;
-    this.addressDetail = addressDetail;
-    this.businessType = businessType;
-  }
-
-  public static Store of(
-      EmployerUser employerUser,
-      String businessNumber,
-      String name,
-      String addressCommon,
-      String addressDetail,
-      String businessType) {
+  public static Store of(CreateStoreReq createReq, EmployerUser employerUser) {
     return new Store(
-        employerUser, businessNumber, name, addressCommon, addressDetail, businessType);
+        null,
+        employerUser,
+        createReq.businessNumber(),
+        createReq.name(),
+        createReq.addressCommon(),
+        createReq.addressDetail(),
+        createReq.businessType(),
+        new ArrayList<>(),
+        null,
+        null,
+        null);
   }
 
-  public void update(UpdateStoreReq updateStoreReq) {
-    this.name = updateStoreReq.name();
-    this.addressCommon = updateStoreReq.addressCommon();
-    this.addressDetail = updateStoreReq.addressDetail();
-    this.businessType = updateStoreReq.businessType();
+  public void update(UpdateStoreReq updateReq) {
+    this.name = updateReq.name();
+    this.addressCommon = updateReq.addressCommon();
+    this.addressDetail = updateReq.addressDetail();
+    this.businessType = updateReq.businessType();
   }
 
   public void delete() {
