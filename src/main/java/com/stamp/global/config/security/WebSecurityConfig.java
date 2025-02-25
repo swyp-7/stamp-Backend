@@ -31,8 +31,7 @@ public class WebSecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(
             auth ->
-                auth
-                    .requestMatchers(CorsUtils::isPreFlightRequest)
+                auth.requestMatchers(CorsUtils::isPreFlightRequest)
                     .permitAll()
                     .requestMatchers("/api/v1/auth/**", "/api/v1/oauth/**", "/api/v1/signUp")
                     .permitAll()
