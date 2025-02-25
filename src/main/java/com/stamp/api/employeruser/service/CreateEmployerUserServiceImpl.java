@@ -1,8 +1,8 @@
 package com.stamp.api.employeruser.service;
 
 import com.stamp.api.auth.exception.AuthErrorCode;
-import com.stamp.api.employeruser.dto.CreateEmployerUserReq;
-import com.stamp.api.employeruser.dto.CreateSocialEmployerUserReq;
+import com.stamp.api.employeruser.dto.request.CreateEmployerUserReq;
+import com.stamp.api.employeruser.dto.request.CreateSocialEmployerUserReq;
 import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.api.employeruser.repository.EmployerUserRepository;
 import com.stamp.global.exception.DomainException;
