@@ -5,7 +5,7 @@ import com.stamp.api.auth.employer.infra.oauth.OAuthMemberClient;
 import com.stamp.api.auth.employer.infra.oauth.OAuthUserDetails;
 import com.stamp.api.auth.employer.infra.oauth.ProviderType;
 import com.stamp.api.auth.employer.infra.oauth.kakao.dto.KakaoMemberResponse;
-import com.stamp.api.employeruser.dto.CreateSocialEmployerUserReq;
+import com.stamp.api.employeruser.dto.request.CreateSocialEmployerUserReq;
 import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.global.config.oauth.kakao.KakaoOAuthConfig;
 import lombok.RequiredArgsConstructor;
