@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record ReadEmployeeRes(
-    Long employeeId,
+    Long id,
     String name,
     LocalDate birthDate,
     String contact,
