@@ -11,12 +11,17 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
   Optional<Store> findByBusinessNumber(String businessNumber);
 
   @Query(
-      "SELECT s FROM Store s LEFT JOIN FETCH s.storeScheduleList WHERE s.id = :storeId AND s.deletedAt IS NULL")
+      "SELECT s FROM Store s "
+          + "LEFT JOIN FETCH s.storeScheduleList sch "
+          + "WHERE s.id = :storeId AND s.deletedAt IS NULL "
+          + "ORDER BY sch.weekDay ASC")
   Optional<Store> findByIdWithSchedules(@Param("storeId") Long storeId);
 
   @Query(
-      "SELECT s FROM Store s LEFT JOIN FETCH s.storeScheduleList "
-          + "WHERE s.employerUser = :employerUser AND s.deletedAt IS NULL")
+      "SELECT s FROM Store s "
+          + "LEFT JOIN FETCH s.storeScheduleList sch "
+          + "WHERE s.employerUser = :employerUser AND s.deletedAt IS NULL "
+          + "ORDER BY sch.weekDay ASC")
   Optional<Store> findByEmployerUserIdWithSchedules(
       @Param("employerUser") EmployerUser employerUser);
 }

@@ -33,7 +33,7 @@ public class EmployeeSchedule {
   private LocalTime startTime;
   private LocalTime endTime;
 
-  @Enumerated(EnumType.STRING)
+  @Enumerated(EnumType.ORDINAL)
   private WeekDay weekDay;
 
   private boolean isAdditional; // 추가 근무 시간으로 등록한 것인지 아닌지를 구분

@@ -32,7 +32,7 @@ public class StoreSchedule {
   private LocalTime startTime;
   private LocalTime endTime;
 
-  @Enumerated(EnumType.STRING)
+  @Enumerated(EnumType.ORDINAL)
   private WeekDay weekDay;
 
   private boolean isClosed;
