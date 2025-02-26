@@ -44,7 +44,6 @@ public class EmployeeSchedule {
 
   @CreationTimestamp private LocalDateTime createdAt;
   @UpdateTimestamp private LocalDateTime updatedAt;
-  private LocalDateTime deletedAt;
 
   public static EmployeeSchedule of(CreateEmployeeScheduleReq createReq, Employee employee) {
 
@@ -56,7 +55,6 @@ public class EmployeeSchedule {
         createReq.isAdditional(),
         employee,
         null,
-        null,
         null);
   }
 
@@ -65,9 +63,5 @@ public class EmployeeSchedule {
     this.endTime = updateReq.endTime();
     this.weekDay = updateReq.weekDay();
     this.isAdditional = updateReq.isAdditional();
-  }
-
-  public void delete() {
-    this.deletedAt = LocalDateTime.now();
   }
 }

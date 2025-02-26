@@ -4,6 +4,7 @@ import com.stamp.api.employee.dto.request.CreateEmployeeReq;
 import com.stamp.api.employee.dto.request.UpdateEmployeeReq;
 import com.stamp.api.employeeschedule.entity.EmployeeSchedule;
 import com.stamp.api.store.entity.Store;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -43,7 +44,7 @@ public class Employee {
   @JoinColumn(name = "store_id")
   private Store store;
 
-  @OneToMany(mappedBy = "employee")
+  @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
   private List<EmployeeSchedule> employeeScheduleList = new ArrayList<>();
 
   public static Employee of(CreateEmployeeReq createReq, Store store) {

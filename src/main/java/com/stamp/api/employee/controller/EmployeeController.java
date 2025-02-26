@@ -4,6 +4,7 @@ import com.stamp.api.employee.dto.request.CreateEmployeeReq;
 import com.stamp.api.employee.dto.request.UpdateEmployeeReq;
 import com.stamp.api.employee.dto.response.ReadEmployeeRes;
 import com.stamp.api.employee.service.CreateEmployeeService;
+import com.stamp.api.employee.service.DeleteEmployeeService;
 import com.stamp.api.employee.service.ReadEmployeeService;
 import com.stamp.api.employee.service.UpdateEmployeeService;
 import com.stamp.global.response.ApplicationResponse;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +30,7 @@ public class EmployeeController {
   private final CreateEmployeeService createEmployeeService;
   private final ReadEmployeeService readEmployeeService;
   private final UpdateEmployeeService updateEmployeeService;
+  private final DeleteEmployeeService deleteEmployeeService;
 
   @PostMapping("/enroll")
   public void enroll(@PathVariable Long storeId, @RequestBody CreateEmployeeReq createEmployeeReq) {
@@ -58,5 +61,11 @@ public class EmployeeController {
       @PathVariable Long employeeId, @RequestBody UpdateEmployeeReq updateEmployeeReq) {
     return ApplicationResponse.ok(
         updateEmployeeService.updateEmployee(employeeId, updateEmployeeReq));
+  }
+
+  @DeleteMapping("{employeeId}/{employeeScheduleId}")
+  public ApplicationResponse<Void> deleteEmployeeSchedule(@PathVariable Long employeeScheduleId) {
+    deleteEmployeeService.deleteEmployeeSchedule(employeeScheduleId);
+    return ApplicationResponse.ok();
   }
 }
