@@ -6,7 +6,6 @@ import com.stamp.api.store.entity.Store;
 import com.stamp.api.store.exception.StoreErrorCode;
 import com.stamp.api.store.repository.StoreRepository;
 import com.stamp.global.exception.DomainException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class CreateStoreServiceImpl implements CreateStoreService {
   private final StoreRepository storeRepository;
 
-  @Transactional
   @Override
   public Store createStore(CreateStoreReq createStoreReq, EmployerUser employerUser) {
     storeRepository
