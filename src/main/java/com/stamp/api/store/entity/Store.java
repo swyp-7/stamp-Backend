@@ -70,6 +70,7 @@ public class Store {
 
   public void update(UpdateStoreReq updateReq) {
     this.name = updateReq.name();
+    this.businessNumber = updateReq.businessNumber();
     this.addressCommon = updateReq.addressCommon();
     this.addressDetail = updateReq.addressDetail();
     this.businessType = updateReq.businessType();
