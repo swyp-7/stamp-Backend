@@ -5,6 +5,8 @@ import com.stamp.api.employee.entity.Employee;
 import com.stamp.api.employeeschedule.dto.request.CreateEmployeeScheduleReq;
 import com.stamp.api.employeeschedule.dto.request.UpdateEmployeeScheduleReq;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,7 +32,10 @@ public class EmployeeSchedule {
 
   private LocalTime startTime;
   private LocalTime endTime;
+
+  @Enumerated(EnumType.STRING)
   private WeekDay weekDay;
+
   private boolean isAdditional; // 추가 근무 시간으로 등록한 것인지 아닌지를 구분
 
   @ManyToOne
