@@ -35,4 +35,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
       @Param("store") Store store,
       @Param("currentDate") LocalDate currentDate,
       @Param("weekDays") List<WeekDay> weekDays);
+
+  Optional<Employee> findByContact(String contact);
 }
