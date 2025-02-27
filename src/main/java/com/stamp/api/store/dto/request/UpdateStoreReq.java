@@ -5,6 +5,7 @@ import java.util.List;
 
 public record UpdateStoreReq(
     String businessNumber,
+    String employerName,
     String name,
     String addressCommon,
     String addressDetail,

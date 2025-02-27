@@ -78,4 +78,8 @@ public class EmployerUser {
     user.deletedAt = LocalDateTime.now();
     return user;
   }
+
+  public void updateName(String name) {
+    this.name = name;
+  }
 }
