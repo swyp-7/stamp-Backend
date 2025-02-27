@@ -1,5 +1,6 @@
 package com.stamp.api.store.service;
 
+import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.api.store.dto.request.UpdateStoreReq;
 import com.stamp.api.store.dto.response.ReadStoreRes;
 import com.stamp.api.store.entity.Store;
@@ -25,6 +26,8 @@ public class UpdateStoreServiceImpl implements UpdateStoreService {
   public ReadStoreRes updateStore(Long storeId, UpdateStoreReq updateStoreReq) {
     Store store = findStoreWithSchedule(storeId);
     store.update(updateStoreReq);
+    EmployerUser employer = store.getEmployerUser();
+    employer.updateName(updateStoreReq.employerName());
 
     for (UpdateStoreScheduleReq storeScheduleReq : updateStoreReq.storeScheduleList()) {
       if (storeScheduleReq.id() == null) {
