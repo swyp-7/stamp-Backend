@@ -1,5 +1,6 @@
 package com.stamp.global.jwt.util;
 
+import com.stamp.api.employee.entity.Employee;
 import com.stamp.api.employeruser.entity.EmployerUser;
 import com.stamp.global.jwt.JwtResponse;
 import io.jsonwebtoken.Claims;
@@ -35,10 +36,28 @@ public class JwtTokenProvider {
         expirationMs);
   }
 
+  public JwtResponse generateToken(Employee member) {
+    long expirationMs = 1000 * 60 * 120;
+    return new JwtResponse(
+            Jwts.builder()
+                    .subject(String.valueOf(member.getId()))
+                    .claim("contact", member.getContact())
+                    .claim("roles", "Employee")
+                    .issuedAt(new Date())
+                    .expiration(new Date(System.currentTimeMillis() + expirationMs))
+                    .signWith(secretKey)
+                    .compact(),
+            expirationMs);
+  }
+
   public String validateAndGetUserId(String token) {
     Claims claims =
         Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
 
     return claims.getSubject();
+  }
+
+  public Claims getClaims(String token) {
+    return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
   }
 }
