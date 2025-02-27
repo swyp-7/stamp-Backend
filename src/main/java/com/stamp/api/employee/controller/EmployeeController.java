@@ -9,6 +9,7 @@ import com.stamp.api.employee.service.ReadEmployeeService;
 import com.stamp.api.employee.service.UpdateEmployeeService;
 import com.stamp.global.response.ApplicationResponse;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -54,6 +55,16 @@ public class EmployeeController {
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
     return ApplicationResponse.ok(
         readEmployeeService.getEmployeeByPeriod(storeId, startDate, endDate));
+  }
+
+  @GetMapping("/available")
+  public ApplicationResponse<List<ReadEmployeeRes>> getAvailableEmployeesForTimeSlot(
+      @PathVariable Long storeId,
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+      @RequestParam LocalTime startTime,
+      @RequestParam LocalTime endTime) {
+    return ApplicationResponse.ok(
+        readEmployeeService.getAvailableEmployeesForTimeSlot(storeId, date, startTime, endTime));
   }
 
   @PutMapping("/{employeeId}")
