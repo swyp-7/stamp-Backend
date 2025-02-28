@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LocalQRManageServiceImpl implements QRManageService {
+public class LocalQRManageServiceImpl implements LocalQRManageService {
 
   private final QRAuthCodeRepository authCodeRepository; // key: storeId, value: 인증코드
   private String defaultUrl = "localhost:3000/m/attendance/"; // 반환할 프론트 서버 url

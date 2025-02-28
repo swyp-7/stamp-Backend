@@ -70,25 +70,23 @@ public class LocalAttendanceServiceImpl implements LocalAttendanceService {
     checkEmployeeAuthority(storeId, userDetails);
 
     // 인증 코드 체크
-    if (!qrManageService.checkAuthCode(storeId, authCode))
-      throw new DomainException(
-          AttendanceErrorCode.AUTH_CODE_FAIL_ERROR, "AttendanceServiceImpl.punchIn");
+    qrManageService.checkAuthCode(storeId, authCode);
 
     // 당일 출근 기록이 있는지 체크
     if (attendanceRepository.existsAttendanceByStoreIdAndEmployeeIdAndDateAndAttendance(
-        storeId,
-        Long.parseLong(userDetails.getUsername()),
-        LocalDate.now(),
-        AttendanceEnum.PUNCH_IN))
-      throw new DomainException(
-          AttendanceErrorCode.DUPLICATE_PUNCH_IN_ERROR, "AttendanceServiceImpl.punchIn");
-
-    attendanceRepository.save(
-        Attendance.of(
             storeId,
             Long.parseLong(userDetails.getUsername()),
-            AttendanceEnum.PUNCH_IN,
-            LocalDateTime.now()));
+            LocalDate.now(),
+            AttendanceEnum.PUNCH_IN))
+      throw new DomainException(
+              AttendanceErrorCode.DUPLICATE_PUNCH_IN_ERROR, "AttendanceServiceImpl.punchIn");
+
+    attendanceRepository.save(
+            Attendance.of(
+                    storeId,
+                    Long.parseLong(userDetails.getUsername()),
+                    AttendanceEnum.PUNCH_IN,
+                    LocalDateTime.now()));
   }
 
   /**
@@ -103,25 +101,23 @@ public class LocalAttendanceServiceImpl implements LocalAttendanceService {
     checkEmployeeAuthority(storeId, userDetails);
 
     // 인증 코드 체크
-    if (!qrManageService.checkAuthCode(storeId, authCode))
-      throw new DomainException(
-          AttendanceErrorCode.AUTH_CODE_FAIL_ERROR, "AttendanceServiceImpl.punchIn");
+    qrManageService.checkAuthCode(storeId, authCode);
 
     // 당일 퇴근 기록이 있는지 체크
     if (attendanceRepository.existsAttendanceByStoreIdAndEmployeeIdAndDateAndAttendance(
-        storeId,
-        Long.parseLong(userDetails.getUsername()),
-        LocalDate.now(),
-        AttendanceEnum.PUNCH_OUT))
-      throw new DomainException(
-          AttendanceErrorCode.DUPLICATE_PUNCH_IN_ERROR, "AttendanceServiceImpl.punchIn");
-
-    attendanceRepository.save(
-        Attendance.of(
             storeId,
             Long.parseLong(userDetails.getUsername()),
-            AttendanceEnum.PUNCH_OUT,
-            LocalDateTime.now()));
+            LocalDate.now(),
+            AttendanceEnum.PUNCH_OUT))
+      throw new DomainException(
+              AttendanceErrorCode.DUPLICATE_PUNCH_IN_ERROR, "AttendanceServiceImpl.punchIn");
+
+    attendanceRepository.save(
+            Attendance.of(
+                    storeId,
+                    Long.parseLong(userDetails.getUsername()),
+                    AttendanceEnum.PUNCH_OUT,
+                    LocalDateTime.now()));
   }
 
   /** 로그인 한 유저가 Store의 EmployerUser가 맞는지 체크 권한이 없을 시 throw Exception */
@@ -132,18 +128,18 @@ public class LocalAttendanceServiceImpl implements LocalAttendanceService {
     */
 
     Store store =
-        storeRepository
-            .findById(storeId)
-            .orElseThrow(
-                () ->
-                    new DomainException(
-                        AttendanceErrorCode.NO_STORE_ERROR,
-                        "AttendanceServiceImpl.checkEmployerUserAuthority"));
+            storeRepository
+                    .findById(storeId)
+                    .orElseThrow(
+                            () ->
+                                    new DomainException(
+                                            AttendanceErrorCode.NO_STORE_ERROR,
+                                            "AttendanceServiceImpl.checkEmployerUserAuthority"));
 
     if (!store.getEmployerUser().getId().equals(Long.valueOf(userDetails.getUsername())))
       throw new DomainException(
-          AttendanceErrorCode.NO_AUTHORITY_FOR_STORE_ERROR,
-          "AttendanceServiceImpl.checkEmployerUserAuthority");
+              AttendanceErrorCode.NO_AUTHORITY_FOR_STORE_ERROR,
+              "AttendanceServiceImpl.checkEmployerUserAuthority");
   }
 
   /** 로그인 한 유저가 Employee가 맞는지, Employee.store가 인자로 넘어온 storeId와 일치하는지 체크 권한이 없을 시 throw Exception */
@@ -154,17 +150,17 @@ public class LocalAttendanceServiceImpl implements LocalAttendanceService {
     */
 
     Employee employee =
-        employeeRepository
-            .findById(Long.parseLong(userDetails.getUsername()))
-            .orElseThrow(
-                () ->
-                    new DomainException(
-                        AttendanceErrorCode.NO_AUTHORITY_FOR_STORE_ERROR,
-                        "AttendanceServiceImpl.checkEmployeeAuthority"));
+            employeeRepository
+                    .findById(Long.parseLong(userDetails.getUsername()))
+                    .orElseThrow(
+                            () ->
+                                    new DomainException(
+                                            AttendanceErrorCode.NO_AUTHORITY_FOR_STORE_ERROR,
+                                            "AttendanceServiceImpl.checkEmployeeAuthority"));
 
     if (!employee.getStore().getId().equals(storeId))
       throw new DomainException(
-          AttendanceErrorCode.NO_AUTHORITY_FOR_STORE_ERROR,
-          "AttendanceServiceImpl.checkEmployerUserAuthority");
+              AttendanceErrorCode.NO_AUTHORITY_FOR_STORE_ERROR,
+              "AttendanceServiceImpl.checkEmployerUserAuthority");
   }
 }

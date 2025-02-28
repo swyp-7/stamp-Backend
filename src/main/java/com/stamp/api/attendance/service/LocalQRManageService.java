@@ -7,5 +7,5 @@ public interface LocalQRManageService {
 
   byte[] getQRCode(Long storeId);
 
-  boolean checkAuthCode(Long storeId, String authCode);
+  void checkAuthCode(Long storeId, String authCode);
 }
