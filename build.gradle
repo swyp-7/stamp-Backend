@@ -36,6 +36,12 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
 
+    //JUnit4 추가
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation("org.junit.vintage:junit-vintage-engine") {
+        exclude group: "org.hamcrest", module: "hamcrest-core"
+    }
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -53,6 +59,11 @@ dependencies {
     testImplementation 'org.mockito:mockito-inline:5.2.0'
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
+
+    /* QR 코드 생성 */
+    implementation group: 'com.google.zxing', name: 'core', version: '3.5.3'
+    implementation group: 'com.google.zxing', name: 'javase', version: '3.5.3'
+
 
     if (isAppleSilicon()) {
         runtimeOnly 'io.netty:netty-resolver-dns-native-macos:4.1.94.Final:osx-aarch_64'
@@ -75,6 +86,11 @@ spotless {
 }
 
 tasks.named('test') {
+    useJUnitPlatform()
+}
+
+
+test {
     useJUnitPlatform()
 }
 
