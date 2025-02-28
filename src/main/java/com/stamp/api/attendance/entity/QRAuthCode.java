@@ -14,12 +14,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class QRAuthCode {
 
-    @Id
-    Long storeId;
+  @Id Long storeId;
 
-    String code;    //QR 인증 코드
+  String code; // QR 인증 코드
 
-    public static QRAuthCode of (Long storeId, String code) {
-        return new QRAuthCode (storeId, code);
-    }
+  public static QRAuthCode of(Long storeId, String code) {
+    return new QRAuthCode(storeId, code);
+  }
 }
