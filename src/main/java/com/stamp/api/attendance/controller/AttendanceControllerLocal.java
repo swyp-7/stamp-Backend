@@ -19,7 +19,7 @@ public class AttendanceControllerLocal {
   private final LocalAttendanceService attendanceService;
 
   // QR코드 생성 API
-  @GetMapping("/store/{storeId}/employees/createQR")
+  @GetMapping("/store/{storeId}/employees/createQR/local")
   public ApplicationResponse<QRCodeRes> createQR(
       @PathVariable("storeId") String storeId, @AuthenticationPrincipal UserDetails userDetails) {
 
@@ -27,32 +27,10 @@ public class AttendanceControllerLocal {
   }
 
   //  QR코드 조회 API
-  @GetMapping("/store/{storeId}/employees/getQR")
+  @GetMapping("/store/{storeId}/employees/getQR/local")
   public ApplicationResponse<QRCodeRes> getQR(
       @PathVariable("storeId") String storeId, @AuthenticationPrincipal UserDetails userDetails) {
 
     return ApplicationResponse.ok(attendanceService.getQR(Long.valueOf(storeId), userDetails));
-  }
-
-  //  출근 로그 생성 API
-  @PostMapping("/store/{storeId}/employees/punchIn")
-  public ApplicationResponse<Void> punchIn(
-      @PathVariable("storeId") String storeId,
-      @RequestBody AttendanceReq attendanceReq,
-      @AuthenticationPrincipal UserDetails userDetails) {
-
-    attendanceService.punchIn(Long.valueOf(storeId), userDetails, attendanceReq.authCode());
-    return ApplicationResponse.ok();
-  }
-
-  //  퇴근 로그 생성 API
-  @PostMapping("/store/{storeId}/employees/punchOut")
-  public ApplicationResponse<Void> punchOut(
-      @PathVariable("storeId") String storeId,
-      @RequestBody AttendanceReq attendanceReq,
-      @AuthenticationPrincipal UserDetails userDetails) {
-
-    attendanceService.punchOut(Long.valueOf(storeId), userDetails, attendanceReq.authCode());
-    return ApplicationResponse.ok();
   }
 }
