@@ -39,15 +39,15 @@ public class JwtTokenProvider {
   public JwtResponse generateToken(Employee member) {
     long expirationMs = 1000 * 60 * 120;
     return new JwtResponse(
-            Jwts.builder()
-                    .subject(String.valueOf(member.getId()))
-                    .claim("contact", member.getContact())
-                    .claim("roles", "Employee")
-                    .issuedAt(new Date())
-                    .expiration(new Date(System.currentTimeMillis() + expirationMs))
-                    .signWith(secretKey)
-                    .compact(),
-            expirationMs);
+        Jwts.builder()
+            .subject(String.valueOf(member.getId()))
+            .claim("contact", member.getContact())
+            .claim("roles", "Employee")
+            .issuedAt(new Date())
+            .expiration(new Date(System.currentTimeMillis() + expirationMs))
+            .signWith(secretKey)
+            .compact(),
+        expirationMs);
   }
 
   public String validateAndGetUserId(String token) {

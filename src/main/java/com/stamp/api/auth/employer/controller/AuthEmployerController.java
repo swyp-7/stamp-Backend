@@ -57,12 +57,13 @@ public class AuthEmployerController {
 
   /**
    * 아르바이트생 로그인
+   *
    * @param loginEmployeeReq contact: 전화번호
-   * @return  token: JWT토큰, expirationTime: 토큰 만료시간, isNewUser: false
+   * @return token: JWT토큰, expirationTime: 토큰 만료시간, isNewUser: false
    */
   @PostMapping("/auth/login/employee")
-  public ApplicationResponse<LoginRes> loginEmployee(@RequestBody LoginEmployeeReq loginEmployeeReq) {
+  public ApplicationResponse<LoginRes> loginEmployee(
+      @RequestBody LoginEmployeeReq loginEmployeeReq) {
     return ApplicationResponse.ok(authEmployeeService.login(loginEmployeeReq));
   }
-
 }

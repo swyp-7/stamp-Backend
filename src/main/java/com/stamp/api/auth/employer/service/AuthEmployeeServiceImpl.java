@@ -15,18 +15,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthEmployeeServiceImpl implements AuthEmployeeService {
 
-    private final EmployeeRepository employeeRepository;
-    private final JwtTokenProvider jwtTokenProvider;
+  private final EmployeeRepository employeeRepository;
+  private final JwtTokenProvider jwtTokenProvider;
 
-    @Override
-    public LoginRes login(LoginEmployeeReq req) {
-        Employee employee = employeeRepository
-                .findByContact(req.contact())
-                .orElseThrow(
-                        () ->
-                                new DomainException(
-                                        AuthErrorCode.EMPLOYEE_USER_NOT_FOUNDED, "AuthEmployeeServiceImpl.login"));
-        JwtResponse response = jwtTokenProvider.generateToken(employee);
-        return LoginRes.of(response.token(), response.expiration());
-    }
+  @Override
+  public LoginRes login(LoginEmployeeReq req) {
+    Employee employee =
+        employeeRepository
+            .findByContact(req.contact())
+            .orElseThrow(
+                () ->
+                    new DomainException(
+                        AuthErrorCode.EMPLOYEE_USER_NOT_FOUNDED, "AuthEmployeeServiceImpl.login"));
+    JwtResponse response = jwtTokenProvider.generateToken(employee);
+    return LoginRes.of(response.token(), response.expiration());
+  }
 }
