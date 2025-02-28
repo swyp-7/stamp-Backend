@@ -39,7 +39,7 @@ public class LocalQRManageServiceImpl implements QRManageService {
 
     // private HashMap에 인증코드 매핑
     QRAuthCode qrAuthCode =
-            authCodeRepository.findByStoreId(storeId).orElse(QRAuthCode.of(storeId, authCode));
+        authCodeRepository.findByStoreId(storeId).orElse(QRAuthCode.of(storeId, authCode));
     qrAuthCode.setCode(authCode);
     authCodeRepository.save(qrAuthCode);
 
@@ -56,12 +56,12 @@ public class LocalQRManageServiceImpl implements QRManageService {
   public byte[] getQRCode(Long storeId) {
 
     QRAuthCode qrAuthCode =
-            authCodeRepository
-                    .findByStoreId(storeId)
-                    .orElseThrow(
-                            () ->
-                                    new DomainException(
-                                            QRCodeErrorCode.QR_NOT_EXIST_ERROR, "QRManageServiceImpl.getQRCode"));
+        authCodeRepository
+            .findByStoreId(storeId)
+            .orElseThrow(
+                () ->
+                    new DomainException(
+                        QRCodeErrorCode.QR_NOT_EXIST_ERROR, "QRManageServiceImpl.getQRCode"));
 
     String url = defaultUrl + qrAuthCode.getCode();
     return createQRImage(url);
@@ -77,17 +77,17 @@ public class LocalQRManageServiceImpl implements QRManageService {
   public void checkAuthCode(Long storeId, String authCode) {
 
     QRAuthCode qrAuthCode =
-            authCodeRepository
-                    .findByStoreId(storeId)
-                    .orElseThrow(
-                            () ->
-                                    new DomainException(
-                                            AttendanceErrorCode.AUTH_CODE_FAIL_ERROR,
-                                            "QRManageServiceImpl.checkAuthCode"));
+        authCodeRepository
+            .findByStoreId(storeId)
+            .orElseThrow(
+                () ->
+                    new DomainException(
+                        AttendanceErrorCode.AUTH_CODE_FAIL_ERROR,
+                        "QRManageServiceImpl.checkAuthCode"));
 
     if (!qrAuthCode.getCode().equals(authCode))
       throw new DomainException(
-              AttendanceErrorCode.AUTH_CODE_FAIL_ERROR, "QRManageServiceImpl.checkAuthCode");
+          AttendanceErrorCode.AUTH_CODE_FAIL_ERROR, "QRManageServiceImpl.checkAuthCode");
   }
 
   /**
@@ -107,7 +107,7 @@ public class LocalQRManageServiceImpl implements QRManageService {
       hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 
       BitMatrix bitMatrix =
-              new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height, hints);
+          new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height, hints);
 
       MatrixToImageWriter.writeToStream(bitMatrix, "PNG", out);
       return out.toByteArray();
@@ -131,10 +131,10 @@ public class LocalQRManageServiceImpl implements QRManageService {
     Random random = new Random();
 
     return random
-            .ints(leftLimit, rightLimit + 1)
-            .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-            .limit(targetStringLength)
-            .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-            .toString();
+        .ints(leftLimit, rightLimit + 1)
+        .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+        .limit(targetStringLength)
+        .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+        .toString();
   }
 }
