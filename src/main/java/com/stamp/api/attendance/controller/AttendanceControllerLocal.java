@@ -1,6 +1,5 @@
 package com.stamp.api.attendance.controller;
 
-import com.stamp.api.attendance.dto.requeset.AttendanceReq;
 import com.stamp.api.attendance.dto.response.QRCodeRes;
 import com.stamp.api.attendance.service.LocalAttendanceService;
 import com.stamp.global.response.ApplicationResponse;
