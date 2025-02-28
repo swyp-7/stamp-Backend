@@ -5,23 +5,24 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import com.stamp.api.attendance.entity.QRAuthCode;
+import com.stamp.api.attendance.exception.AttendanceErrorCode;
 import com.stamp.api.attendance.exception.QRCodeErrorCode;
+import com.stamp.api.attendance.repository.QRAuthCodeRepository;
 import com.stamp.global.exception.DomainException;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LocalQRManageServiceImpl implements LocalQRManageService {
+@RequiredArgsConstructor
+public class LocalQRManageServiceImpl implements QRManageService {
 
-  private HashMap<Long, String> authCodeMap; //  key: storeId, value: 인증코드
+  private final QRAuthCodeRepository authCodeRepository; // key: storeId, value: 인증코드
   private String defaultUrl = "localhost:3000/m/attendance/"; // 반환할 프론트 서버 url
-
-  public LocalQRManageServiceImpl() {
-    this.authCodeMap = new HashMap<>();
-  }
 
   /**
    * Public Method Store에 인증 코드를 할당한 뒤, 이를 포함한 URL로 QR코드를 생성하여 반환
@@ -37,7 +38,10 @@ public class LocalQRManageServiceImpl implements LocalQRManageService {
     byte[] qrCode = createQRImage(url);
 
     // private HashMap에 인증코드 매핑
-    authCodeMap.put(storeId, authCode);
+    QRAuthCode qrAuthCode =
+        authCodeRepository.findByStoreId(storeId).orElse(QRAuthCode.of(storeId, authCode));
+    qrAuthCode.setCode(authCode);
+    authCodeRepository.save(qrAuthCode);
 
     return qrCode;
   }
@@ -51,29 +55,39 @@ public class LocalQRManageServiceImpl implements LocalQRManageService {
   @Override
   public byte[] getQRCode(Long storeId) {
 
-    String authCode = authCodeMap.get(storeId);
-    if (authCode == null) {
+    QRAuthCode qrAuthCode =
+        authCodeRepository
+            .findByStoreId(storeId)
+            .orElseThrow(
+                () ->
+                    new DomainException(
+                        QRCodeErrorCode.QR_NOT_EXIST_ERROR, "QRManageServiceImpl.getQRCode"));
 
-      throw new DomainException(
-          QRCodeErrorCode.QR_NOT_EXIST_ERROR, "QRManageServiceImpl.getQRCode");
-    }
-
-    String url = defaultUrl + authCode;
+    String url = defaultUrl + qrAuthCode.getCode();
     return createQRImage(url);
   }
 
   /**
-   * Public Method 인증코드 확인 함수
+   * Public Method 인증코드 확인 후 문제시 throw Exception
    *
    * @param storeId
    * @param authCode 인증코드
-   * @return 인증 성공시 true
    */
   @Override
-  public boolean checkAuthCode(Long storeId, String authCode) {
+  public void checkAuthCode(Long storeId, String authCode) {
 
-    if (!authCodeMap.containsKey(storeId)) return false;
-    return authCodeMap.get(storeId).equals(authCode);
+    QRAuthCode qrAuthCode =
+        authCodeRepository
+            .findByStoreId(storeId)
+            .orElseThrow(
+                () ->
+                    new DomainException(
+                        AttendanceErrorCode.AUTH_CODE_FAIL_ERROR,
+                        "QRManageServiceImpl.checkAuthCode"));
+
+    if (!qrAuthCode.getCode().equals(authCode))
+      throw new DomainException(
+          AttendanceErrorCode.AUTH_CODE_FAIL_ERROR, "QRManageServiceImpl.checkAuthCode");
   }
 
   /**
