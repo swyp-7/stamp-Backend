@@ -11,6 +11,7 @@ import com.stamp.api.store.repository.StoreRepository;
 import com.stamp.global.exception.DomainException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -47,6 +48,19 @@ public class ReadEmployeeServiceImpl implements ReadEmployeeService {
             weekDays)
         .stream()
         .map((ReadEmployeeRes::of))
+        .toList();
+  }
+
+  @Override
+  public List<ReadEmployeeRes> getAvailableEmployeesForTimeSlot(
+      Long storeId, LocalDate date, LocalTime startTime, LocalTime endTime) {
+    Store store = findStore(storeId);
+    WeekDay weekDay = convertToWeekDay(date.getDayOfWeek());
+
+    return employeeRepository
+        .findAvailableEmployeesForTimeSlot(store, date, weekDay, startTime, endTime)
+        .stream()
+        .map(ReadEmployeeRes::of)
         .toList();
   }
 
