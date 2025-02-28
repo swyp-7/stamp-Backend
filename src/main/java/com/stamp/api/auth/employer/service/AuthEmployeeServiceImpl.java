@@ -2,7 +2,6 @@ package com.stamp.api.auth.employer.service;
 
 import com.stamp.api.auth.employer.dto.request.LoginEmployeeReq;
 import com.stamp.api.auth.employer.dto.response.EmployeeLoginRes;
-import com.stamp.api.auth.employer.dto.response.LoginRes;
 import com.stamp.api.auth.exception.AuthErrorCode;
 import com.stamp.api.employee.entity.Employee;
 import com.stamp.api.employee.repository.EmployeeRepository;
@@ -19,6 +18,12 @@ public class AuthEmployeeServiceImpl implements AuthEmployeeService {
   private final EmployeeRepository employeeRepository;
   private final JwtTokenProvider jwtTokenProvider;
 
+  /**
+   * Public Method 직원 로그인 함수
+   *
+   * @param req
+   * @return
+   */
   @Override
   public EmployeeLoginRes login(LoginEmployeeReq req) {
     Employee employee =
@@ -29,6 +34,7 @@ public class AuthEmployeeServiceImpl implements AuthEmployeeService {
                     new DomainException(
                         AuthErrorCode.EMPLOYEE_USER_NOT_FOUNDED, "AuthEmployeeServiceImpl.login"));
     JwtResponse response = jwtTokenProvider.generateToken(employee);
-    return EmployeeLoginRes.of(response.token(), response.expiration(), employee.getStore().getId());
+    return EmployeeLoginRes.of(
+        response.token(), response.expiration(), employee.getStore().getId());
   }
 }
