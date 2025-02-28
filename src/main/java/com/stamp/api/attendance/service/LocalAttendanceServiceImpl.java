@@ -70,9 +70,7 @@ public class LocalAttendanceServiceImpl implements LocalAttendanceService {
     checkEmployeeAuthority(storeId, userDetails);
 
     // 인증 코드 체크
-    if (!qrManageService.checkAuthCode(storeId, authCode))
-      throw new DomainException(
-          AttendanceErrorCode.AUTH_CODE_FAIL_ERROR, "AttendanceServiceImpl.punchIn");
+    qrManageService.checkAuthCode(storeId, authCode);
 
     // 당일 출근 기록이 있는지 체크
     if (attendanceRepository.existsAttendanceByStoreIdAndEmployeeIdAndDateAndAttendance(
@@ -103,9 +101,7 @@ public class LocalAttendanceServiceImpl implements LocalAttendanceService {
     checkEmployeeAuthority(storeId, userDetails);
 
     // 인증 코드 체크
-    if (!qrManageService.checkAuthCode(storeId, authCode))
-      throw new DomainException(
-          AttendanceErrorCode.AUTH_CODE_FAIL_ERROR, "AttendanceServiceImpl.punchIn");
+    qrManageService.checkAuthCode(storeId, authCode);
 
     // 당일 퇴근 기록이 있는지 체크
     if (attendanceRepository.existsAttendanceByStoreIdAndEmployeeIdAndDateAndAttendance(
