@@ -1,9 +1,11 @@
 package com.stamp.api.auth.employer.controller;
 
+import com.stamp.api.auth.employer.dto.request.LoginEmployeeReq;
 import com.stamp.api.auth.employer.dto.request.LoginEmployerReq;
 import com.stamp.api.auth.employer.dto.request.SocialLoginEmployerReq;
 import com.stamp.api.auth.employer.dto.response.LoginRes;
 import com.stamp.api.auth.employer.infra.oauth.ProviderType;
+import com.stamp.api.auth.employer.service.AuthEmployeeService;
 import com.stamp.api.auth.employer.service.AuthEmployerService;
 import com.stamp.api.auth.employer.service.OAuthEmployerService;
 import com.stamp.global.exception.DomainException;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthEmployerController {
 
   private final AuthEmployerService authEmployerService;
+  private final AuthEmployeeService authEmployeeService;
   private final OAuthEmployerService oAuthEmployerService;
 
   @PostMapping("/auth/login")
@@ -51,4 +54,15 @@ public class AuthEmployerController {
   public ApplicationResponse<LoginRes> register(@RequestBody SocialLoginEmployerReq loginReq) {
     return ApplicationResponse.ok(oAuthEmployerService.registerNewUser(loginReq));
   }
+
+  /**
+   * 아르바이트생 로그인
+   * @param loginEmployeeReq contact: 전화번호
+   * @return  token: JWT토큰, expirationTime: 토큰 만료시간, isNewUser: false
+   */
+  @PostMapping("/auth/login/employee")
+  public ApplicationResponse<LoginRes> loginEmployee(@RequestBody LoginEmployeeReq loginEmployeeReq) {
+    return ApplicationResponse.ok(authEmployeeService.login(loginEmployeeReq));
+  }
+
 }

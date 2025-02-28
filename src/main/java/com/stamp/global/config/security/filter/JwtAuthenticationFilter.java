@@ -32,9 +32,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       try {
         // JWT에서 사용자 정보를 가져오는 메서드
         String userId = jwtTokenProvider.validateAndGetUserId(token);
+        String role = jwtTokenProvider.getClaims(token).get("role").toString();
 
         UserDetails userDetails =
-            User.builder().username(userId).password("").roles("USER").build();
+            User.builder().username(userId).password("").roles(role).build();
 
         JwtAuthentication authentication =
             new JwtAuthentication(userDetails, token, userDetails.getAuthorities());
