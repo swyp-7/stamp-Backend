@@ -1,4 +1,4 @@
-package com.stamp.api.attendance.service;
+package com.stamp.api.attendance.service.frontlocal;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
