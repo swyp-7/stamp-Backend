@@ -34,7 +34,6 @@ public class AuthEmployeeServiceImpl implements AuthEmployeeService {
                     new DomainException(
                         AuthErrorCode.EMPLOYEE_USER_NOT_FOUNDED, "AuthEmployeeServiceImpl.login"));
     JwtResponse response = jwtTokenProvider.generateToken(employee);
-    return EmployeeLoginRes.of(
-        response.token(), response.expiration(), employee.getStore().getId());
+    return EmployeeLoginRes.of(response.token(), response.expiration(), employee);
   }
 }
