@@ -47,8 +47,7 @@ public class QRManageServiceImpl implements QRManageService {
   }
 
   /**
-   * Public Method Store의 QR 이미지 조회 함수
-   * QRAuthCode Entity에 매핑되지 않은 storeId에서 요청시 생성하여 반환
+   * Public Method Store의 QR 이미지 조회 함수 QRAuthCode Entity에 매핑되지 않은 storeId에서 요청시 생성하여 반환
    *
    * @param storeId
    * @return QR코드 PNG파일
@@ -57,7 +56,9 @@ public class QRManageServiceImpl implements QRManageService {
   public byte[] getQRCode(Long storeId) {
 
     QRAuthCode qrAuthCode =
-            authCodeRepository.findByStoreId(storeId).orElse(QRAuthCode.of(storeId, generateRandomString()));
+        authCodeRepository
+            .findByStoreId(storeId)
+            .orElse(QRAuthCode.of(storeId, generateRandomString()));
 
     authCodeRepository.save(qrAuthCode);
 
