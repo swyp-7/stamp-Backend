@@ -1,4 +1,4 @@
-package com.stamp.api.attendance.service;
+package com.stamp.api.attendance.service.frontlocal;
 
 import com.stamp.api.attendance.dto.response.QRCodeRes;
 import org.springframework.security.core.userdetails.UserDetails;

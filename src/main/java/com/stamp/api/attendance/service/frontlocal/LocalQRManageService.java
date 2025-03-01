@@ -1,4 +1,4 @@
-package com.stamp.api.attendance.service;
+package com.stamp.api.attendance.service.frontlocal;
 
 public interface LocalQRManageService {
 

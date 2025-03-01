@@ -6,9 +6,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Attendance {
@@ -25,6 +28,7 @@ public class Attendance {
   @Temporal(TemporalType.DATE)
   private LocalDate date;
 
+  @Setter
   @Temporal(TemporalType.TIME)
   private LocalTime time;
 

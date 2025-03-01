@@ -1,5 +1,6 @@
 package com.stamp.api.attendance.service;
 
+import com.stamp.api.attendance.dto.requeset.AttendanceUpdateReq;
 import com.stamp.api.attendance.dto.response.AttendanceRes;
 import com.stamp.api.attendance.dto.response.QRCodeRes;
 import java.time.LocalDate;
@@ -27,4 +28,6 @@ public interface AttendanceService {
 
   List<AttendanceRes> getAttendancesForDayWithEmployeeId(
       Long storeId, LocalDate firstDate, Long EmployeeId, UserDetails userDetails);
+
+  void updateAttendance(Long storeId, AttendanceUpdateReq req, UserDetails userDetails);
 }
