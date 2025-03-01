@@ -81,7 +81,7 @@ public class AttendanceController {
    ****************************/
 
   //  가게 직원들의 한달 출/퇴근 로그 조회
-  @GetMapping("/store/{storeId}/employees/attendance/month/?firstDate=YYYY-MM-DD")
+  @GetMapping("/store/{storeId}/employees/attendance/month/all")
   public ApplicationResponse<List<AttendanceRes>> getAttendancesForMonth(
       @PathVariable("storeId") String storeId,
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate,
@@ -92,7 +92,7 @@ public class AttendanceController {
   }
 
   //  가게 직원들의 하루 출/퇴근 로그 조회
-  @GetMapping("/store/{storeId}/employees/attendance/day/?firstDate=YYYY-MM-DD")
+  @GetMapping("/store/{storeId}/employees/attendance/day/all")
   public ApplicationResponse<List<AttendanceRes>> getAttendancesForDay(
       @PathVariable("storeId") String storeId,
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate,
@@ -103,7 +103,7 @@ public class AttendanceController {
   }
 
   //  특정 직원의 한달 출/퇴근 로그 조회
-  @GetMapping("/store/{storeId}/employees/attendance/month/{employeeId}/?firstDate=YYYY-MM-DD")
+  @GetMapping("/store/{storeId}/employees/attendance/month/{employeeId}")
   public ApplicationResponse<List<AttendanceRes>> getAttendancesForMonthWithEmployeeId(
       @PathVariable("storeId") String storeId,
       @PathVariable("employeeId") String employeeId,
@@ -116,7 +116,7 @@ public class AttendanceController {
   }
 
   //  특정 직원의 하루 출/퇴근 로그 조회
-  @GetMapping("/store/{storeId}/employees/attendance/day/{employeeId}/?firstDate=YYYY-MM-DD")
+  @GetMapping("/store/{storeId}/employees/attendance/day/{employeeId}")
   public ApplicationResponse<List<AttendanceRes>> getAttendancesForDayWithEmployeeId(
       @PathVariable("storeId") String storeId,
       @PathVariable("employeeId") String employeeId,
