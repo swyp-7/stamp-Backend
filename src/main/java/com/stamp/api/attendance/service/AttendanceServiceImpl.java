@@ -14,6 +14,7 @@ import com.stamp.api.store.repository.StoreRepository;
 import com.stamp.global.exception.DomainException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,8 @@ public class AttendanceServiceImpl implements AttendanceService {
   private final EmployerUserRepository employerUserRepository;
   private final EmployeeRepository employeeRepository;
   private final AttendanceRepository attendanceRepository;
+
+  ZoneId logTimeZone = ZoneId.of("Asia/Tokyo");
 
   /**
    * Public Method QR코드 생성 함수. StoreId를 받아 QR코드 PNG파일을 Byte List로 반환 권한 : EmployerUser
@@ -79,7 +82,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     if (attendanceRepository.existsAttendanceByStoreIdAndEmployeeIdAndDateAndAttendance(
         storeId,
         Long.parseLong(userDetails.getUsername()),
-        LocalDate.now(),
+        LocalDate.now(logTimeZone),
         AttendanceEnum.PUNCH_IN))
       throw new DomainException(
           AttendanceErrorCode.DUPLICATE_PUNCH_IN_ERROR, "AttendanceServiceImpl.punchIn");
@@ -89,7 +92,7 @@ public class AttendanceServiceImpl implements AttendanceService {
             storeId,
             Long.parseLong(userDetails.getUsername()),
             AttendanceEnum.PUNCH_IN,
-            LocalDateTime.now()));
+            LocalDateTime.now(logTimeZone)));
   }
 
   /**
@@ -110,7 +113,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     if (attendanceRepository.existsAttendanceByStoreIdAndEmployeeIdAndDateAndAttendance(
         storeId,
         Long.parseLong(userDetails.getUsername()),
-        LocalDate.now(),
+        LocalDate.now(logTimeZone),
         AttendanceEnum.PUNCH_OUT))
       throw new DomainException(
           AttendanceErrorCode.DUPLICATE_PUNCH_IN_ERROR, "AttendanceServiceImpl.punchIn");
@@ -120,7 +123,7 @@ public class AttendanceServiceImpl implements AttendanceService {
             storeId,
             Long.parseLong(userDetails.getUsername()),
             AttendanceEnum.PUNCH_OUT,
-            LocalDateTime.now()));
+            LocalDateTime.now(logTimeZone)));
   }
 
   /**
