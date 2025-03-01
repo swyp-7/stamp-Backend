@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -32,10 +31,7 @@ public class AttendanceServiceImpl implements AttendanceService {
   private final AttendanceRepository attendanceRepository;
 
   /**
-   * Public Method
-   * QR코드 생성 함수.
-   * StoreId를 받아 QR코드 PNG파일을 Byte List로 반환
-   * 권한 : EmployerUser
+   * Public Method QR코드 생성 함수. StoreId를 받아 QR코드 PNG파일을 Byte List로 반환 권한 : EmployerUser
    *
    * @param storeId 가게 Id
    * @return List<Byte> byteArr QR코드 파일
@@ -50,11 +46,8 @@ public class AttendanceServiceImpl implements AttendanceService {
   }
 
   /**
-   * Public Method
-   * QR코드 조회 함수.
-   * 해당 가게에서 기존에 생성했던 QR코드를 반환한다.
-   * StoreId를 받아 QR코드 PNG파일을 Byte List로 반환
-   * 권한 : EmployerUser
+   * Public Method QR코드 조회 함수. 해당 가게에서 기존에 생성했던 QR코드를 반환한다. StoreId를 받아 QR코드 PNG파일을 Byte List로 반환 권한
+   * : EmployerUser
    *
    * @param storeId 가게 Id
    * @return List<Byte> byteArr QR코드 파일
@@ -69,9 +62,7 @@ public class AttendanceServiceImpl implements AttendanceService {
   }
 
   /**
-   * Public Method
-   * 직원의 출근 로그를 남긴다.
-   * 권한 : Employee
+   * Public Method 직원의 출근 로그를 남긴다. 권한 : Employee
    *
    * @param storeId
    */
@@ -102,9 +93,7 @@ public class AttendanceServiceImpl implements AttendanceService {
   }
 
   /**
-   * Public Method
-   * 직원의 퇴근 로그를 남긴다.
-   * 권한 : Employee
+   * Public Method 직원의 퇴근 로그를 남긴다. 권한 : Employee
    *
    * @param storeId
    */
@@ -135,111 +124,94 @@ public class AttendanceServiceImpl implements AttendanceService {
   }
 
   /**
-   * Public Method
-   * 가게내 전 직원의 한달 출/퇴근 로그를 조회하는 method
-   * firstDate를 포함하여 조회한다.
-   * 권한 : Employer
+   * Public Method 가게내 전 직원의 한달 출/퇴근 로그를 조회하는 method firstDate를 포함하여 조회한다. 권한 : Employer
    *
    * @return
    */
-  public List<AttendanceRes> getAttendancesForMonth(Long storeId, LocalDate firstDate, UserDetails userDetails) {
+  public List<AttendanceRes> getAttendancesForMonth(
+      Long storeId, LocalDate firstDate, UserDetails userDetails) {
 
     // 권한 체크
     checkEmployerUserAuthority(storeId, userDetails);
 
     // firstDate로 Attendance Id 생성
-    String id1 = String.format("%019d", storeId) +
-            firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id1 =
+        String.format("%019d", storeId) + firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     // firstDate + 1개월의 날짜로 Attendance Id 생성
-    String id2 = String.format("%019d", storeId) +
-            firstDate.plusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id2 =
+        String.format("%019d", storeId)
+            + firstDate.plusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
     return attendanceRepository.findAttendancesByIdRange(id1, id2);
   }
 
-
   /**
-   * Public Method
-   * 가게내 전 직원의 하루 출/퇴근 로그를 조회하는 method
-   * 권한 : Employer
+   * Public Method 가게내 전 직원의 하루 출/퇴근 로그를 조회하는 method 권한 : Employer
    *
    * @return
    */
-  public List<AttendanceRes> getAttendancesForDay(Long storeId,
-                                                  LocalDate firstDate,
-                                                  UserDetails userDetails) {
+  public List<AttendanceRes> getAttendancesForDay(
+      Long storeId, LocalDate firstDate, UserDetails userDetails) {
 
     // 권한 체크
     checkEmployerUserAuthority(storeId, userDetails);
 
     // firstDate로 Attendance Id 생성
-    String id1 = String.format("%019d", storeId) +
-            firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id1 =
+        String.format("%019d", storeId) + firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     // firstDate + 1일의 날짜로 Attendance Id 생성
-    String id2 = String.format("%019d", storeId) +
-            firstDate.plusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id2 =
+        String.format("%019d", storeId)
+            + firstDate.plusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
     return attendanceRepository.findAttendancesByIdRange(id1, id2);
   }
 
-
   /**
-   * Public Method
-   * 가게 내 특정 직원의 한달 출/퇴근 로그를 조회하는 method
-   * firstDate를 포함하여 조회한다.
-   * 권한 : Employer
+   * Public Method 가게 내 특정 직원의 한달 출/퇴근 로그를 조회하는 method firstDate를 포함하여 조회한다. 권한 : Employer
    *
    * @return
    */
-  public List<AttendanceRes> getAttendancesForMonthWithEmployeeId(Long storeId,
-                                                                  LocalDate firstDate,
-                                                                  Long EmployeeId,
-                                                                  UserDetails userDetails) {
+  public List<AttendanceRes> getAttendancesForMonthWithEmployeeId(
+      Long storeId, LocalDate firstDate, Long EmployeeId, UserDetails userDetails) {
 
     // 권한 체크
     checkEmployerUserAuthority(storeId, userDetails);
 
     // firstDate로 Attendance Id 생성
-    String id1 = String.format("%019d", storeId) +
-            firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id1 =
+        String.format("%019d", storeId) + firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     // firstDate + 1개월의 날짜로 Attendance Id 생성
-    String id2 = String.format("%019d", storeId) +
-            firstDate.plusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id2 =
+        String.format("%019d", storeId)
+            + firstDate.plusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
     return attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, EmployeeId);
   }
 
   /**
-   * Public Method
-   * 가게 내 특정 직원의 하루 출/퇴근 로그를 조회하는 method
-   * 권한 : Employer
+   * Public Method 가게 내 특정 직원의 하루 출/퇴근 로그를 조회하는 method 권한 : Employer
    *
    * @return
    */
-  public List<AttendanceRes> getAttendancesForDayWithEmployeeId(Long storeId,
-                                                                  LocalDate firstDate,
-                                                                  Long EmployeeId,
-                                                                  UserDetails userDetails) {
+  public List<AttendanceRes> getAttendancesForDayWithEmployeeId(
+      Long storeId, LocalDate firstDate, Long EmployeeId, UserDetails userDetails) {
 
     // 권한 체크
     checkEmployerUserAuthority(storeId, userDetails);
 
     // firstDate로 Attendance Id 생성
-    String id1 = String.format("%019d", storeId) +
-            firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id1 =
+        String.format("%019d", storeId) + firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     // firstDate + 1일의 날짜로 Attendance Id 생성
-    String id2 = String.format("%019d", storeId) +
-            firstDate.plusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id2 =
+        String.format("%019d", storeId)
+            + firstDate.plusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
     return attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, EmployeeId);
   }
 
-
-
-  /**
-   * 로그인 한 유저가 Store의 EmployerUser가 맞는지 체크
-   * 권한이 없을 시 throw Exception
-   * */
+  /** 로그인 한 유저가 Store의 EmployerUser가 맞는지 체크 권한이 없을 시 throw Exception */
   private void checkEmployerUserAuthority(Long storeId, UserDetails userDetails) {
 
     /*
@@ -261,10 +233,7 @@ public class AttendanceServiceImpl implements AttendanceService {
           "AttendanceServiceImpl.checkEmployerUserAuthority");
   }
 
-  /**
-   * 로그인 한 유저가 Employee가 맞는지, Employee.store가 인자로 넘어온 storeId와 일치하는지 체크
-   * 권한이 없을 시 throw Exception
-   * */
+  /** 로그인 한 유저가 Employee가 맞는지, Employee.store가 인자로 넘어온 storeId와 일치하는지 체크 권한이 없을 시 throw Exception */
   private void checkEmployeeAuthority(Long storeId, UserDetails userDetails) {
 
     /*

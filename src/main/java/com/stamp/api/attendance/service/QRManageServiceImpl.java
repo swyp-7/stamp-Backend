@@ -25,8 +25,7 @@ public class QRManageServiceImpl implements QRManageService {
   private String defaultUrl = "https://stamp.swygbro.com/m/attendance/"; // 반환할 프론트 서버 url
 
   /**
-   * Public Method
-   * Store에 인증 코드를 할당한 뒤, 이를 포함한 URL로 QR코드를 생성하여 반환
+   * Public Method Store에 인증 코드를 할당한 뒤, 이를 포함한 URL로 QR코드를 생성하여 반환
    *
    * @param storeId
    * @return QR코드 PNG파일
@@ -68,8 +67,7 @@ public class QRManageServiceImpl implements QRManageService {
   }
 
   /**
-   * Public Method
-   * 인증코드 확인 후 문제시 throw Exception
+   * Public Method 인증코드 확인 후 문제시 throw Exception
    *
    * @param storeId
    * @param authCode 인증코드
