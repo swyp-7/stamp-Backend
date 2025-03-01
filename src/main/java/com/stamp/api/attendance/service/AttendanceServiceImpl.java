@@ -1,5 +1,6 @@
 package com.stamp.api.attendance.service;
 
+import com.stamp.api.attendance.dto.requeset.AttendanceUpdateReq;
 import com.stamp.api.attendance.dto.response.AttendanceRes;
 import com.stamp.api.attendance.dto.response.QRCodeRes;
 import com.stamp.api.attendance.entity.Attendance;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -138,12 +140,9 @@ public class AttendanceServiceImpl implements AttendanceService {
     checkEmployerUserAuthority(storeId, userDetails);
 
     // firstDate로 Attendance Id 생성
-    String id1 =
-        String.format("%019d", storeId) + firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id1 = createAttendanceId(storeId, firstDate);
     // firstDate + 1개월의 날짜로 Attendance Id 생성
-    String id2 =
-        String.format("%019d", storeId)
-            + firstDate.plusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id2 = createAttendanceId(storeId, firstDate.plusMonths(1));
 
     return attendanceRepository.findAttendancesByIdRange(id1, id2);
   }
@@ -160,12 +159,9 @@ public class AttendanceServiceImpl implements AttendanceService {
     checkEmployerUserAuthority(storeId, userDetails);
 
     // firstDate로 Attendance Id 생성
-    String id1 =
-        String.format("%019d", storeId) + firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id1 = createAttendanceId(storeId, firstDate);
     // firstDate + 1일의 날짜로 Attendance Id 생성
-    String id2 =
-        String.format("%019d", storeId)
-            + firstDate.plusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id2 = createAttendanceId(storeId, firstDate.plusDays(1));
 
     return attendanceRepository.findAttendancesByIdRange(id1, id2);
   }
@@ -182,12 +178,9 @@ public class AttendanceServiceImpl implements AttendanceService {
     checkEmployerUserAuthority(storeId, userDetails);
 
     // firstDate로 Attendance Id 생성
-    String id1 =
-        String.format("%019d", storeId) + firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id1 = createAttendanceId(storeId, firstDate);
     // firstDate + 1개월의 날짜로 Attendance Id 생성
-    String id2 =
-        String.format("%019d", storeId)
-            + firstDate.plusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id2 = createAttendanceId(storeId, firstDate.plusMonths(1));
 
     return attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, EmployeeId);
   }
@@ -204,14 +197,64 @@ public class AttendanceServiceImpl implements AttendanceService {
     checkEmployerUserAuthority(storeId, userDetails);
 
     // firstDate로 Attendance Id 생성
-    String id1 =
-        String.format("%019d", storeId) + firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id1 = createAttendanceId(storeId, firstDate);
     // firstDate + 1일의 날짜로 Attendance Id 생성
-    String id2 =
-        String.format("%019d", storeId)
-            + firstDate.plusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    String id2 = createAttendanceId(storeId, firstDate.plusDays(1));
 
     return attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, EmployeeId);
+  }
+
+  public void updateAttendance(Long storeId, AttendanceUpdateReq req, UserDetails userDetails) {
+
+    // store Id에 대한 권한 체크
+    checkEmployerUserAuthority(storeId, userDetails);
+
+    // employee에 대한 권한체크
+    Employee employee = checkEmployerEmployeeAuthority(storeId, req);
+
+    /*
+     조회할 attendanceId 범위 설정
+     store Id의 가게에서 req.date의 날에 해당하는 req.attendanceEnum(출/퇴근 구분) 중 employee Id의 기록을 조회
+     */
+    String id1 = createAttendanceId(storeId, req.date(), req.attendanceEnum().ordinal());
+    String id2 = createAttendanceId(storeId, req.date(), req.attendanceEnum().ordinal() +1);
+    List<AttendanceRes> attendanceResList = attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, employee.getId());
+
+    Attendance updatedAttendance;
+
+    if (attendanceResList.isEmpty() || !attendanceRepository.existsById(attendanceResList.getFirst().id())) {
+
+      // 출퇴근 기록이 없다면 새로 생성
+      updatedAttendance = Attendance.of(
+              storeId,
+              employee.getId(),
+              req.attendanceEnum(),
+              LocalDateTime.of(req.date(), req.time()));
+    } else {
+
+      // 출퇴근 기록이 있다면 시간 변경
+      updatedAttendance = attendanceRepository.findById(attendanceResList.getFirst().id()).get();
+      updatedAttendance.setTime(req.time());
+    }
+
+    attendanceRepository.save(updatedAttendance);
+  }
+
+
+
+  /**
+   * 로그인 한 유저가 employee Id에 대한 권한이 있는지 체크.
+   * 권한이 없을 시 throw Exception
+   */
+  private Employee checkEmployerEmployeeAuthority(Long storeId, AttendanceUpdateReq req) {
+    Employee employee = employeeRepository.findById(req.employeeId()).orElseThrow(
+            () ->
+                    new DomainException(AttendanceErrorCode.EMPLOYEE_ID_ERROR, "AttendanceServiceImpl.updateAttendance"));
+
+    if (!storeId.equals(employee.getStore().getId())) {
+      throw new DomainException(AttendanceErrorCode.NO_AUTHORITY_FOR_EMPLOYEE_ERROR, "AttendanceServiceImpl.updateAttendance");
+    }
+    return employee;
   }
 
   /** 로그인 한 유저가 Store의 EmployerUser가 맞는지 체크 권한이 없을 시 throw Exception */
@@ -256,5 +299,17 @@ public class AttendanceServiceImpl implements AttendanceService {
       throw new DomainException(
           AttendanceErrorCode.NO_AUTHORITY_FOR_STORE_ERROR,
           "AttendanceServiceImpl.checkEmployerUserAuthority");
+  }
+
+  /**
+   * 출/퇴근 로그 정보를 Attendance Id로 변환하는 메서드
+   */
+  private static String createAttendanceId(Long storeId, LocalDate firstDate) {
+      return String.format("%019d", storeId) + firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+  }
+  private static String createAttendanceId(Long storeId, LocalDate firstDate, Integer attendanceEnum) {
+      return String.format("%019d", storeId) +
+            firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) +
+            attendanceEnum;
   }
 }

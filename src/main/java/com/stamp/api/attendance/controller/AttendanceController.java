@@ -1,6 +1,7 @@
 package com.stamp.api.attendance.controller;
 
 import com.stamp.api.attendance.dto.requeset.AttendanceReq;
+import com.stamp.api.attendance.dto.requeset.AttendanceUpdateReq;
 import com.stamp.api.attendance.dto.response.AttendanceRes;
 import com.stamp.api.attendance.dto.response.QRCodeRes;
 import com.stamp.api.attendance.service.AttendanceService;
@@ -22,6 +23,13 @@ public class AttendanceController {
 
   private final AttendanceService attendanceService;
 
+
+  /****************************
+   *
+   * QR코드 관련 API
+   *
+   ****************************/
+
   // QR코드 생성 API
   @GetMapping("/store/{storeId}/employees/createQR")
   public ApplicationResponse<QRCodeRes> createQR(
@@ -37,6 +45,12 @@ public class AttendanceController {
 
     return ApplicationResponse.ok(attendanceService.getQR(Long.valueOf(storeId), userDetails));
   }
+
+  /****************************
+   *
+   * 출/퇴근 API (직원용)
+   *
+   ****************************/
 
   //  출근 로그 생성 API
   @PostMapping("/store/{storeId}/employees/punchIn")
@@ -59,6 +73,12 @@ public class AttendanceController {
     attendanceService.punchOut(Long.valueOf(storeId), userDetails, attendanceReq.authCode());
     return ApplicationResponse.ok();
   }
+
+  /****************************
+   *
+   * 출/퇴근 기록 조회 API (사장용)
+   *
+   ****************************/
 
   //  가게 직원들의 한달 출/퇴근 로그 조회
   @GetMapping("/store/{storeId}/employees/attendance/month/?firstDate=YYYY-MM-DD")
@@ -104,7 +124,24 @@ public class AttendanceController {
       @AuthenticationPrincipal UserDetails userDetails) {
 
     return ApplicationResponse.ok(
-        attendanceService.getAttendancesForMonthWithEmployeeId(
+        attendanceService.getAttendancesForDayWithEmployeeId(
             Long.valueOf(storeId), firstDate, Long.valueOf(employeeId), userDetails));
+  }
+
+  /****************************
+   *
+   * 출퇴근 기록 수정 API (사장용)
+   *
+   ****************************/
+
+  //  직원 출/퇴근 로그 수정/생성
+  @GetMapping("/store/{storeId}/employees/attendance/update")
+  public ApplicationResponse<Void> updateAttendance(
+          @PathVariable("storeId") String storeId,
+          @RequestBody AttendanceUpdateReq attendanceUpdateReq,
+          @AuthenticationPrincipal UserDetails userDetails) {
+
+    attendanceService.updateAttendance(Long.valueOf(storeId), attendanceUpdateReq, userDetails);
+    return ApplicationResponse.ok();
   }
 }

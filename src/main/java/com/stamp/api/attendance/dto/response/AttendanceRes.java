@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record AttendanceRes(
-    String id,
+    String id,  //attendance Entity id
     String name,
     Long employeeId,
     AttendanceEnum attendanceEnum,
