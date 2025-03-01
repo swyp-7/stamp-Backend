@@ -3,6 +3,7 @@ package com.stamp.api.auth.employer.controller;
 import com.stamp.api.auth.employer.dto.request.LoginEmployeeReq;
 import com.stamp.api.auth.employer.dto.request.LoginEmployerReq;
 import com.stamp.api.auth.employer.dto.request.SocialLoginEmployerReq;
+import com.stamp.api.auth.employer.dto.response.EmployeeLoginRes;
 import com.stamp.api.auth.employer.dto.response.LoginRes;
 import com.stamp.api.auth.employer.infra.oauth.ProviderType;
 import com.stamp.api.auth.employer.service.AuthEmployeeService;
@@ -62,7 +63,7 @@ public class AuthEmployerController {
    * @return token: JWT토큰, expirationTime: 토큰 만료시간, isNewUser: false
    */
   @PostMapping("/auth/login/employee")
-  public ApplicationResponse<LoginRes> loginEmployee(
+  public ApplicationResponse<EmployeeLoginRes> loginEmployee(
       @RequestBody LoginEmployeeReq loginEmployeeReq) {
     return ApplicationResponse.ok(authEmployeeService.login(loginEmployeeReq));
   }

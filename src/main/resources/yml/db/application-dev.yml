@@ -8,3 +8,7 @@ spring:
     username: stampuser
     password: ENC(X+7rj16rm/uhoCm2bUwmcQ==)
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # 데이터베이스 자동 생성/업데이트. 필요에 따라 'none'이나 'create'로 설정 가능.
