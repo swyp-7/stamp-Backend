@@ -1,11 +1,15 @@
 package com.stamp.api.attendance.controller;
 
 import com.stamp.api.attendance.dto.requeset.AttendanceReq;
+import com.stamp.api.attendance.dto.response.AttendanceRes;
 import com.stamp.api.attendance.dto.response.QRCodeRes;
 import com.stamp.api.attendance.service.AttendanceService;
 import com.stamp.global.response.ApplicationResponse;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -54,5 +58,53 @@ public class AttendanceController {
 
     attendanceService.punchOut(Long.valueOf(storeId), userDetails, attendanceReq.authCode());
     return ApplicationResponse.ok();
+  }
+
+  //  가게 직원들의 한달 출/퇴근 로그 조회
+  @GetMapping("/store/{storeId}/employees/attendance/month/?firstDate=YYYY-MM-DD")
+  public ApplicationResponse<List<AttendanceRes>> getAttendancesForMonth(
+      @PathVariable("storeId") String storeId,
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate,
+      @AuthenticationPrincipal UserDetails userDetails) {
+
+    return ApplicationResponse.ok(
+        attendanceService.getAttendancesForMonth(Long.valueOf(storeId), firstDate, userDetails));
+  }
+
+  //  가게 직원들의 하루 출/퇴근 로그 조회
+  @GetMapping("/store/{storeId}/employees/attendance/day/?firstDate=YYYY-MM-DD")
+  public ApplicationResponse<List<AttendanceRes>> getAttendancesForDay(
+      @PathVariable("storeId") String storeId,
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate,
+      @AuthenticationPrincipal UserDetails userDetails) {
+
+    return ApplicationResponse.ok(
+        attendanceService.getAttendancesForDay(Long.valueOf(storeId), firstDate, userDetails));
+  }
+
+  //  특정 직원의 한달 출/퇴근 로그 조회
+  @GetMapping("/store/{storeId}/employees/attendance/month/{employeeId}/?firstDate=YYYY-MM-DD")
+  public ApplicationResponse<List<AttendanceRes>> getAttendancesForMonthWithEmployeeId(
+      @PathVariable("storeId") String storeId,
+      @PathVariable("employeeId") String employeeId,
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate,
+      @AuthenticationPrincipal UserDetails userDetails) {
+
+    return ApplicationResponse.ok(
+        attendanceService.getAttendancesForMonthWithEmployeeId(
+            Long.valueOf(storeId), firstDate, Long.valueOf(employeeId), userDetails));
+  }
+
+  //  특정 직원의 하루 출/퇴근 로그 조회
+  @GetMapping("/store/{storeId}/employees/attendance/day/{employeeId}/?firstDate=YYYY-MM-DD")
+  public ApplicationResponse<List<AttendanceRes>> getAttendancesForDayWithEmployeeId(
+      @PathVariable("storeId") String storeId,
+      @PathVariable("employeeId") String employeeId,
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate,
+      @AuthenticationPrincipal UserDetails userDetails) {
+
+    return ApplicationResponse.ok(
+        attendanceService.getAttendancesForMonthWithEmployeeId(
+            Long.valueOf(storeId), firstDate, Long.valueOf(employeeId), userDetails));
   }
 }
