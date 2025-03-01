@@ -79,18 +79,20 @@ public class QRManageServiceImplUnitTest {
     assertTrue("QR 코드 길이는 0보다 커야 한다.", qrCode.length > 0);
   }
 
-  @DisplayName("getQRCode() - 없는 storeId일 경우 DomainException 발생 테스트")
-  @Test(expected = DomainException.class)
-  public void getQRCode_Fail_WhenNotExist() {
+  @DisplayName("getQRCode() - 성공테스트: QR이 생성된 적 없는 없는 storeId일 경우에도 정상적으로 생성")
+  @Test
+  public void getQRCode_Success_WhenNotExist() {
 
     // given
     when(authCodeRepository.findByStoreId(storeId))
         .thenReturn(Optional.empty()); // 해당 StoreId가 없다고 가정
 
     // when
-    qrManageService.getQRCode(storeId);
+    byte[] qrCode = qrManageService.getQRCode(storeId);
 
     // then
+    assertNotNull("QR 코드 바이트 배열이 null이 아니다.", qrCode);
+    assertTrue("QR 코드 길이는 0보다 커야 한다.", qrCode.length > 0);
   }
 
   @DisplayName("create/get 동일성 테스트 - 같은 store에서 createQR로 만든 QR코드와 getQR로 가져오는 QR파일이 같은지")
