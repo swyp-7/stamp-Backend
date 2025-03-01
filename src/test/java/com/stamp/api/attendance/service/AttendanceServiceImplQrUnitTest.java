@@ -23,7 +23,7 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class AttendanceServiceImplUnitTest {
+public class AttendanceServiceImplQrUnitTest {
   @Rule public MockitoRule rule = MockitoJUnit.rule().strictness(Strictness.LENIENT);
 
   private AttendanceServiceImpl attendanceService;
