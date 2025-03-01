@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     // Request Method, URI 로깅
     String requestUri = request.getRequestURI();
     String method = request.getMethod();
-    log.info("Request method: {}, Request URI : {}", method,requestUri);
+    log.info("Request method: {}, Request URI : {}", method, requestUri);
 
     String token = extractToken(request);
 
