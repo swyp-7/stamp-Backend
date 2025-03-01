@@ -48,6 +48,7 @@ public class LocalQRManageServiceImpl implements LocalQRManageService {
 
   /**
    * Public Method Store의 QR 이미지 조회 함수
+   * QRAuthCode Entity에 매핑되지 않은 storeId에서 요청시 생성하여 반환
    *
    * @param storeId
    * @return QR코드 PNG파일
@@ -56,12 +57,9 @@ public class LocalQRManageServiceImpl implements LocalQRManageService {
   public byte[] getQRCode(Long storeId) {
 
     QRAuthCode qrAuthCode =
-        authCodeRepository
-            .findByStoreId(storeId)
-            .orElseThrow(
-                () ->
-                    new DomainException(
-                        QRCodeErrorCode.QR_NOT_EXIST_ERROR, "QRManageServiceImpl.getQRCode"));
+            authCodeRepository.findByStoreId(storeId).orElse(QRAuthCode.of(storeId, generateRandomString()));
+
+    authCodeRepository.save(qrAuthCode);
 
     String url = defaultUrl + qrAuthCode.getCode();
     return createQRImage(url);

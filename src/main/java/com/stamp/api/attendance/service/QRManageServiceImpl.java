@@ -37,7 +37,7 @@ public class QRManageServiceImpl implements QRManageService {
     String url = defaultUrl + authCode;
     byte[] qrCode = createQRImage(url);
 
-    // private HashMap에 인증코드 매핑
+    // QRAuthCode Entity에 인증코드 매핑
     QRAuthCode qrAuthCode =
         authCodeRepository.findByStoreId(storeId).orElse(QRAuthCode.of(storeId, authCode));
     qrAuthCode.setCode(authCode);
@@ -48,6 +48,7 @@ public class QRManageServiceImpl implements QRManageService {
 
   /**
    * Public Method Store의 QR 이미지 조회 함수
+   * QRAuthCode Entity에 매핑되지 않은 storeId에서 요청시 생성하여 반환
    *
    * @param storeId
    * @return QR코드 PNG파일
@@ -56,12 +57,9 @@ public class QRManageServiceImpl implements QRManageService {
   public byte[] getQRCode(Long storeId) {
 
     QRAuthCode qrAuthCode =
-        authCodeRepository
-            .findByStoreId(storeId)
-            .orElseThrow(
-                () ->
-                    new DomainException(
-                        QRCodeErrorCode.QR_NOT_EXIST_ERROR, "QRManageServiceImpl.getQRCode"));
+            authCodeRepository.findByStoreId(storeId).orElse(QRAuthCode.of(storeId, generateRandomString()));
+
+    authCodeRepository.save(qrAuthCode);
 
     String url = defaultUrl + qrAuthCode.getCode();
     return createQRImage(url);
