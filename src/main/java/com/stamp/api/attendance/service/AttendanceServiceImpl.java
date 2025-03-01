@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -213,19 +212,22 @@ public class AttendanceServiceImpl implements AttendanceService {
     Employee employee = checkEmployerEmployeeAuthority(storeId, req);
 
     /*
-     조회할 attendanceId 범위 설정
-     store Id의 가게에서 req.date의 날에 해당하는 req.attendanceEnum(출/퇴근 구분) 중 employee Id의 기록을 조회
-     */
+    조회할 attendanceId 범위 설정
+    store Id의 가게에서 req.date의 날에 해당하는 req.attendanceEnum(출/퇴근 구분) 중 employee Id의 기록을 조회
+    */
     String id1 = createAttendanceId(storeId, req.date(), req.attendanceEnum().ordinal());
-    String id2 = createAttendanceId(storeId, req.date(), req.attendanceEnum().ordinal() +1);
-    List<AttendanceRes> attendanceResList = attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, employee.getId());
+    String id2 = createAttendanceId(storeId, req.date(), req.attendanceEnum().ordinal() + 1);
+    List<AttendanceRes> attendanceResList =
+        attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, employee.getId());
 
     Attendance updatedAttendance;
 
-    if (attendanceResList.isEmpty() || !attendanceRepository.existsById(attendanceResList.getFirst().id())) {
+    if (attendanceResList.isEmpty()
+        || !attendanceRepository.existsById(attendanceResList.getFirst().id())) {
 
       // 출퇴근 기록이 없다면 새로 생성
-      updatedAttendance = Attendance.of(
+      updatedAttendance =
+          Attendance.of(
               storeId,
               employee.getId(),
               req.attendanceEnum(),
@@ -240,19 +242,21 @@ public class AttendanceServiceImpl implements AttendanceService {
     attendanceRepository.save(updatedAttendance);
   }
 
-
-
-  /**
-   * 로그인 한 유저가 employee Id에 대한 권한이 있는지 체크.
-   * 권한이 없을 시 throw Exception
-   */
+  /** 로그인 한 유저가 employee Id에 대한 권한이 있는지 체크. 권한이 없을 시 throw Exception */
   private Employee checkEmployerEmployeeAuthority(Long storeId, AttendanceUpdateReq req) {
-    Employee employee = employeeRepository.findById(req.employeeId()).orElseThrow(
-            () ->
-                    new DomainException(AttendanceErrorCode.EMPLOYEE_ID_ERROR, "AttendanceServiceImpl.updateAttendance"));
+    Employee employee =
+        employeeRepository
+            .findById(req.employeeId())
+            .orElseThrow(
+                () ->
+                    new DomainException(
+                        AttendanceErrorCode.EMPLOYEE_ID_ERROR,
+                        "AttendanceServiceImpl.updateAttendance"));
 
     if (!storeId.equals(employee.getStore().getId())) {
-      throw new DomainException(AttendanceErrorCode.NO_AUTHORITY_FOR_EMPLOYEE_ERROR, "AttendanceServiceImpl.updateAttendance");
+      throw new DomainException(
+          AttendanceErrorCode.NO_AUTHORITY_FOR_EMPLOYEE_ERROR,
+          "AttendanceServiceImpl.updateAttendance");
     }
     return employee;
   }
@@ -301,15 +305,16 @@ public class AttendanceServiceImpl implements AttendanceService {
           "AttendanceServiceImpl.checkEmployerUserAuthority");
   }
 
-  /**
-   * 출/퇴근 로그 정보를 Attendance Id로 변환하는 메서드
-   */
+  /** 출/퇴근 로그 정보를 Attendance Id로 변환하는 메서드 */
   private static String createAttendanceId(Long storeId, LocalDate firstDate) {
-      return String.format("%019d", storeId) + firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    return String.format("%019d", storeId)
+        + firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
   }
-  private static String createAttendanceId(Long storeId, LocalDate firstDate, Integer attendanceEnum) {
-      return String.format("%019d", storeId) +
-            firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) +
-            attendanceEnum;
+
+  private static String createAttendanceId(
+      Long storeId, LocalDate firstDate, Integer attendanceEnum) {
+    return String.format("%019d", storeId)
+        + firstDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+        + attendanceEnum;
   }
 }

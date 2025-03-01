@@ -1,10 +1,8 @@
 package com.stamp.api.attendance.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
-import com.stamp.api.attendance.dto.requeset.AttendanceReq;
 import com.stamp.api.attendance.dto.requeset.AttendanceUpdateReq;
 import com.stamp.api.attendance.dto.response.AttendanceRes;
 import com.stamp.api.attendance.entity.Attendance;
@@ -23,7 +21,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -142,7 +139,7 @@ public class AttendanceServiceImplQueryUnitTest {
 
   @DisplayName("출/퇴근 로그 업데이트 - 신규 생성 성공 테스트")
   @Test
-  public void updateAttendanc_Create_Success_Test(){
+  public void updateAttendanc_Create_Success_Test() {
 
     // given
     /* EmployerUser, UserDetail 준비 */
@@ -173,25 +170,24 @@ public class AttendanceServiceImplQueryUnitTest {
     /* AttendanceUpdateReq 준비 */
     LocalDate date = LocalDate.of(2024, 5, 5);
     LocalTime time = LocalTime.of(14, 50, 0);
-    AttendanceUpdateReq req = new AttendanceUpdateReq(employeeId, AttendanceEnum.PUNCH_IN, date, time);
-
+    AttendanceUpdateReq req =
+        new AttendanceUpdateReq(employeeId, AttendanceEnum.PUNCH_IN, date, time);
 
     // when
     attendanceService.updateAttendance(storeId, req, userDetails);
     ArgumentCaptor<Attendance> captor = ArgumentCaptor.forClass(Attendance.class);
-    verify(attendanceRepository, atLeastOnce())
-            .save(captor.capture());
+    verify(attendanceRepository, atLeastOnce()).save(captor.capture());
 
-    //then
+    // then
     Attendance attendance = captor.getValue();
     assertEquals(employeeId, attendance.getEmployeeId());
-    assertEquals(date,attendance.getDate());
-    assertEquals(time,attendance.getTime());
+    assertEquals(date, attendance.getDate());
+    assertEquals(time, attendance.getTime());
   }
 
   @DisplayName("출/퇴근 로그 업데이트 - 기존 로그 변경 성공 테스트")
   @Test
-  public void updateAttendance_Modify_Success_Test(){
+  public void updateAttendance_Modify_Success_Test() {
 
     // given
     /* EmployerUser, UserDetail 준비 */
@@ -227,39 +223,45 @@ public class AttendanceServiceImplQueryUnitTest {
 
     /* 기존 Attendance 준비 */
     LocalTime defaultTime = LocalTime.of(13, 53, 22);
-    Attendance attendance = Attendance.of(storeId, employeeId, attendanceEnum, LocalDateTime.of(reqDate, defaultTime));
+    Attendance attendance =
+        Attendance.of(storeId, employeeId, attendanceEnum, LocalDateTime.of(reqDate, defaultTime));
 
     /* AttendanceRes 준비 */
-    AttendanceRes attendanceRes = new AttendanceRes(attendance.getId(), employee.getName(), attendance.getEmployeeId(), attendance.getAttendance(), attendance.getDate(), attendance.getTime());
+    AttendanceRes attendanceRes =
+        new AttendanceRes(
+            attendance.getId(),
+            employee.getName(),
+            attendance.getEmployeeId(),
+            attendance.getAttendance(),
+            attendance.getDate(),
+            attendance.getTime());
     List<AttendanceRes> attendanceResList = Arrays.asList(attendanceRes);
 
     /* AttendanceRepository 준비 */
-    String id1 = String.format("%019d", storeId) +
-            reqDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) +
-            (Integer)attendanceEnum.ordinal();
-    String id2 = String.format("%019d", storeId) +
-            reqDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) +
-            ((Integer)attendanceEnum.ordinal() + 1);
+    String id1 =
+        String.format("%019d", storeId)
+            + reqDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+            + (Integer) attendanceEnum.ordinal();
+    String id2 =
+        String.format("%019d", storeId)
+            + reqDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+            + ((Integer) attendanceEnum.ordinal() + 1);
     when(attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, employeeId))
-            .thenReturn(attendanceResList);
+        .thenReturn(attendanceResList);
     when(attendanceRepository.findById(attendance.getId()))
-            .thenReturn(java.util.Optional.of(attendance));
-    when(attendanceRepository.existsById(attendanceResList.getFirst().id()))
-            .thenReturn(true);
-
-
+        .thenReturn(java.util.Optional.of(attendance));
+    when(attendanceRepository.existsById(attendanceResList.getFirst().id())).thenReturn(true);
 
     // when
     attendanceService.updateAttendance(storeId, req, userDetails);
     ArgumentCaptor<Attendance> captor = ArgumentCaptor.forClass(Attendance.class);
     verify(attendanceRepository, atLeastOnce()).findById(attendanceResList.getFirst().id());
-    verify(attendanceRepository, atLeastOnce())
-            .save(captor.capture());
+    verify(attendanceRepository, atLeastOnce()).save(captor.capture());
 
-    //then
+    // then
     Attendance captoredAttendance = captor.getValue();
     assertEquals(employeeId, captoredAttendance.getEmployeeId());
-    assertEquals(reqDate,captoredAttendance.getDate());
-    assertEquals(reqTime,captoredAttendance.getTime());
+    assertEquals(reqDate, captoredAttendance.getDate());
+    assertEquals(reqTime, captoredAttendance.getTime());
   }
 }

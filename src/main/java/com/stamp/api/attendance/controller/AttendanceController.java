@@ -23,7 +23,6 @@ public class AttendanceController {
 
   private final AttendanceService attendanceService;
 
-
   /****************************
    *
    * QR코드 관련 API
@@ -137,9 +136,9 @@ public class AttendanceController {
   //  직원 출/퇴근 로그 수정/생성
   @GetMapping("/store/{storeId}/employees/attendance/update")
   public ApplicationResponse<Void> updateAttendance(
-          @PathVariable("storeId") String storeId,
-          @RequestBody AttendanceUpdateReq attendanceUpdateReq,
-          @AuthenticationPrincipal UserDetails userDetails) {
+      @PathVariable("storeId") String storeId,
+      @RequestBody AttendanceUpdateReq attendanceUpdateReq,
+      @AuthenticationPrincipal UserDetails userDetails) {
 
     attendanceService.updateAttendance(Long.valueOf(storeId), attendanceUpdateReq, userDetails);
     return ApplicationResponse.ok();
