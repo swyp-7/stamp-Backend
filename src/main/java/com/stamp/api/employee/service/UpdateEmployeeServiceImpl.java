@@ -44,7 +44,7 @@ public class UpdateEmployeeServiceImpl implements UpdateEmployeeService {
         .orElseThrow(
             () ->
                 new DomainException(
-                    EmployeeErrorCode.EMPLOYEE_NOT_FOUNDED,
+                    EmployeeErrorCode.EMPLOYEE_NOT_FOUND,
                     "UpdateEmployeeServiceImpl.updateEmployee"));
   }
 }

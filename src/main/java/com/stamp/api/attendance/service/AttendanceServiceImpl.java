@@ -171,7 +171,7 @@ public class AttendanceServiceImpl implements AttendanceService {
    * @return
    */
   public List<AttendanceRes> getAttendancesForMonthWithEmployeeId(
-      Long storeId, LocalDate firstDate, Long EmployeeId, UserDetails userDetails) {
+      Long storeId, LocalDate firstDate, Long employeeId, UserDetails userDetails) {
 
     // 권한 체크
     checkEmployerUserAuthority(storeId, userDetails);
@@ -181,7 +181,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     // firstDate + 1개월의 날짜로 Attendance Id 생성
     String id2 = createAttendanceId(storeId, firstDate.plusMonths(1));
 
-    return attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, EmployeeId);
+    return attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, employeeId);
   }
 
   /**
@@ -190,7 +190,7 @@ public class AttendanceServiceImpl implements AttendanceService {
    * @return
    */
   public List<AttendanceRes> getAttendancesForDayWithEmployeeId(
-      Long storeId, LocalDate firstDate, Long EmployeeId, UserDetails userDetails) {
+      Long storeId, LocalDate firstDate, Long employeeId, UserDetails userDetails) {
 
     // 권한 체크
     checkEmployerUserAuthority(storeId, userDetails);
@@ -200,7 +200,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     // firstDate + 1일의 날짜로 Attendance Id 생성
     String id2 = createAttendanceId(storeId, firstDate.plusDays(1));
 
-    return attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, EmployeeId);
+    return attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, employeeId);
   }
 
   public void updateAttendance(Long storeId, AttendanceUpdateReq req, UserDetails userDetails) {

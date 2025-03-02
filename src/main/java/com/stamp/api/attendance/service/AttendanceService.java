@@ -9,6 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface AttendanceService {
 
+  /***************************************************
+   * QR 출퇴근 관련 서비스 클래스
+   * #직원용 출/퇴근 기록 조회 API는 Employee 도메인에 위치
+   ***************************************************/
   QRCodeRes createQR(Long storeId, UserDetails userDetails);
 
   QRCodeRes getQR(Long storeId, UserDetails userDetails);

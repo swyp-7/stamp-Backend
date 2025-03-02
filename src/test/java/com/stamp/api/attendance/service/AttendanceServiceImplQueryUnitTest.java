@@ -35,7 +35,7 @@ public class AttendanceServiceImplQueryUnitTest {
 
   @Rule public MockitoRule rule = MockitoJUnit.rule().strictness(Strictness.LENIENT);
 
-  private AttendanceServiceImpl attendanceService;
+  private AttendanceService attendanceService;
 
   // Repository 등등은 Mock
   private StoreRepository storeRepository = mock(StoreRepository.class);

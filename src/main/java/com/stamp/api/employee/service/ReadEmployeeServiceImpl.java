@@ -70,7 +70,7 @@ public class ReadEmployeeServiceImpl implements ReadEmployeeService {
         .orElseThrow(
             () ->
                 new DomainException(
-                    EmployeeErrorCode.EMPLOYEE_NOT_FOUNDED, "ReadEmployeeServiceImpl.getEmployee"));
+                    EmployeeErrorCode.EMPLOYEE_NOT_FOUND, "ReadEmployeeServiceImpl.getEmployee"));
   }
 
   private List<Employee> findAllEmployees(Long storeId) {
