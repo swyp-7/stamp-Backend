@@ -2,6 +2,7 @@ package com.stamp.api.employee.service;
 
 import com.stamp.api.attendance.dto.response.AttendanceRes;
 import com.stamp.api.attendance.repository.AttendanceRepository;
+import com.stamp.api.employee.dto.response.EmployeeAttendacneRes;
 import com.stamp.api.employee.entity.Employee;
 import com.stamp.api.employee.exception.EmployeeErrorCode;
 import com.stamp.api.employee.repository.EmployeeRepository;
@@ -21,7 +22,7 @@ public class EmployeeAttendanceServiceImpl implements EmployeeAttendanceService 
   private final EmployeeRepository employeeRepository;
 
   @Override
-  public List<AttendanceRes> getAttendancesForMonth(LocalDate firstDate, UserDetails userDetails) {
+  public List<EmployeeAttendacneRes> getAttendancesForMonth(LocalDate firstDate, UserDetails userDetails) {
 
     Long employeeId = Long.parseLong(userDetails.getUsername());
     Employee employee =
@@ -39,11 +40,11 @@ public class EmployeeAttendanceServiceImpl implements EmployeeAttendanceService 
     // firstDate + 1개월의 날짜로 Attendance Id 생성
     String id2 = createAttendanceId(storeId, firstDate.plusMonths(1));
 
-    return attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, employeeId);
+    return attendanceRepository.findAttendancesByIdRangeOnEmployee(id1, id2, employeeId);
   }
 
   @Override
-  public List<AttendanceRes> getAttendancesForDay(LocalDate firstDate, UserDetails userDetails) {
+  public List<EmployeeAttendacneRes> getAttendancesForDay(LocalDate firstDate, UserDetails userDetails) {
 
     Long employeeId = Long.parseLong(userDetails.getUsername());
     Employee employee =
@@ -61,7 +62,7 @@ public class EmployeeAttendanceServiceImpl implements EmployeeAttendanceService 
     // firstDate + 1일의 날짜로 Attendance Id 생성
     String id2 = createAttendanceId(storeId, firstDate.plusDays(1));
 
-    return attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, employeeId);
+    return attendanceRepository.findAttendancesByIdRangeOnEmployee(id1, id2, employeeId);
   }
 
   /** 출/퇴근 로그 정보를 Attendance Id로 변환하는 메서드 */

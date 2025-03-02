@@ -1,6 +1,7 @@
 package com.stamp.api.employee.controller;
 
 import com.stamp.api.attendance.dto.response.AttendanceRes;
+import com.stamp.api.employee.dto.response.EmployeeAttendacneRes;
 import com.stamp.api.employee.service.EmployeeService;
 import com.stamp.global.response.ApplicationResponse;
 import java.time.LocalDate;
@@ -26,7 +27,7 @@ public class EmployeeController {
 
   //  직원의 한달 출/퇴근 로그 조회
   @GetMapping("/attendance/month")
-  public ApplicationResponse<List<AttendanceRes>> getAttendancesForMonth(
+  public ApplicationResponse<List<EmployeeAttendacneRes>> getAttendancesForMonth(
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate,
       @AuthenticationPrincipal UserDetails userDetails) {
 
@@ -35,7 +36,7 @@ public class EmployeeController {
 
   //  직원의 하루 출/퇴근 로그 조회
   @GetMapping("/attendance/day")
-  public ApplicationResponse<List<AttendanceRes>> getAttendancesForDayWithEmployeeId(
+  public ApplicationResponse<List<EmployeeAttendacneRes>> getAttendancesForDayWithEmployeeId(
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate,
       @AuthenticationPrincipal UserDetails userDetails) {
 
