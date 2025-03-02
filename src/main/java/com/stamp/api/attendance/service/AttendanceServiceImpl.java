@@ -10,6 +10,7 @@ import com.stamp.api.attendance.repository.AttendanceRepository;
 import com.stamp.api.employee.entity.Employee;
 import com.stamp.api.employee.repository.EmployeeRepository;
 import com.stamp.api.employeruser.repository.EmployerUserRepository;
+import com.stamp.api.store.dto.response.WageRes;
 import com.stamp.api.store.entity.Store;
 import com.stamp.api.store.repository.StoreRepository;
 import com.stamp.global.exception.DomainException;
@@ -95,6 +96,7 @@ public class AttendanceServiceImpl implements AttendanceService {
             AttendanceEnum.PUNCH_IN,
             LocalDateTime.now(logTimeZone)));
   }
+
 
   /**
    * Public Method 직원의 퇴근 로그를 남긴다. 권한 : Employee
@@ -240,6 +242,17 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     attendanceRepository.save(updatedAttendance);
+  }
+
+
+  @Override
+  public List<AttendanceRes> getEmployeesWorktimeForMonth(LocalDate firstDate, UserDetails userDetails) {
+
+    Long storeId = Long.parseLong(userDetails.getUsername());
+    checkEmployerUserAuthority(storeId, userDetails);
+    String id1 = createAttendanceId(storeId, firstDate);
+    String id2 = createAttendanceId(storeId, firstDate.plusMonths(1));
+    return attendanceRepository.findAttendancesByIdRange(id1, id2);
   }
 
   /** 로그인 한 유저가 employee Id에 대한 권한이 있는지 체크. 권한이 없을 시 throw Exception */

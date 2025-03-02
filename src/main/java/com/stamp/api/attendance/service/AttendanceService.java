@@ -5,6 +5,8 @@ import com.stamp.api.attendance.dto.response.AttendanceRes;
 import com.stamp.api.attendance.dto.response.QRCodeRes;
 import java.time.LocalDate;
 import java.util.List;
+
+import com.stamp.api.store.dto.response.WageRes;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface AttendanceService {
@@ -34,4 +36,6 @@ public interface AttendanceService {
       Long storeId, LocalDate firstDate, Long EmployeeId, UserDetails userDetails);
 
   void updateAttendance(Long storeId, AttendanceUpdateReq req, UserDetails userDetails);
+
+  List<AttendanceRes> getEmployeesWorktimeForMonth(LocalDate firstDate, UserDetails userDetails);
 }
