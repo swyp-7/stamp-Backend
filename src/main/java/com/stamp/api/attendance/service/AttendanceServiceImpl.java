@@ -242,6 +242,17 @@ public class AttendanceServiceImpl implements AttendanceService {
     attendanceRepository.save(updatedAttendance);
   }
 
+  @Override
+  public List<AttendanceRes> getEmployeesWorktimeForMonth(
+      LocalDate firstDate, UserDetails userDetails) {
+
+    Long storeId = Long.parseLong(userDetails.getUsername());
+    checkEmployerUserAuthority(storeId, userDetails);
+    String id1 = createAttendanceId(storeId, firstDate);
+    String id2 = createAttendanceId(storeId, firstDate.plusMonths(1));
+    return attendanceRepository.findAttendancesByIdRange(id1, id2);
+  }
+
   /** 로그인 한 유저가 employee Id에 대한 권한이 있는지 체크. 권한이 없을 시 throw Exception */
   private Employee checkEmployerEmployeeAuthority(Long storeId, AttendanceUpdateReq req) {
     Employee employee =

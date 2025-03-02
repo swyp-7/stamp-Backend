@@ -34,4 +34,6 @@ public interface AttendanceService {
       Long storeId, LocalDate firstDate, Long EmployeeId, UserDetails userDetails);
 
   void updateAttendance(Long storeId, AttendanceUpdateReq req, UserDetails userDetails);
+
+  List<AttendanceRes> getEmployeesWorktimeForMonth(LocalDate firstDate, UserDetails userDetails);
 }
