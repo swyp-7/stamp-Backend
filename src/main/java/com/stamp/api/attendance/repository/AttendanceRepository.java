@@ -21,9 +21,9 @@ public interface AttendanceRepository extends JpaRepository<Attendance, String> 
   @Query(
       "SELECT new com.stamp.api.attendance.dto.response.AttendanceRes(a.id, e.name, e.id, a.attendance, a.date, a.time) "
           + "FROM Attendance a "
-          + "LEFT JOIN Employee e ON a.storeId = e.id "
-          + "WHERE e.id >= :id1 "
-          + "AND e.id < :id2")
+          + "LEFT JOIN Employee e ON a.employeeId = e.id "
+          + "WHERE a.id >= :id1 "
+          + "AND a.id < :id2")
   List<AttendanceRes> findAttendancesByIdRange(@Param("id1") String id1, @Param("id2") String id2);
 
   /**
@@ -33,9 +33,9 @@ public interface AttendanceRepository extends JpaRepository<Attendance, String> 
   @Query(
       "SELECT new com.stamp.api.attendance.dto.response.AttendanceRes(a.id, e.name, e.id, a.attendance, a.date, a.time) "
           + "FROM Attendance a "
-          + "LEFT JOIN Employee e ON a.storeId = e.id "
-          + "WHERE e.id >= :id1 "
-          + "AND e.id < :id2 "
+          + "LEFT JOIN Employee e ON a.employeeId = e.id "
+          + "WHERE a.id >= :id1 "
+          + "AND a.id < :id2 "
           + "AND a.employeeId = :employeeId")
   List<AttendanceRes> findAttendancesByIdRangeAndEmployeeId(
       @Param("id1") String id1, @Param("id2") String id2, @Param("employeeId") Long employeeId);
