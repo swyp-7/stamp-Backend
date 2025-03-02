@@ -4,11 +4,12 @@
 # 환경 설정
 #######################################
 TIME_NOW=$(TZ=Asia/Seoul date '+%Y%m%d_%H%M%S')
+
 PROJECT_ROOT="/home/ubuntu/app"
 JAR_FILE="$PROJECT_ROOT/spring-webapp.jar"
 
 LOG_FOLDER="$PROJECT_ROOT/logging"
-APP_LOG_BACKUP_FOLDER="$LOG_FOLDER/app_runtime"  # 이전 로그 백업 폴더
+APP_LOG_BACKUP_FOLDER="$LOG_FOLDER/app_runtime"
 DEPLOY_LOG="$LOG_FOLDER/deploy.log"
 
 #######################################
@@ -16,6 +17,7 @@ DEPLOY_LOG="$LOG_FOLDER/deploy.log"
 mkdir -p "$LOG_FOLDER"
 mkdir -p "$APP_LOG_BACKUP_FOLDER"
 mkdir -p "$LOG_FOLDER/app_error"
+mkdir -p "$PROJECT_ROOT/jar_backup"
 #######################################
 
 #######################################
@@ -38,11 +40,11 @@ done
 #######################################
 # 현재 구동 중인 애플리케이션 종료
 #######################################
-CURRENT_PID=$(pgrep -f "$JAR_FILE")
+CURRENT_PID=$(pgrep -f $JAR_FILE)
 
-if [ -z "$CURRENT_PID" ]; then
+if [ -z $CURRENT_PID ]; then
   echo "$TIME_NOW > 현재 실행중인 애플리케이션이 없습니다" >> "$DEPLOY_LOG"
 else
   echo "$TIME_NOW > 실행중인 애플리케이션 종료 [PID: $CURRENT_PID]" >> "$DEPLOY_LOG"
-  kill -15 "$CURRENT_PID"
+  kill -15 $CURRENT_PID
 fi

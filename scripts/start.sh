@@ -3,7 +3,6 @@
 #######################################
 # 환경 설정
 #######################################
-# 원하는 타임존으로 변경 가능: Asia/Seoul, UTC, America/New_York 등
 TIME_NOW=$(TZ=Asia/Seoul date '+%Y%m%d_%H%M%S')
 
 PROJECT_ROOT="/home/ubuntu/app"
@@ -47,7 +46,7 @@ echo "Run command: java -D$JASYPT_SECRET -jar $JAR_FILE" >> "$DEPLOY_LOG"
 nohup java -D"$JASYPT_SECRET" -jar "$JAR_FILE" > "$APP_LOG" 2> "$APP_ERROR_LOG" &
 
 # PID 확인
-CURRENT_PID=$(pgrep -f "$JAR_FILE")
+CURRENT_PID=$(pgrep -f $JAR_FILE)
 echo "$TIME_NOW > 프로세스 실행완료. [PID: $CURRENT_PID]" >> "$DEPLOY_LOG"
 
 #######################################
