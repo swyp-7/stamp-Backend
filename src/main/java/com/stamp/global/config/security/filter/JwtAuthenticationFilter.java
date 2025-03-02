@@ -28,9 +28,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       throws ServletException, IOException {
 
     // Request Method, URI 로깅
-    String requestUri = request.getRequestURI();
+    String remoteAddr = request.getRemoteAddr();
+    String requestUrl = request.getRequestURL().toString();
     String method = request.getMethod();
-    log.info("Request method: {}, Request URI : {}", method, requestUri);
+    log.info("From {}, Request method: {}, Request URL : {}",remoteAddr, method, requestUrl);
 
     String token = extractToken(request);
 
