@@ -36,7 +36,7 @@ public class ExtraShiftServiceImpl implements ExtraShiftService {
     WeekDay requestWeekDay = convertToWeekDay(requestDate);
 
     boolean isAvailable = checkEmployeeAvailability(employee, requestWeekDay);
-    if (isAvailable) {
+    if (!isAvailable) {
       extraShiftRepository.save(ExtraShift.of(requestDate, false, employee));
     } else {
       throw new DomainException(
