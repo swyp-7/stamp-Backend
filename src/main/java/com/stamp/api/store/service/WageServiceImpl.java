@@ -95,7 +95,7 @@ public class WageServiceImpl implements WageService {
               .map(IsPaid::isPaid)
               .orElse(false);
 
-      WageRes wageRes = new WageRes(employeeId, name, totalDuration, hourlyPay, totalWage, isPaid);
+      WageRes wageRes = WageRes.of(employeeId, name, totalDuration, hourlyPay, totalWage, isPaid);
       wageResList.add(wageRes);
     }
     return wageResList;
