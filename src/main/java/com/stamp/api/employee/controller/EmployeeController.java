@@ -1,82 +1,48 @@
 package com.stamp.api.employee.controller;
 
-import com.stamp.api.employee.dto.request.CreateEmployeeReq;
-import com.stamp.api.employee.dto.request.UpdateEmployeeReq;
-import com.stamp.api.employee.dto.response.ReadEmployeeRes;
-import com.stamp.api.employee.service.CreateEmployeeService;
-import com.stamp.api.employee.service.DeleteEmployeeService;
-import com.stamp.api.employee.service.ReadEmployeeService;
-import com.stamp.api.employee.service.UpdateEmployeeService;
+import com.stamp.api.attendance.dto.response.AttendanceRes;
+import com.stamp.api.attendance.service.AttendanceService;
+import com.stamp.api.employee.service.EmployeeService;
 import com.stamp.global.response.ApplicationResponse;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
-@RequiredArgsConstructor
-@RequestMapping("/api/v1/store/{storeId}/employees")
+import java.time.LocalDate;
+import java.util.List;
+
 @RestController
+@RequestMapping("/api/v1/employee")
+@RequiredArgsConstructor
 public class EmployeeController {
 
-  private final CreateEmployeeService createEmployeeService;
-  private final ReadEmployeeService readEmployeeService;
-  private final UpdateEmployeeService updateEmployeeService;
-  private final DeleteEmployeeService deleteEmployeeService;
+    private final EmployeeService employeeService;
 
-  @PostMapping("/enroll")
-  public void enroll(@PathVariable Long storeId, @RequestBody CreateEmployeeReq createEmployeeReq) {
-    createEmployeeService.enrollEmployee(storeId, createEmployeeReq);
-  }
+    /****************************
+     *
+     * 출/퇴근 기록 조회 API (직원용)
+     *
+     ****************************/
 
-  @GetMapping("/total")
-  public ApplicationResponse<List<ReadEmployeeRes>> getAllEmployees(@PathVariable Long storeId) {
-    return ApplicationResponse.ok(readEmployeeService.getAllEmployees(storeId));
-  }
+    //  직원의 한달 출/퇴근 로그 조회
+    @GetMapping("/attendance/month")
+    public ApplicationResponse<List<AttendanceRes>> getAttendancesForMonth(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate,
+            @AuthenticationPrincipal UserDetails userDetails) {
 
-  @GetMapping("/{employeeId}")
-  public ApplicationResponse<ReadEmployeeRes> getEmployee(@PathVariable Long employeeId) {
-    return ApplicationResponse.ok(readEmployeeService.getEmployee(employeeId));
-  }
+        return ApplicationResponse.ok(
+                employeeService.getAttendancesForMonth(firstDate, userDetails));
+    }
 
-  @GetMapping("/period")
-  public ApplicationResponse<List<ReadEmployeeRes>> getEmployeeByPeriod(
-      @PathVariable Long storeId,
-      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-    return ApplicationResponse.ok(
-        readEmployeeService.getEmployeeByPeriod(storeId, startDate, endDate));
-  }
+    //  직원의 하루 출/퇴근 로그 조회
+    @GetMapping("/attendance/day")
+    public ApplicationResponse<List<AttendanceRes>> getAttendancesForDayWithEmployeeId(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate,
+            @AuthenticationPrincipal UserDetails userDetails) {
 
-  @GetMapping("/available")
-  public ApplicationResponse<List<ReadEmployeeRes>> getAvailableEmployeesForTimeSlot(
-      @PathVariable Long storeId,
-      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-      @RequestParam LocalTime startTime,
-      @RequestParam LocalTime endTime) {
-    return ApplicationResponse.ok(
-        readEmployeeService.getAvailableEmployeesForTimeSlot(storeId, date, startTime, endTime));
-  }
-
-  @PutMapping("/{employeeId}")
-  public ApplicationResponse<ReadEmployeeRes> updateEmployee(
-      @PathVariable Long employeeId, @RequestBody UpdateEmployeeReq updateEmployeeReq) {
-    return ApplicationResponse.ok(
-        updateEmployeeService.updateEmployee(employeeId, updateEmployeeReq));
-  }
-
-  @DeleteMapping("{employeeId}/{employeeScheduleId}")
-  public ApplicationResponse<Void> deleteEmployeeSchedule(@PathVariable Long employeeScheduleId) {
-    deleteEmployeeService.deleteEmployeeSchedule(employeeScheduleId);
-    return ApplicationResponse.ok();
-  }
+        return ApplicationResponse.ok(
+                employeeService.getAttendancesForDay(firstDate, userDetails));
+    }
 }
