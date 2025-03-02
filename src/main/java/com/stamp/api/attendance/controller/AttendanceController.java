@@ -134,7 +134,7 @@ public class AttendanceController {
    ****************************/
 
   //  직원 출/퇴근 로그 수정/생성
-  @GetMapping("/store/{storeId}/employees/attendance/update")
+  @PutMapping("/store/{storeId}/employees/attendance/update")
   public ApplicationResponse<Void> updateAttendance(
       @PathVariable("storeId") String storeId,
       @RequestBody AttendanceUpdateReq attendanceUpdateReq,
