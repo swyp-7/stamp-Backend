@@ -3,10 +3,9 @@ package com.stamp.api.attendance.repository;
 import com.stamp.api.attendance.dto.response.AttendanceRes;
 import com.stamp.api.attendance.entity.Attendance;
 import com.stamp.api.attendance.entity.AttendanceEnum;
+import com.stamp.api.employee.dto.response.EmployeeAttendacneRes;
 import java.time.LocalDate;
 import java.util.List;
-
-import com.stamp.api.employee.dto.response.EmployeeAttendacneRes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -47,12 +46,11 @@ public interface AttendanceRepository extends JpaRepository<Attendance, String> 
    * 가능하다. 특정 Employee의 로그만을 조회한다.
    */
   @Query(
-          "SELECT new com.stamp.api.employee.dto.response.EmployeeAttendacneRes(a.id, a.attendance, a.date, a.time) "
-                  + "FROM Attendance a "
-                  + "WHERE a.id >= :id1 "
-                  + "AND a.id < :id2 "
-                  + "AND a.employeeId = :employeeId")
+      "SELECT new com.stamp.api.employee.dto.response.EmployeeAttendacneRes(a.id, a.attendance, a.date, a.time) "
+          + "FROM Attendance a "
+          + "WHERE a.id >= :id1 "
+          + "AND a.id < :id2 "
+          + "AND a.employeeId = :employeeId")
   List<EmployeeAttendacneRes> findAttendancesByIdRangeOnEmployee(
-          @Param("id1") String id1, @Param("id2") String id2, @Param("employeeId") Long employeeId);
-
+      @Param("id1") String id1, @Param("id2") String id2, @Param("employeeId") Long employeeId);
 }

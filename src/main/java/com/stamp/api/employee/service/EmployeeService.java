@@ -1,10 +1,8 @@
 package com.stamp.api.employee.service;
 
-import com.stamp.api.attendance.dto.response.AttendanceRes;
+import com.stamp.api.employee.dto.response.EmployeeAttendacneRes;
 import java.time.LocalDate;
 import java.util.List;
-
-import com.stamp.api.employee.dto.response.EmployeeAttendacneRes;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface EmployeeService {

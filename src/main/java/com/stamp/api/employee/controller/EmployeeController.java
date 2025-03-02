@@ -1,6 +1,5 @@
 package com.stamp.api.employee.controller;
 
-import com.stamp.api.attendance.dto.response.AttendanceRes;
 import com.stamp.api.employee.dto.response.EmployeeAttendacneRes;
 import com.stamp.api.employee.service.EmployeeService;
 import com.stamp.global.response.ApplicationResponse;

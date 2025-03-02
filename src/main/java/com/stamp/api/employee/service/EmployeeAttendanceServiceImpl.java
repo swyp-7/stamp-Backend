@@ -1,6 +1,5 @@
 package com.stamp.api.employee.service;
 
-import com.stamp.api.attendance.dto.response.AttendanceRes;
 import com.stamp.api.attendance.repository.AttendanceRepository;
 import com.stamp.api.employee.dto.response.EmployeeAttendacneRes;
 import com.stamp.api.employee.entity.Employee;
@@ -22,7 +21,8 @@ public class EmployeeAttendanceServiceImpl implements EmployeeAttendanceService 
   private final EmployeeRepository employeeRepository;
 
   @Override
-  public List<EmployeeAttendacneRes> getAttendancesForMonth(LocalDate firstDate, UserDetails userDetails) {
+  public List<EmployeeAttendacneRes> getAttendancesForMonth(
+      LocalDate firstDate, UserDetails userDetails) {
 
     Long employeeId = Long.parseLong(userDetails.getUsername());
     Employee employee =
@@ -44,7 +44,8 @@ public class EmployeeAttendanceServiceImpl implements EmployeeAttendanceService 
   }
 
   @Override
-  public List<EmployeeAttendacneRes> getAttendancesForDay(LocalDate firstDate, UserDetails userDetails) {
+  public List<EmployeeAttendacneRes> getAttendancesForDay(
+      LocalDate firstDate, UserDetails userDetails) {
 
     Long employeeId = Long.parseLong(userDetails.getUsername());
     Employee employee =
