@@ -31,7 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     String remoteAddr = request.getRemoteAddr();
     String requestUrl = request.getRequestURL().toString();
     String method = request.getMethod();
-    log.info("From {}, Request method: {}, Request URL : {}",remoteAddr, method, requestUrl);
+    log.info("From {}, Request method: {}, Request URL : {}", remoteAddr, method, requestUrl);
 
     String token = extractToken(request);
 

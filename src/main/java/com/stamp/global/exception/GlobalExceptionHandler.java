@@ -12,7 +12,11 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(DomainException.class)
   public ResponseEntity<ApplicationResponse<Error>> handleDomainException(DomainException e) {
-    log.error("domain exception occurred: {} - {} <- {}",e.getError().getStatus(), e.getError().getMessage(), e.getMessage());
+    log.error(
+        "domain exception occurred: {} - {} <- {}",
+        e.getError().getStatus(),
+        e.getError().getMessage(),
+        e.getMessage());
     return ResponseEntity.status(e.getError().getStatus())
         .body(ApplicationResponse.error(e.getError()));
   }
