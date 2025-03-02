@@ -20,11 +20,7 @@ public class EmployeeAttendanceServiceImpl implements EmployeeAttendanceService 
   private final AttendanceRepository attendanceRepository;
   private final EmployeeRepository employeeRepository;
 
-  /**
-   * Public Method
-   * 로그인 한 Employee 유저의 1개월 출/퇴근 기록 조회
-   * firstDate를 포함하여 조회함
-   */
+  /** Public Method 로그인 한 Employee 유저의 1개월 출/퇴근 기록 조회 firstDate를 포함하여 조회함 */
   @Override
   public List<EmployeeAttendacneRes> getAttendancesForMonth(
       LocalDate firstDate, UserDetails userDetails) {
@@ -48,11 +44,7 @@ public class EmployeeAttendanceServiceImpl implements EmployeeAttendanceService 
     return attendanceRepository.findAttendancesByIdRangeOnEmployee(id1, id2, employeeId);
   }
 
-  /**
-   * Public Method
-   * 로그인 한 Employee 유저의 1일 출/퇴근 기록 조회
-   * firstDate 일자를 조회
-   */
+  /** Public Method 로그인 한 Employee 유저의 1일 출/퇴근 기록 조회 firstDate 일자를 조회 */
   @Override
   public List<EmployeeAttendacneRes> getAttendancesForDay(
       LocalDate firstDate, UserDetails userDetails) {
