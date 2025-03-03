@@ -2,6 +2,8 @@ package com.stamp.api.extraShift.entity;
 
 import com.stamp.api.employee.entity.Employee;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,21 +25,19 @@ public class ExtraShift {
   private Long id;
 
   private LocalDate requestDate; // 추가 근무 요청 날짜
-  private boolean isAccepted; // true 수락, false 삭제
+
+  @Enumerated(EnumType.STRING)
+  private RequestStatus status = RequestStatus.REQUESTED;
 
   @ManyToOne
   @JoinColumn(name = "employee_id")
   private Employee employee;
 
-  public static ExtraShift of(LocalDate requestDate, boolean isAccepted, Employee employee) {
-    return new ExtraShift(null, requestDate, isAccepted, employee);
+  public static ExtraShift of(LocalDate requestDate, RequestStatus status, Employee employee) {
+    return new ExtraShift(null, requestDate, status, employee);
   }
 
-  public void accept() {
-    this.isAccepted = true;
-  }
-
-  public void reject() {
-    this.isAccepted = false;
+  public void changeStatus(RequestStatus status) {
+    this.status = status;
   }
 }

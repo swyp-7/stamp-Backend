@@ -2,7 +2,9 @@ package com.stamp.api.extraShift.controller;
 
 import com.stamp.api.extraShift.dto.request.ExtraShiftReq;
 import com.stamp.api.extraShift.dto.response.ExtraShiftRes;
-import com.stamp.api.extraShift.service.ExtraShiftService;
+import com.stamp.api.extraShift.service.CreateExtraShiftService;
+import com.stamp.api.extraShift.service.ReadExtraShiftService;
+import com.stamp.api.extraShift.service.UpdateExtraShiftService;
 import com.stamp.global.response.ApplicationResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ExtraShiftController {
 
-  private final ExtraShiftService extraShiftService;
+  private final CreateExtraShiftService createExtraShiftService;
+  private final ReadExtraShiftService readExtraShiftService;
+  private final UpdateExtraShiftService updateExtraShiftService;
 
   @PostMapping("/createRequest/{employeeId}")
   public ApplicationResponse<Void> createExtraShiftRequest(
       @PathVariable("storeId") Long storeId,
       @PathVariable("employeeId") Long employeeId,
       @RequestBody ExtraShiftReq extraShiftReq) {
-    extraShiftService.createExtraShiftRequest(storeId, employeeId, extraShiftReq);
+    createExtraShiftService.createExtraShiftRequest(storeId, employeeId, extraShiftReq);
     return ApplicationResponse.ok();
   }
 
@@ -36,7 +40,7 @@ public class ExtraShiftController {
   public ApplicationResponse<List<ExtraShiftRes>> getExtraShiftRequests(
       @AuthenticationPrincipal UserDetails userDetails) {
     return ApplicationResponse.ok(
-        extraShiftService.getExtraShiftRequests(Long.valueOf(userDetails.getUsername())));
+        readExtraShiftService.getExtraShiftRequests(Long.valueOf(userDetails.getUsername())));
   }
 
   @PutMapping("/{extraShiftId}/acceptRequest")
@@ -44,7 +48,7 @@ public class ExtraShiftController {
       @PathVariable("extraShiftId") Long extraShiftId,
       @AuthenticationPrincipal UserDetails userDetail) {
     return ApplicationResponse.ok(
-        extraShiftService.acceptExtraShiftRequest(
+        updateExtraShiftService.acceptExtraShiftRequest(
             extraShiftId, Long.valueOf(userDetail.getUsername())));
   }
 
@@ -53,7 +57,7 @@ public class ExtraShiftController {
       @PathVariable("extraShiftId") Long extraShiftId,
       @AuthenticationPrincipal UserDetails userDetail) {
     return ApplicationResponse.ok(
-        extraShiftService.rejectExtraShiftRequest(
+        updateExtraShiftService.rejectExtraShiftRequest(
             extraShiftId, Long.valueOf(userDetail.getUsername())));
   }
 }
