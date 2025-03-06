@@ -27,7 +27,7 @@ public class ExtraShift {
   private LocalDate requestDate; // 추가 근무 요청 날짜
 
   @Enumerated(EnumType.STRING)
-  private RequestStatus status = RequestStatus.REQUESTED;
+  private RequestStatus status = RequestStatus.CREATED;
 
   @ManyToOne
   @JoinColumn(name = "employee_id")
