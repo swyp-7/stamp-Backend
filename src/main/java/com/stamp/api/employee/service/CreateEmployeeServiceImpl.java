@@ -10,6 +10,7 @@ import com.stamp.api.store.exception.StoreErrorCode;
 import com.stamp.api.store.repository.StoreRepository;
 import com.stamp.global.exception.DomainException;
 import jakarta.transaction.Transactional;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +27,8 @@ public class CreateEmployeeServiceImpl implements CreateEmployeeService {
   public void enrollEmployee(Long storeId, CreateEmployeeReq createEmployeeReq) {
     Store store = findStoreWithSchedule(storeId);
     Employee employee = employeeRepository.save(Employee.of(createEmployeeReq, store));
-    createEmployeeReq
-        .scheduleList()
+    createEmployeeReq.scheduleList().stream()
+        .filter(Objects::nonNull)
         .forEach(
             employeeScheduleReq ->
                 employeeScheduleRepository.save(
