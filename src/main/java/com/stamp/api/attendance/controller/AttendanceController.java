@@ -1,7 +1,7 @@
 package com.stamp.api.attendance.controller;
 
+import com.stamp.api.attendance.dto.requeset.AttendanceMultiUpdateReq;
 import com.stamp.api.attendance.dto.requeset.AttendanceReq;
-import com.stamp.api.attendance.dto.requeset.AttendanceUpdateReq;
 import com.stamp.api.attendance.dto.response.AttendanceRes;
 import com.stamp.api.attendance.dto.response.QRCodeRes;
 import com.stamp.api.attendance.service.AttendanceService;
@@ -137,10 +137,11 @@ public class AttendanceController {
   @PutMapping("/store/{storeId}/employees/attendance/update")
   public ApplicationResponse<Void> updateAttendance(
       @PathVariable("storeId") String storeId,
-      @RequestBody AttendanceUpdateReq attendanceUpdateReq,
+      @RequestBody AttendanceMultiUpdateReq attendanceMultiUpdateReq,
       @AuthenticationPrincipal UserDetails userDetails) {
 
-    attendanceService.updateAttendance(Long.valueOf(storeId), attendanceUpdateReq, userDetails);
+    attendanceService.updateAttendances(
+        Long.valueOf(storeId), attendanceMultiUpdateReq.attendanceReqs(), userDetails);
     return ApplicationResponse.ok();
   }
 }

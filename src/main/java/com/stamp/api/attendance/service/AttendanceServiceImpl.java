@@ -21,6 +21,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -201,6 +202,14 @@ public class AttendanceServiceImpl implements AttendanceService {
     String id2 = createAttendanceId(storeId, firstDate.plusDays(1));
 
     return attendanceRepository.findAttendancesByIdRangeAndEmployeeId(id1, id2, employeeId);
+  }
+
+  @Transactional
+  public void updateAttendances(
+      Long storeId, List<AttendanceUpdateReq> reqs, UserDetails userDetails) {
+
+    reqs.stream().forEach(req -> updateAttendance(storeId, req, userDetails));
+    ;
   }
 
   public void updateAttendance(Long storeId, AttendanceUpdateReq req, UserDetails userDetails) {
