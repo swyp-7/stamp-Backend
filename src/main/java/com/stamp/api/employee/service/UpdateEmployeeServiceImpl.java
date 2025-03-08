@@ -5,6 +5,8 @@ import com.stamp.api.employee.dto.response.ReadEmployeeRes;
 import com.stamp.api.employee.entity.Employee;
 import com.stamp.api.employee.exception.EmployeeErrorCode;
 import com.stamp.api.employee.repository.EmployeeRepository;
+import com.stamp.api.employeeschedule.dto.request.CreateEmployeeScheduleReq;
+import com.stamp.api.employeeschedule.entity.EmployeeSchedule;
 import com.stamp.api.employeeschedule.repository.EmployeeScheduleRepository;
 import com.stamp.global.exception.DomainException;
 import jakarta.transaction.Transactional;
@@ -26,7 +28,18 @@ public class UpdateEmployeeServiceImpl implements UpdateEmployeeService {
     updateEmployeeReq
         .scheduleList()
         .forEach(
-            scheduleReq ->
+            scheduleReq -> {
+              if (scheduleReq.id() == null) {
+                // 새로운 스케줄 추가
+                CreateEmployeeScheduleReq createScheduleReq =
+                    CreateEmployeeScheduleReq.of(
+                        scheduleReq.weekDay(),
+                        scheduleReq.startTime(),
+                        scheduleReq.endTime(),
+                        scheduleReq.isAdditional());
+                employeeScheduleRepository.save(EmployeeSchedule.of(createScheduleReq, employee));
+              } else {
+                // 기존 스케줄 업데이트
                 employeeScheduleRepository
                     .findById(scheduleReq.id())
                     .orElseThrow(
@@ -34,7 +47,9 @@ public class UpdateEmployeeServiceImpl implements UpdateEmployeeService {
                             new DomainException(
                                 EmployeeErrorCode.EMPLOYEE_SCHEDULE_NOT_FOUNDED,
                                 "UpdateEmployeeServiceImpl.updateEmployee"))
-                    .update(scheduleReq));
+                    .update(scheduleReq);
+              }
+            });
     return ReadEmployeeRes.of(employee);
   }
 
